@@ -42,8 +42,6 @@ public final class MistPaperPlugin extends AbstractPlugin {
         this.scheduler = XScheduler.of(this);
         this.processor = ChatBootstrap.bootstrap(this.configRegistry);
 
-        ChatBootstrap.bootstrap(this.configRegistry);
-
         AsyncChatListener.listener().register();
     }
 
