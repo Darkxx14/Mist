@@ -1,0 +1,11 @@
+plugins {
+    java
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+dependencies {
+    compileOnly(libs.paper.api)
+}

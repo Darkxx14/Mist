@@ -1,0 +1,14 @@
+[versions]
+paper = "1.21.8-R0.1-SNAPSHOT"
+placeholderapi = "2.11.7"
+xlibrary = "1.0.0"
+caffeine = "3.2.3"
+lombok = "1.18.36"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+placeholder-api = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+xlibrary = { module = "com.xyrisdev:XLibrary", version.ref = "xlibrary" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+

@@ -1,0 +1,16 @@
+example_text: "Test"
+
+# Enables automatic config migration on server startup.
+#
+# ⚠ IMPORTANT:
+# - Migration will normalize YAML formatting.
+# - Quotes, inline comments, and exact spacing are NOT preserved.
+# - Values and section comments ARE preserved.
+#
+# Disable this if you want to fully control config updates manually.
+config_migration:
+  enabled: true
+
+# DO NOT EDIT THIS VALUE
+# Used for automatic migration
+config_version: 1

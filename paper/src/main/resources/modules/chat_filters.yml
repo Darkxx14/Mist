@@ -1,0 +1,22 @@
+# -------------------------------------------------
+# Chat Filter Module
+# -------------------------------------------------
+# Blocks messages containing forbidden words.
+# Matching is case-insensitive.
+#
+# Notes:
+# - This module runs early in the chat pipeline.
+# - Messages containing a blocked word are cancelled.
+# -------------------------------------------------
+
+config_version: 1
+
+enabled: true
+
+# List of blocked words or phrases.
+# If any of these appear in a message, the message is cancelled.
+blocked-words:
+  - badword
+  - anotherbadword
+  - verybadphrase
+  - slur123
