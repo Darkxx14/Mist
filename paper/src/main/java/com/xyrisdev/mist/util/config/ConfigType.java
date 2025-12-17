@@ -20,10 +20,10 @@ public enum ConfigType {
 			)
 	),
 
-	CHAT_FILTERS(
-			"modules/chat_filters.yml",
+	CHAT_FORMAT(
+			"modules/chat_format.yml",
 			new MigrationContext(
-					"modules/chat_filters.yml",
+					"modules/chat_format.yml",
 					"config_version",
 					"backups",
 					true

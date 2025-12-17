@@ -20,6 +20,7 @@ dependencies {
 
     compileOnly(libs.paper.api)
     compileOnly(libs.placeholder.api)
+    compileOnly(libs.luckperms)
 
     paperLibrary(libs.caffeine)
 }

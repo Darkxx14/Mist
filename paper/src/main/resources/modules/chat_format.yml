@@ -1,0 +1,70 @@
+# ──────────────────────────────────────────────
+#              Mist Chat Formatting
+# ──────────────────────────────────────────────
+# Uses MiniMessage + legacy (&) colors
+# Supports:
+# - LuckPerms primary group
+# - Hover text (multi-line)
+# - Click actions (Adventure)
+# - <message> placeholder
+# - PAPI placeholders
+# ──────────────────────────────────────────────
+
+fallback_format: default
+
+formats:
+
+  default:
+    message: "<gray>%luckperms_prefix%</gray> <white>%player_name%</white> <dark_gray>➠</dark_gray> <gray><message>"
+    hover_text:
+      - "<gray>Click to message <white>%player_name%</white>"
+      - "<dark_gray>Rank:</dark_gray> <white>%luckperms_primary_group%</white>"
+      - ""
+      - "<gray>✦ Powered by <gradient:#9efcff:#c77dff>Mist</gradient></gray>"
+    action:
+      action: SUGGEST_COMMAND
+      value: "/msg %player_name% "
+
+  vip:
+    message: "<gradient:#ffd166:#f77f00>[VIP]</gradient> <white>%player_name%</white> <dark_gray>➠</dark_gray> <white><message>"
+    hover_text:
+      - "<gradient:#ffd166:#f77f00>VIP Player</gradient>"
+      - "<gray>Enjoys exclusive perks ✨</gray>"
+      - ""
+      - "<yellow>Click to send a private message</yellow>"
+    action:
+      action: SUGGEST_COMMAND
+      value: "/msg %player_name% "
+
+  mvp:
+    message: "<gradient:#6afcff:#00b4d8>[MVP]</gradient> <white>%player_name%</white> <dark_gray>➠</dark_gray> <color:#caf0f8><message>"
+    hover_text:
+      - "<gradient:#6afcff:#00b4d8>MVP Rank</gradient>"
+      - "<gray>High-tier supporter</gray>"
+      - ""
+      - "<aqua>Click to chat privately</aqua>"
+    action:
+      action: SUGGEST_COMMAND
+      value: "/msg %player_name% "
+
+  staff:
+    message: "<gradient:#ff4d4d:#ff0000>[STAFF]</gradient> <white>%player_name%</white> <dark_gray>➠</dark_gray> <gray><message>"
+    hover_text:
+      - "<red>Server Staff</red>"
+      - "<gray>Please follow instructions</gray>"
+      - ""
+      - "<red>Click to message staff</red>"
+    action:
+      action: SUGGEST_COMMAND
+      value: "/msg %player_name% "
+
+  owner:
+    message: "<gradient:#ffb703:#fb8500>[OWNER]</gradient> <white>%player_name%</white> <dark_gray>➠</dark_gray> <white><message>"
+    hover_text:
+      - "<gradient:#ffb703:#fb8500>Server Owner</gradient>"
+      - "<gray>The big boss 😎</gray>"
+      - ""
+      - "<gold>Click to message</gold>"
+    action:
+      action: SUGGEST_COMMAND
+      value: "/msg %player_name% "
