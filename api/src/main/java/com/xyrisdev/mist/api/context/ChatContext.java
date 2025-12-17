@@ -12,6 +12,9 @@ public final class ChatContext {
 
 	private Component message;
 	private String plainMessage;
+
+	private Object format;
+
 	private boolean cancelled;
 
 	public ChatContext(Player player, Component message) {
@@ -40,6 +43,15 @@ public final class ChatContext {
 	public void plain(String plain) {
 		this.plainMessage = plain;
 		this.message = Component.text(plain);
+	}
+
+	public <T> void format(T value) {
+		this.format = value;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T format(Class<T> type) {
+		return (T) format;
 	}
 
 	public boolean cancelled() {

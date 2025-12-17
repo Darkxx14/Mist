@@ -7,6 +7,7 @@ import com.xyrisdev.library.lib.feature.FeatureRegistry;
 import com.xyrisdev.library.scheduler.XScheduler;
 import com.xyrisdev.library.scheduler.scheduling.schedulers.TaskScheduler;
 import com.xyrisdev.mist.api.processor.ChatProcessor;
+import com.xyrisdev.mist.hook.LuckPermsHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.module.ModuleRegistrar;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
@@ -41,6 +42,12 @@ public final class MistPaperPlugin extends AbstractPlugin {
         this.configRegistry = ConfigRegistry.load();
         this.scheduler = XScheduler.of(this);
         this.chatProcessor = ModuleRegistrar.build();
+
+        if (plugins().isPluginEnabled("LuckPerms")) {
+            LuckPermsHook.init();
+        } else {
+            this.disable();
+        }
 
         AsyncChatListener.listener().register();
     }

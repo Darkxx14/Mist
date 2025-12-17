@@ -22,8 +22,51 @@ public final class FormatStage implements ChatStage {
 		this.config = config;
 	}
 
+//	@Override
+//	@SuppressWarnings("deprecation")
+//	public void process(@NotNull ChatContext context) {
+//		final Player player = context.player();
+//
+//		final String group = group(player);
+//		final FormatEntry entry = config.resolve(group);
+//
+//		if (entry == null) {
+//			return;
+//		}
+//
+//		final String raw = entry.message().replace("<message>", context.plain());
+//
+//		Component component = MistTextParser.parse(player, raw);
+//
+//		// hover
+//		if (!entry.hoverText().isEmpty()) {
+//			Component hover = Component.empty();
+//
+//			for (String line : entry.hoverText()) {
+//				hover = hover.append(
+//						MistTextParser.parse(player, line)
+//				).append(Component.newline());
+//			}
+//
+//			component = component.hoverEvent(
+//					HoverEvent.showText(hover)
+//			);
+//		}
+//
+//		// click
+//		if (entry.action() != null) {
+//			component = component.clickEvent(
+//					ClickEvent.clickEvent(
+//							entry.action().action(),
+//							entry.action().value()
+//					)
+//			);
+//		}
+//
+//		context.message(component);
+//	}
+
 	@Override
-	@SuppressWarnings("deprecation")
 	public void process(@NotNull ChatContext context) {
 		final Player player = context.player();
 
@@ -34,36 +77,7 @@ public final class FormatStage implements ChatStage {
 			return;
 		}
 
-		final String raw = entry.message().replace("<message>", context.plain());
-
-		Component component = MistTextParser.parse(player, raw);
-
-		// hover
-		if (!entry.hoverText().isEmpty()) {
-			Component hover = Component.empty();
-
-			for (String line : entry.hoverText()) {
-				hover = hover.append(
-						MistTextParser.parse(player, line)
-				).append(Component.newline());
-			}
-
-			component = component.hoverEvent(
-					HoverEvent.showText(hover)
-			);
-		}
-
-		// click
-		if (entry.action() != null) {
-			component = component.clickEvent(
-					ClickEvent.clickEvent(
-							entry.action().action(),
-							entry.action().value()
-					)
-			);
-		}
-
-		context.message(component);
+		context.format(entry);
 	}
 
 	private static @NotNull String group(@NotNull Player player) {
