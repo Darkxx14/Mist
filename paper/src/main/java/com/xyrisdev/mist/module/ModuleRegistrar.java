@@ -6,6 +6,9 @@ import com.xyrisdev.mist.internal.builder.MistProcessorBuilder;
 import com.xyrisdev.mist.module.format.ChatFormatModule;
 import com.xyrisdev.mist.module.format.config.FormatConfiguration;
 import com.xyrisdev.mist.module.format.config.loader.FormatConfigurationLoader;
+import com.xyrisdev.mist.module.render.RenderModule;
+import com.xyrisdev.mist.module.render.config.RenderConfiguration;
+import com.xyrisdev.mist.module.render.config.loader.RenderConfigurationLoader;
 import com.xyrisdev.mist.module.replacement.ChatReplacementsModule;
 import com.xyrisdev.mist.module.replacement.config.ReplacementsConfiguration;
 import com.xyrisdev.mist.module.replacement.config.loader.ReplacementsConfigurationLoader;
@@ -19,9 +22,11 @@ public final class ModuleRegistrar {
 		final ConfigRegistry registry = MistPaperPlugin.instance().configRegistry();
 		final FormatConfiguration formatConfig = FormatConfigurationLoader.load(registry.get(ConfigType.CHAT_FORMAT));
 		final ReplacementsConfiguration replacementsConfig = ReplacementsConfigurationLoader.load(registry.get(ConfigType.CHAT_REPLACEMENTS));
+		final RenderConfiguration renderConfig = RenderConfigurationLoader.load(registry.get(ConfigType.RENDER));
 
 		return new MistProcessorBuilder()
 				.group(0, replacements -> replacements.module(ChatReplacementsModule.create(replacementsConfig)))
+				.group(1, render -> render.module(RenderModule.create(renderConfig)))
 				.group(100, format -> format.module(ChatFormatModule.create(formatConfig)))
 				.build();
 	}

@@ -38,6 +38,16 @@ public enum ConfigType {
 					"backups",
 					true
 			)
+	),
+
+	RENDER(
+			"modules/render.yml",
+			new MigrationContext(
+					"modules/render.yml",
+					"config_version",
+					"backups",
+					true
+			)
 	);
 
 	private final String path;
