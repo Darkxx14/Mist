@@ -22,6 +22,6 @@ public final class ChatFormatModule implements ChatModule {
 
 	@Override
 	public void register(@NotNull StageRegistrar registrar) {
-		registrar.stage(new FormatStage(config), 0);
+		registrar.stage(new FormatStage(config), 100);
 	}
 }

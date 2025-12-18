@@ -1,0 +1,29 @@
+# ──────────────────────────────────────────────
+#           Mist Chat Replacements
+# ──────────────────────────────────────────────
+# Replaces message content before formatting
+# Supports simple text replacements and PAPI placeholders
+# ──────────────────────────────────────────────
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1
+
+replacements:
+  "<3": "<red>❤</red>"
+  ":)": "<yellow>😊</yellow>"
+  ":D": "<gold>😃</gold>"
+  ":(": "<gray>☹</gray>"
+  "o/": "<yellow>👋</yellow>"
+
+placeholderapi_replacements:
+  balance:
+    key: "<bal>"
+    processor: "<yellow><papi:player_name> has <papi:vault_eco_balance_formatted> Money!</yellow>"
+    require_permission: true
+    permission: "mist.replacements.balance"
+
+  location:
+    key: "<loc>"
+    processor: "<gray>At: <papi:player_x>, <papi:player_y>, <papi:player_z> in <papi:player_world></gray>"
+    require_permission: false
+    permission: ""

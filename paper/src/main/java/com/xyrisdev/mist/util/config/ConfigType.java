@@ -28,6 +28,16 @@ public enum ConfigType {
 					"backups",
 					true
 			)
+	),
+
+	CHAT_REPLACEMENTS(
+			"modules/chat_replacement.yml",
+			new MigrationContext(
+					"modules/chat_replacement.yml",
+					"config_version",
+					"backups",
+					true
+			)
 	);
 
 	private final String path;
