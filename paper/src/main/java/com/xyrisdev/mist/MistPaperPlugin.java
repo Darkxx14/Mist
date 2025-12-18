@@ -66,4 +66,9 @@ public final class MistPaperPlugin extends AbstractPlugin {
                 .disable(FeatureFlags.Game.CRYSTAL)
                 .disable(FeatureFlags.Game.ANCHOR);
     }
+
+    public void reload() {
+        this.configRegistry.reloadAll();
+        this.chatProcessor = ModuleRegistrar.build();
+    }
 }
