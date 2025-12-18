@@ -24,11 +24,15 @@ public final class RenderRequest {
 	public @NotNull UUID capture() {
 		final UUID id = UUID.randomUUID();
 
+		final List<ItemStack> filteredItems = items.stream()
+				.map(item -> item != null ? item : new ItemStack(org.bukkit.Material.AIR))
+				.toList();
+
 		final RenderEntry entry = new RenderEntry(
 				id,
 				owner,
 				type,
-				List.copyOf(items)
+				filteredItems
 		);
 
 		return RenderService.get().capture(entry);

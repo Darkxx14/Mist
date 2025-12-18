@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+import org.atteo.evo.inflector.English;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,8 +18,10 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public final class RenderStage implements ChatStage {
 
@@ -77,7 +80,7 @@ public final class RenderStage implements ChatStage {
 			@NotNull String processor,
 			@NotNull String prefix
 	) {
-		final List<ItemStack> items = collectItems(player, type);
+		final List<ItemStack> items = collect(player, type);
 
 		final UUID id = RenderRequest.builder()
 				.owner(player)
@@ -107,7 +110,7 @@ public final class RenderStage implements ChatStage {
 		));
 	}
 
-	private @NotNull List<ItemStack> collectItems(@NotNull Player player, @NotNull RenderType type) {
+	private @NotNull List<ItemStack> collect(@NotNull Player player, @NotNull RenderType type) {
 		return switch (type) {
 			case INVENTORY -> {
 				List<ItemStack> items = new ArrayList<>();
@@ -172,10 +175,26 @@ public final class RenderStage implements ChatStage {
 			final ItemStack item = items.getFirst();
 
 			if (item != null && !item.getType().isAir()) {
+				final int amount = item.getAmount();
+
+				final Component itemName =
+						item.hasItemMeta() && item.getItemMeta().hasDisplayName()
+								? item.getItemMeta().displayName()
+								: Component.text(
+								English.plural(
+										Arrays.stream(item.getType().name().split("_"))
+												.map(word -> word.charAt(0) + word.substring(1).toLowerCase())
+												.collect(Collectors.joining(" ")),
+										amount
+								)
+						);
+
+				result = result.replaceText(builder ->
+						builder.matchLiteral("<item>").replacement(itemName)
+				);
+
 				return result.hoverEvent(item);
 			}
-
-			return result;
 		}
 
 		if (!hoverText.isEmpty()) {

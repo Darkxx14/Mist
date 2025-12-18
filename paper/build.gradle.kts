@@ -23,6 +23,7 @@ dependencies {
     compileOnly(libs.luckperms)
 
     paperLibrary(libs.caffeine)
+    paperLibrary(libs.evo.inflector)
 }
 
 tasks.withType<JavaCompile>().configureEach {
