@@ -16,6 +16,7 @@ public final class MistColor {
 	public static final String WARNING = "#fff159";
 
 	/* ---------- wrappers ---------- */
+	// todo: make wrappers and pattle header begttter possible, refacor line models
 
 	@Contract(pure = true)
 	public static @NotNull String gradient(final @NotNull String content) {
