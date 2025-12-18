@@ -9,6 +9,7 @@ import com.xyrisdev.library.scheduler.scheduling.schedulers.TaskScheduler;
 import com.xyrisdev.mist.api.processor.ChatProcessor;
 import com.xyrisdev.mist.hook.LuckPermsHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
+import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.module.ModuleRegistrar;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
 import lombok.Getter;
@@ -50,6 +51,7 @@ public final class MistPaperPlugin extends AbstractPlugin {
         }
 
         AsyncChatListener.listener().register();
+        PlayerQuitListener.listener().register();
     }
 
     @Override

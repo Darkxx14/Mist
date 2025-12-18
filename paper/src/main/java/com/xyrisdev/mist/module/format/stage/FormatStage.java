@@ -5,6 +5,7 @@ import com.xyrisdev.mist.api.processor.ChatStage;
 import com.xyrisdev.mist.hook.LuckPermsHook;
 import com.xyrisdev.mist.module.format.config.FormatConfiguration;
 import com.xyrisdev.mist.module.format.entry.FormatEntry;
+import net.kyori.adventure.key.Key;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public final class FormatStage implements ChatStage {
 			return;
 		}
 
-		context.format(entry);
+		context.data(Key.key("mist", "render"), entry);
 	}
 
 	private static @NotNull String group(@NotNull Player player) {

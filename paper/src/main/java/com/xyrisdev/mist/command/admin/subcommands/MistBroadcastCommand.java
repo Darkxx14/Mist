@@ -1,4 +1,4 @@
-package com.xyrisdev.mist.command.subcommands;
+package com.xyrisdev.mist.command.admin.subcommands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;

@@ -1,8 +1,12 @@
 package com.xyrisdev.mist.api.context;
 
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class ChatContext {
 
@@ -13,7 +17,7 @@ public final class ChatContext {
 	private Component message;
 	private String plainMessage;
 
-	private Object format;
+	private final Map<Key, Object> data = new ConcurrentHashMap<>();
 
 	private boolean cancelled;
 
@@ -45,13 +49,21 @@ public final class ChatContext {
 		this.message = Component.text(plain);
 	}
 
-	public <T> void format(T value) {
-		this.format = value;
+	public <T> void data(Key key, T value) {
+		this.data.put(key, value);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T format(Class<T> type) {
-		return (T) format;
+	public <T> T data(Key key, Class<T> type) {
+		return (T) data.get(key);
+	}
+
+	public boolean hasData(Key key) {
+		return data.containsKey(key);
+	}
+
+	public void removeData(Key key) {
+		data.remove(key);
 	}
 
 	public boolean cancelled() {

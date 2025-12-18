@@ -4,6 +4,7 @@ import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.format.entry.FormatEntry;
 import com.xyrisdev.mist.util.text.MistTextParser;
 import io.papermc.paper.chat.ChatRenderer;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -16,7 +17,7 @@ public final class ChatFormatRenderer {
 	@SuppressWarnings("deprecation")
 	public static @NotNull ChatRenderer.ViewerUnaware render(@NotNull ChatContext context) {
 		return (player, displayName, message) -> {
-			final FormatEntry entry = context.format(FormatEntry.class);
+			final FormatEntry entry = context.data(Key.key("mist", "render"), FormatEntry.class);
 
 			if (entry == null) {
 				return message;

@@ -1,9 +1,9 @@
-package com.xyrisdev.mist.command;
+package com.xyrisdev.mist.command.admin;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.xyrisdev.mist.command.subcommands.MistBroadcastCommand;
-import com.xyrisdev.mist.command.subcommands.MistReloadCommand;
+import com.xyrisdev.mist.command.admin.subcommands.MistBroadcastCommand;
+import com.xyrisdev.mist.command.admin.subcommands.MistReloadCommand;
 import com.xyrisdev.mist.util.styling.MistLayout;
 import com.xyrisdev.mist.util.styling.layout.LineStyle;
 import com.xyrisdev.mist.util.styling.layout.LineType;
@@ -12,7 +12,7 @@ import io.papermc.paper.command.brigadier.Commands;
 
 public final class MistCommand {
 
-	public static LiteralCommandNode<CommandSourceStack> mist() {
+	public static LiteralCommandNode<CommandSourceStack> create() {
 		return Commands.literal("mist")
 				.executes(ctx -> {
 					MistLayout.create(ctx.getSource().getSender())
