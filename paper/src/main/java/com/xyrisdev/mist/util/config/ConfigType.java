@@ -50,7 +50,7 @@ public enum ConfigType {
 			)
 	),
 
-	FILTER(
+	CHAT_FILTER(
 			"modules/chat_filter.yml",
 			new MigrationContext(
 					"modules/chat_filter.yml",

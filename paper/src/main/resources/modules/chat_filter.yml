@@ -1,19 +1,27 @@
-config_version: 1
+# ──────────────────────────────────────────────
+# Mist Chat Filtering
+# ──────────────────────────────────────────────
 
 similarity:
   enabled: true
-  threshold: 75 #75%
+  # percentage similarity between last and current message
+  # above this value → message is cancelled
+  threshold: 75
 
 flood:
   enabled: true
-  maximum_lenght: 90
-  maximum_repated_chars: 5
+  # max total message length
+  maximum_length: 90
+  # max consecutive repeated characters (e.g. "aaaaaa")
+  maximum_repeated_chars: 5
 
 caps:
   enabled: true
-  type: RATIO/DEFINED
+  # RATIO -> caps / length > ratio
+  # DEFINED -> caps > max_caps
+  type: RATIO
   max_caps: 5
-  ratio: 7
+  ratio: 0.7
 
 cooldown:
   enabled: true
@@ -23,101 +31,31 @@ blocked_words:
   enabled: true
   words:
     fuck:
-      type: "basic/aggresive/aggresive v2"
+      type: basic
       cancel_message: true
       replace_with: "*"
-    shit:
-      type: "basic/aggresive/aggresive v2"
+
+    bitch:
+      type: aggressive
       cancel_message: false
-      replace_with: "*"
+      replace_with: "***"
+
+    nigga:
+      type: aggressive v2
+      cancel_message: true
+      replace_with: ""
 
 regex:
   enabled: true
   patterns:
-    ".*\\d{3}-\\d{3}-\\d{4}.*":
+    "(?i)kys":
       cancel_message: true
-      replace_with: "***"
-    .*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}.*:
+      replace_with: ""
+
+    "(?i)(ez|ezz|ezzz)":
+      cancel_message: false
+      replace_with: "<gray>gg</gray>"
+
+    "(?i)(https?|www\\.)":
       cancel_message: true
-      replace_with: "***"
-
-# ──────────────────────────────────────────────
-#              Chat Filter Configuration
-# ──────────────────────────────────────────────
-#
-# Documentation: https://zelchat.zeltuv.com
-# Support:       https://discord.gg/zeltuv
-#
-# ChatFilter is a powerful tool to help your staff
-# manage toxicity and spam in your server.
-# ──────────────────────────────────────────────
-
-config-version: 1 # Config version, used for update checks
-
-# ──────────────── Similarity Check ────────────────
-# This feature checks if a message is % similar to the previous one
-similarity-check:
-  enable: true
-  threshold: 0.75 # This is the similarity threshold (0.0 - 1.0)
-
-# ──────────────── Flood Check ────────────────
-# This feature is built to prevent players from flooding the chat
-# 1 - FLOOD(L) -> Messages that are too long
-# 2 - FLOOD(C) -> Messages that have too many repeated characters
-anti-flood:
-  enable: true
-  max-length: 80 # The maximum length of a message
-  max-repeated-characters: 4 # The maximum number of repeated characters in a message
-  alert-staff: true # Broadcast a message to staff when a player is blocked for flooding
-
-# ──────────────── Caps Check ────────────────
-# This feature checks if a message contains too many capital letters and converts it to lowercase
-anti-caps:
-  enable: true
-  max-caps: 5 # The maximum number of capital letters allowed in a message
-
-# ──────────────── Cooldown Check ────────────────
-# This feature prevents players from sending messages too fast
-cooldown-messages:
-  enable: true
-  seconds: 3 # Time to wait between before sending a message
-
-# ──────────────── IP Check ────────────────
-# This feature checks if a message contains an IP address
-ip-check:
-  enable: true
-  replace-with: '*' # This is how each character of the flagged word will be replaced
-  cancel-message: true # Cancelling the message will not send it to the chat
-  alert-staff: true # Broadcast a message to staff when a player is blocked for the IP check
-
-# ──────────────── URL Check ────────────────
-# This feature checks if a message contains a URL address
-url-check:
-  enable: true
-  replace-with: '*' # This is how each character of the flagged word will be replaced
-  cancel-message: true # Cancelling the message will not send it to the chat
-  alert-staff: true # Broadcast a message to staff when a player is blocked for the URL check
-
-# ──────────────── Domain Check ────────────────
-# This feature checks if a message contains a DOMAIN address
-domain-check:
-  enable: true
-  replace-with: '*' # This is how each character of the flagged word will be replaced
-  cancel-message: true # Cancelling the message will not send it to the chat
-  alert-staff: true # Broadcast a message to staff when a player is blocked for the domain check
-
-# ──────────────── Phone Check ────────────────
-# This feature checks if a message contains a PHONE number
-phone-number-check:
-  enable: true
-  replace-with: '*' # This is how each character of the flagged word will be replaced
-  cancel-message: true # Cancelling the message will not send it to the chat
-  alert-staff: true # Broadcast a message to staff when a player is blocked for the phone number check
-
-# ──────────────── Unicode Check ────────────────
-# This feature checks if a message contains Unicode characters
-unicode-check:
-  enable: false
-  replace-with: '*' # This is how each character of the flagged word will be replaced
-  cancel-message: true # Cancelling the message will not send it to the chat
-  alert-staff: true # Broadcast a message to staff when a player is blocked for the unicode check
+      replace_with: ""

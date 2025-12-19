@@ -22,6 +22,6 @@ public final class RenderModule implements ChatModule {
 
 	@Override
 	public void register(@NotNull StageRegistrar registrar) {
-		registrar.stage(new RenderStage(config), 1);
+		registrar.stage(new RenderStage(config), 2);
 	}
 }
