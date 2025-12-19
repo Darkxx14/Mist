@@ -48,6 +48,16 @@ public enum ConfigType {
 					"backups",
 					true
 			)
+	),
+
+	FILTER(
+			"modules/chat_filter.yml",
+			new MigrationContext(
+					"modules/chat_filter.yml",
+					"config_version",
+					"backups",
+					true
+			)
 	);
 
 	private final String path;

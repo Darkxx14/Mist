@@ -9,6 +9,7 @@ public final class SimilarityUtil {
 	public static double similarity(String a, String b) {
 		int distance = levenshtein(a, b);
 		int max = Math.max(a.length(), b.length());
+
 		return max == 0 ? 1.0 : 1.0 - ((double) distance / max);
 	}
 
