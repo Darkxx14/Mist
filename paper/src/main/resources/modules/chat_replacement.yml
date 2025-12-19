@@ -9,21 +9,39 @@
 config_version: 1
 
 replacements:
-  "<3": "<red>❤</red>"
-  ":)": "<yellow>😊</yellow>"
-  ":D": "<gold>😃</gold>"
-  ":(": "<gray>☹</gray>"
-  "o/": "<yellow>👋</yellow>"
+  heart:
+    type: STATIC
+    match: "<3"
+    replace: "<red>❤</red>"
 
-placeholderapi_replacements:
+  smile:
+    type: STATIC
+    match: ":)"
+    replace: "<yellow>😊</yellow>"
+
+  grin:
+    type: STATIC
+    match: ":D"
+    replace: "<gold>😃</gold>"
+
+  sad:
+    type: STATIC
+    match: ":("
+    replace: "<gray>☹</gray>"
+
+  wave:
+    type: STATIC
+    match: "o/"
+    replace: "<yellow>👋</yellow>"
+
   balance:
-    key: "<bal>"
-    processor: "<yellow><papi:player_name> has <papi:vault_eco_balance_formatted> Money!</yellow>"
-    require_permission: true
+    type: PAPI
+    match: "<bal>"
+    processor: "<yellow><papi:player_name>'s has <papi:vault_eco_balance_formatted> Money!</yellow>"
     permission: "mist.replacements.balance"
 
   location:
-    key: "<loc>"
-    processor: "<gray>At: <papi:player_x>, <papi:player_y>, <papi:player_z> in <papi:player_world></gray>"
-    require_permission: false
-    permission: ""
+    type: PAPI
+    match: "<loc>"
+    processor: "<gray>At <papi:player_x>, <papi:player_y>, <papi:player_z></gray>"
+    permission: "" # no permission required
