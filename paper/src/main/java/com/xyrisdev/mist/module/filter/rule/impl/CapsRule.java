@@ -3,38 +3,25 @@ package com.xyrisdev.mist.module.filter.rule.impl;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
-import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 
 public class CapsRule implements FilterRule {
 
-	public enum Type {
-		RATIO, DEFINED
-	}
+	private CapsRuleType type = CapsRuleType.RATIO;
+	private int maxCaps;
+	private double ratio;
 
-	public static final FilterRuleFactory FACTORY = section ->
-			new CapsRule(
-					section.getBoolean("enabled", false),
-					Type.valueOf(section.getString("type", "RATIO").toUpperCase()),
-					section.getInt("max_caps", 5),
-					section.getDouble("ratio", 0.7)
-			);
-
-	private final boolean enabled;
-	private final Type type;
-	private final int maxCaps;
-	private final double ratio;
-
-	private CapsRule(boolean enabled, Type type, int maxCaps, double ratio) {
-		this.enabled = enabled;
-		this.type = type;
-		this.maxCaps = maxCaps;
-		this.ratio = ratio;
+	@Override
+	public @NotNull String key() {
+		return "caps";
 	}
 
 	@Override
-	public boolean enabled() {
-		return enabled;
+	public void load(@NotNull ConfigurationSection section) {
+		type = CapsRuleType.valueOf(section.getString("type", "RATIO").toUpperCase());
+		maxCaps = section.getInt("max_caps", 5);
+		ratio = section.getDouble("ratio", 0.7);
 	}
 
 	@Override
@@ -46,16 +33,20 @@ public class CapsRule implements FilterRule {
 			if (Character.isUpperCase(c)) caps++;
 		}
 
-		if (type == Type.DEFINED && caps > maxCaps) {
+		if (type == CapsRuleType.DEFINED && caps > maxCaps) {
 			return FilterResult.cancelled();
 		}
 
-		if (type == Type.RATIO && !msg.isEmpty()) {
+		if (type == CapsRuleType.RATIO && !msg.isEmpty()) {
 			if ((double) caps / msg.length() > ratio) {
 				return FilterResult.cancelled();
 			}
 		}
 
 		return FilterResult.pass();
+	}
+
+	public enum CapsRuleType {
+		RATIO, DEFINED
 	}
 }

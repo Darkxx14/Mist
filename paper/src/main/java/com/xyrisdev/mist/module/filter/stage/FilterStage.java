@@ -19,10 +19,6 @@ public class FilterStage implements ChatStage {
 	public void process(@NotNull ChatContext context) {
 		for (FilterRule rule : config.rules()) {
 
-			if (!rule.enabled()) {
-				continue;
-			}
-
 			final FilterResult result = rule.process(context);
 
 			if (result.cancel()) {

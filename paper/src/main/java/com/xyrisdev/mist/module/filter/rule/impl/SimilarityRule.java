@@ -5,9 +5,9 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
-import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 import com.xyrisdev.mist.util.SimilarityUtil;
 import com.xyrisdev.mist.util.message.MistMessage;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -19,23 +19,16 @@ public class SimilarityRule implements FilterRule {
 			.expireAfterWrite(10, TimeUnit.SECONDS)
 			.build();
 
-	public static final FilterRuleFactory FACTORY = section ->
-			new SimilarityRule(
-					section.getBoolean("enabled", false),
-					section.getInt("threshold", 75)
-			);
+	private double threshold;
 
-	private final boolean enabled;
-	private final int threshold;
-
-	private SimilarityRule(boolean enabled, int threshold) {
-		this.enabled = enabled;
-		this.threshold = threshold;
+	@Override
+	public @NotNull String key() {
+		return "similarity";
 	}
 
 	@Override
-	public boolean enabled() {
-		return enabled;
+	public void load(@NotNull ConfigurationSection section) {
+		threshold = section.getDouble("threshold", 0.75);
 	}
 
 	@Override

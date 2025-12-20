@@ -3,7 +3,6 @@ package com.xyrisdev.mist.module.filter.rule.impl;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
-import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,48 +12,39 @@ import java.util.regex.Pattern;
 
 public class RegexRule implements FilterRule {
 
-	public static final FilterRuleFactory FACTORY = section -> {
-		if (!section.getBoolean("enabled", false)) {
-			return new RegexRule(false, List.of());
-		}
+	private final List<Entry> entries = new ArrayList<>();
 
-		final List<Entry> entries = new ArrayList<>();
-		final ConfigurationSection patterns = section.getConfigurationSection("patterns");
-
-		if (patterns != null) {
-			for (String raw : patterns.getKeys(false)) {
-				final ConfigurationSection p = patterns.getConfigurationSection(raw);
-
-				if (p == null) {
-					continue;
-				}
-
-				try {
-					entries.add(new Entry(
-							Pattern.compile(raw),
-							p.getBoolean("cancel_message", true),
-							p.getString("replace_with", "***")
-					));
-				} catch (Exception ignored) {}
-			}
-		}
-
-		return new RegexRule(true, entries);
-	};
-
-	private record Entry(Pattern pattern, boolean cancel, String replace) {}
-
-	private final boolean enabled;
-	private final List<Entry> entries;
-
-	private RegexRule(boolean enabled, List<Entry> entries) {
-		this.enabled = enabled;
-		this.entries = entries;
+	@Override
+	public @NotNull String key() {
+		return "regex";
 	}
 
 	@Override
-	public boolean enabled() {
-		return enabled;
+	public void load(@NotNull ConfigurationSection section) {
+		entries.clear();
+
+		final ConfigurationSection patterns = section.getConfigurationSection("patterns");
+
+		if (patterns == null) {
+			return;
+		}
+
+		for (String raw : patterns.getKeys(false)) {
+			final ConfigurationSection p = patterns.getConfigurationSection(raw);
+
+			if (p == null) {
+				continue;
+			}
+
+			try {
+				entries.add(new Entry(
+						Pattern.compile(raw),
+						p.getBoolean("cancel_message", true),
+						p.getString("replace_with", "***")
+				));
+
+			} catch (Exception ignored) {}
+		}
 	}
 
 	@Override
@@ -77,4 +67,6 @@ public class RegexRule implements FilterRule {
 				? FilterResult.pass()
 				: FilterResult.modify(msg);
 	}
+
+	private record Entry(@NotNull Pattern pattern, boolean cancel, String replace) {}
 }

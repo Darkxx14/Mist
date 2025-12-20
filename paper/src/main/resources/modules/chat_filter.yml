@@ -6,20 +6,20 @@ similarity:
   enabled: true
   # percentage similarity between last and current message
   # above this value → message is cancelled
-  threshold: 75
+  threshold: 0.75
 
 flood:
   enabled: true
   # max total message length
-  maximum_length: 90
+  maximum_length: 100
   # max consecutive repeated characters (e.g. "aaaaaa")
   maximum_repeated_chars: 5
 
 caps:
   enabled: true
-  # RATIO -> caps / length > ratio
-  # DEFINED -> caps > max_caps
-  type: RATIO
+  # ratio -> caps / length > ratio
+  # defined -> caps > max_caps
+  type: ratio
   max_caps: 5
   ratio: 0.7
 

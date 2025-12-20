@@ -5,8 +5,8 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
-import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 import com.xyrisdev.mist.util.message.MistMessage;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -18,23 +18,16 @@ public class CooldownRule implements FilterRule {
 			.expireAfterWrite(5, TimeUnit.MINUTES)
 			.build();
 
-	public static final FilterRuleFactory FACTORY = section ->
-			new CooldownRule(
-					section.getBoolean("enabled", false),
-					section.getInt("cooldown_seconds", 3)
-			);
+	private int seconds;
 
-	private final boolean enabled;
-	private final int seconds;
-
-	private CooldownRule(boolean enabled, int seconds) {
-		this.enabled = enabled;
-		this.seconds = seconds;
+	@Override
+	public @NotNull String key() {
+		return "cooldown";
 	}
 
 	@Override
-	public boolean enabled() {
-		return enabled;
+	public void load(@NotNull ConfigurationSection section) {
+		seconds = section.getInt("cooldown_seconds", 3);
 	}
 
 	@Override
@@ -55,6 +48,7 @@ public class CooldownRule implements FilterRule {
 		}
 
 		CACHE.put(playerId, now);
+
 		return FilterResult.pass();
 	}
 }

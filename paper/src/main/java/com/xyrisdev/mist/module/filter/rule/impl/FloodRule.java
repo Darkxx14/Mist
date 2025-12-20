@@ -3,31 +3,23 @@ package com.xyrisdev.mist.module.filter.rule.impl;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
-import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 public class FloodRule implements FilterRule {
 
-	public static final FilterRuleFactory FACTORY = section ->
-			new FloodRule(
-					section.getBoolean("enabled", false),
-					section.getInt("maximum_length", 90),
-					section.getInt("maximum_repeated_chars", 5)
-			);
+	private int maxLength;
+	private int maxRepeats;
 
-	private final boolean enabled;
-	private final int maxLength;
-	private final int maxRepeats;
-
-	private FloodRule(boolean enabled, int maxLength, int maxRepeats) {
-		this.enabled = enabled;
-		this.maxLength = maxLength;
-		this.maxRepeats = maxRepeats;
+	@Override
+	public @NotNull String key() {
+		return "flood";
 	}
 
 	@Override
-	public boolean enabled() {
-		return enabled;
+	public void load(@NotNull ConfigurationSection section) {
+		maxLength = section.getInt("maximum_length", 100);
+		maxRepeats = section.getInt("maximum_repeated_chars", 5);
 	}
 
 	@Override
