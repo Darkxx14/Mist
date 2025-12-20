@@ -8,7 +8,7 @@ import com.xyrisdev.mist.listener.render.route.RoutedChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class AsyncChatListener {
+public class AsyncChatListener {
 
 	public static @NotNull EventHandler<AsyncChatEvent> listener() {
 		return EventBuilder.event(AsyncChatEvent.class)

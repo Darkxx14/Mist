@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ReplacementsConfigurationLoader {
+public class ReplacementsConfigurationLoader {
 
 	public static @NotNull ReplacementsConfiguration load(@NotNull CachableConfiguration config) {
 		final List<UnifiedReplacement> replacements = new ArrayList<>();

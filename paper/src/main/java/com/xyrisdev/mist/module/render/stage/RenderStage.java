@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public final class RenderStage implements ChatStage {
+public class RenderStage implements ChatStage {
 
 	private final RenderConfiguration config;
 
@@ -73,13 +73,7 @@ public final class RenderStage implements ChatStage {
 		}
 	}
 
-	private void render(
-			@NotNull ChatContext context,
-			@NotNull Player player,
-			@NotNull RenderType type,
-			@NotNull String processor,
-			@NotNull String prefix
-	) {
+	private void render(@NotNull ChatContext context, @NotNull Player player, @NotNull RenderType type, @NotNull String processor, @NotNull String prefix) {
 		final List<ItemStack> items = collect(player, type);
 
 		final UUID id = RenderRequest.builder()
@@ -161,12 +155,9 @@ public final class RenderStage implements ChatStage {
 	}
 
 	private @NotNull Component displayComponent(
-			@NotNull Player player,
-			@NotNull RenderType type,
-			@NotNull String processor,
-			@NotNull UUID id,
-			@NotNull List<ItemStack> items,
-			@NotNull List<String> hoverText
+			@NotNull Player player, @NotNull RenderType type,
+			@NotNull String processor, @NotNull UUID id,
+			@NotNull List<ItemStack> items, @NotNull List<String> hoverText
 	) {
 		Component result = MistTextParser.parse(player, processor)
 				.clickEvent(ClickEvent.runCommand("/mistcallback " + id));

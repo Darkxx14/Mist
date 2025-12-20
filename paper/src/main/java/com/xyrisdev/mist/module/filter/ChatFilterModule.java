@@ -7,7 +7,7 @@ import com.xyrisdev.mist.module.filter.stage.FilterStage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class ChatFilterModule implements ChatModule {
+public class ChatFilterModule implements ChatModule {
 
 	private final FilterConfiguration config;
 

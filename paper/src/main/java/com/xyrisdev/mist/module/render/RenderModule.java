@@ -7,7 +7,7 @@ import com.xyrisdev.mist.module.render.stage.RenderStage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class RenderModule implements ChatModule {
+public class RenderModule implements ChatModule {
 
 	private final RenderConfiguration config;
 

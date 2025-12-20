@@ -1,6 +1,5 @@
 package com.xyrisdev.mist.util.text.tags.registry;
 
-import com.xyrisdev.mist.util.text.tags.CenterTag;
 import com.xyrisdev.mist.util.text.tags.PlaceholderAPITag;
 import com.xyrisdev.mist.util.text.tags.SmallCapsTag;
 import net.kyori.adventure.audience.Audience;
@@ -14,28 +13,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-public final class TagRegistry {
+public class TagRegistry {
 
 	private final Map<Set<String>, Function<Audience, ? extends Tag>> tags = new LinkedHashMap<>();
 	private final Map<Set<String>, Function<Audience, TagResolver>> resolvers = new LinkedHashMap<>();
 
 	public TagRegistry() {
-		register(Set.of("center"), CenterTag::new);
 		register(Set.of("smallcaps", "sc"), audience -> new SmallCapsTag());
 		registerResolver(Set.of("papi", "placeholderapi"), PlaceholderAPITag::create);
 	}
 
-	public void register(
-			@NotNull Set<String> names,
-			@NotNull Function<Audience, ? extends Tag> factory
-	) {
+	public void register(@NotNull Set<String> names, @NotNull Function<Audience, ? extends Tag> factory) {
 		this.tags.put(names, factory);
 	}
 
-	public void registerResolver(
-			@NotNull Set<String> names,
-			@NotNull Function<Audience, TagResolver> factory
-	) {
+	public void registerResolver(@NotNull Set<String> names, @NotNull Function<Audience, TagResolver> factory) {
 		this.resolvers.put(names, factory);
 	}
 

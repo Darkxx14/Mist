@@ -7,7 +7,7 @@ import com.xyrisdev.mist.module.format.stage.FormatStage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class ChatFormatModule implements ChatModule {
+public class ChatFormatModule implements ChatModule {
 
 	private final FormatConfiguration config;
 

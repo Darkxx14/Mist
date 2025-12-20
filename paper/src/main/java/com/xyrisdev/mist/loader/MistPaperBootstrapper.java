@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
-public final class MistPaperBootstrapper implements PluginBootstrap {
+public class MistPaperBootstrapper implements PluginBootstrap {
 
 	@Override
 	public void bootstrap(@NotNull BootstrapContext context) {

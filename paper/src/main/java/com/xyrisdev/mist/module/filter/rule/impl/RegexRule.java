@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class RegexRule implements FilterRule {
+public class RegexRule implements FilterRule {
 
 	public static final FilterRuleFactory FACTORY = section -> {
 		if (!section.getBoolean("enabled", false)) {

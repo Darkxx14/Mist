@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public final class RenderService {
+public class RenderService {
 
 	private static final RenderService INSTANCE = new RenderService();
 	private final RenderCache cache = new RenderCache();
@@ -31,7 +31,10 @@ public final class RenderService {
 
 	public void render(@NotNull Player viewer, @NotNull UUID id) {
 		final RenderEntry entry = cache.get(id);
-		if (entry == null) return;
+
+		if (entry == null) {
+			return;
+		}
 
 		final String name = entry.owner().getName();
 
@@ -44,6 +47,7 @@ public final class RenderService {
 
 		for (int i = 0; i < entry.items().size(); i++) {
 			final ItemStack item = entry.items().get(i);
+
 			if (item != null) {
 				menu.item(i, item);
 			}

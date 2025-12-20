@@ -19,7 +19,7 @@ import com.xyrisdev.mist.util.config.ConfigType;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
 import org.jetbrains.annotations.NotNull;
 
-public final class ModuleRegistrar {
+public class ModuleRegistrar {
 
 	public static @NotNull ChatProcessor build() {
 		final ConfigRegistry registry = MistPaperPlugin.instance().configRegistry();

@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 
 import java.util.Objects;
 
-public final class LuckPermsHook {
+public class LuckPermsHook {
 
 	private static LuckPerms api;
 

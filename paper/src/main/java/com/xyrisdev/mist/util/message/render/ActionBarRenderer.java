@@ -1,0 +1,29 @@
+package com.xyrisdev.mist.util.message.render;
+
+import com.xyrisdev.mist.util.message.builder.object.MessageContext;
+import com.xyrisdev.mist.util.text.MistTextParser;
+import lombok.experimental.UtilityClass;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+@UtilityClass
+public class ActionBarRenderer {
+
+	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext context) {
+		if (section == null) {
+			return;
+		}
+
+		final String text = section.getString("text");
+
+		if (text != null) {
+			player.sendActionBar(
+					context.apply(
+							MistTextParser.parse(player, text)
+					)
+			);
+		}
+	}
+}

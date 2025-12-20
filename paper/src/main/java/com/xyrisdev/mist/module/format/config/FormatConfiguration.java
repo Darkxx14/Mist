@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public final class FormatConfiguration {
+public class FormatConfiguration {
 
 	private final Map<String, FormatEntry> formats;
 	private final String fallback;

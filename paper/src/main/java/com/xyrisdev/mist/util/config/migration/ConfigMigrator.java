@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public final class ConfigMigrator {
+public class ConfigMigrator {
 
 	private final Logger logger;
 	private final MigrationContext context;
@@ -49,13 +49,9 @@ public final class ConfigMigrator {
 		return true;
 	}
 
-	private void merge(
-			@NotNull YamlConfiguration source,
-			@NotNull YamlConfiguration target
-	) {
+	private void merge(@NotNull YamlConfiguration source, @NotNull YamlConfiguration target) {
 		for (String key : source.getKeys(true)) {
 
-			// dont override our version key
 			if (key.equals(context.version())) {
 				continue;
 			}
@@ -78,10 +74,7 @@ public final class ConfigMigrator {
 			return;
 		}
 
-		final Path target = new File(
-				backupDir,
-				context.file() + "_" + version + ".yml"
-		).toPath();
+		final Path target = new File(backupDir, context.file() + "_" + version + ".yml").toPath();
 
 		try {
 			Files.copy(

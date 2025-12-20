@@ -1,16 +1,23 @@
 package com.xyrisdev.mist.module.filter.rule.impl;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
 import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 import com.xyrisdev.mist.util.SimilarityUtil;
-import net.kyori.adventure.key.Key;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.jetbrains.annotations.NotNull;
 
-public final class SimilarityRule implements FilterRule {
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-	private static final Key LAST_MESSAGE_KEY = Key.key("mist", "last_message");
+public class SimilarityRule implements FilterRule {
+
+	private static final Cache<UUID, String> CACHE = Caffeine.newBuilder()
+			.expireAfterWrite(10, TimeUnit.SECONDS)
+			.build();
 
 	public static final FilterRuleFactory FACTORY = section ->
 			new SimilarityRule(
@@ -32,15 +39,20 @@ public final class SimilarityRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		final String previous = context.data(LAST_MESSAGE_KEY, String.class);
-		final String current = context.plain();
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
+		final UUID playerId = ctx.player().getUniqueId();
+		final String previous = CACHE.getIfPresent(playerId);
+		final String current = ctx.plain();
 
 		if (previous != null && SimilarityUtil.similarity(previous, current) >= threshold) {
+			MistMessage.create(ctx.player())
+					.id("modules.filtering.similarity")
+					.send();
+
 			return FilterResult.cancelled();
 		}
 
-		context.data(LAST_MESSAGE_KEY, current);
+		CACHE.put(playerId, current);
 		return FilterResult.pass();
 	}
 }

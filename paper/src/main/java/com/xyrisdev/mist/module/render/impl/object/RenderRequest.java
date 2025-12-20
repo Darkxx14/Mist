@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Builder
-public final class RenderRequest {
+public class RenderRequest {
 
 	@NotNull
 	private final Player owner;

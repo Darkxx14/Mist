@@ -7,7 +7,7 @@ import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
 import org.jetbrains.annotations.NotNull;
 
-public final class FilterStage implements ChatStage {
+public class FilterStage implements ChatStage {
 
 	private final FilterConfiguration config;
 

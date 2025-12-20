@@ -1,15 +1,22 @@
 package com.xyrisdev.mist.module.filter.rule.impl;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
 import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
-import net.kyori.adventure.key.Key;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.jetbrains.annotations.NotNull;
 
-public final class CooldownRule implements FilterRule {
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-	private static final Key COOLDOWN_KEY = Key.key("mist", "chat_cooldown");
+public class CooldownRule implements FilterRule {
+
+	private static final Cache<UUID, Long> CACHE = Caffeine.newBuilder()
+			.expireAfterWrite(5, TimeUnit.MINUTES)
+			.build();
 
 	public static final FilterRuleFactory FACTORY = section ->
 			new CooldownRule(
@@ -31,15 +38,23 @@ public final class CooldownRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
 		final long now = System.currentTimeMillis();
-		final Long last = context.data(COOLDOWN_KEY, Long.class);
+		final UUID playerId = ctx.player().getUniqueId();
+		final Long last = CACHE.getIfPresent(playerId);
 
 		if (last != null && (now - last) < seconds * 1000L) {
+			final long remaining = seconds - ((now - last) / 1000L);
+
+			MistMessage.create(ctx.player())
+					.id("modules.filtering.cooldown")
+					.placeholder("remaining", String.valueOf(remaining))
+					.send();
+
 			return FilterResult.cancelled();
 		}
 
-		context.data(COOLDOWN_KEY, now);
+		CACHE.put(playerId, now);
 		return FilterResult.pass();
 	}
 }

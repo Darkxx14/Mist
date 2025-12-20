@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public final class PlaceholderAPITag implements Modifying {
+public class PlaceholderAPITag implements Modifying {
 
 	@Override
 	public @NotNull Component apply(@NotNull Component current, int depth) {

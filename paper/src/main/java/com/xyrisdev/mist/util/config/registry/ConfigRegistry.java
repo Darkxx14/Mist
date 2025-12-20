@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 
-public final class ConfigRegistry {
+public class ConfigRegistry {
 
 	private final EnumMap<ConfigType, CachableConfiguration> configs;
 

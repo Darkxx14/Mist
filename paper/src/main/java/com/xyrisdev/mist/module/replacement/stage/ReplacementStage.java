@@ -8,7 +8,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class ReplacementStage implements ChatStage {
+public class ReplacementStage implements ChatStage {
 
 	private final ReplacementsConfiguration config;
 

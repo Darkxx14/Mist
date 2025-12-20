@@ -6,7 +6,7 @@ import io.papermc.paper.chat.ChatRenderer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class RoutedChatRenderer {
+public class RoutedChatRenderer {
 
 	@SuppressWarnings("OverrideOnly")
 	public static @NotNull ChatRenderer route(@NotNull ChatContext context) {

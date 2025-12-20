@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 
 import java.time.Duration;
 
-public final class MistBroadcastCommand {
+public class MistBroadcastCommand {
 
 	public static LiteralCommandNode<CommandSourceStack> create() {
 		return Commands.literal("broadcast")

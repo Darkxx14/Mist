@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-public final class SimilarityUtil {
+public class SimilarityUtil {
 
 	public static double similarity(String a, String b) {
 		int distance = levenshtein(a, b);

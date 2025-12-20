@@ -5,7 +5,7 @@ import com.xyrisdev.mist.module.render.config.RenderConfiguration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
-public final class RenderConfigurationLoader {
+public class RenderConfigurationLoader {
 
 	public static @NotNull RenderConfiguration load(@NotNull CachableConfiguration config) {
 		return new RenderConfiguration(

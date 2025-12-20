@@ -20,6 +20,16 @@ public enum ConfigType {
 			)
 	),
 
+	LANGUAGE(
+			"language.yml",
+			new MigrationContext(
+					"language.yml",
+					"config_version",
+					"backups",
+					true
+			)
+	),
+
 	CHAT_FORMAT(
 			"modules/chat_format.yml",
 			new MigrationContext(

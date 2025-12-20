@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class FilterConfigurationLoader {
+public class FilterConfigurationLoader {
 
 	private static final Map<String, FilterRuleFactory> RULES = Map.of(
 			"similarity", SimilarityRule.FACTORY,
@@ -39,6 +39,7 @@ public final class FilterConfigurationLoader {
 			}
 
 			final FilterRule rule = entry.getValue().load(section);
+
 			if (rule != null) {
 				rules.add(rule);
 			}

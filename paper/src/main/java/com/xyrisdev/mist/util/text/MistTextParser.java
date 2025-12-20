@@ -8,15 +8,12 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-public final class MistTextParser {
+public class MistTextParser {
 
 	private static final TagRegistry TAG_REGISTRY = new TagRegistry();
 	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-	public static @NotNull Component parse(
-			@NotNull Audience audience,
-			@NotNull String input
-	) {
+	public static @NotNull Component parse(@NotNull Audience audience, @NotNull String input) {
 		final String message = containsLegacy(input)
 				? legacy(input)
 				: input;

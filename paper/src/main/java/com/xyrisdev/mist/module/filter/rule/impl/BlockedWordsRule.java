@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class BlockedWordsRule implements FilterRule {
+public class BlockedWordsRule implements FilterRule {
 
 	private record Entry(Pattern pattern, boolean cancel, String replace) {}
 

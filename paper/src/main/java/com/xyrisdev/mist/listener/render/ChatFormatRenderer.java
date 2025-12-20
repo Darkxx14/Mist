@@ -12,7 +12,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public final class ChatFormatRenderer {
+public class ChatFormatRenderer {
 
 	@SuppressWarnings("deprecation")
 	public static @NotNull ChatRenderer.ViewerUnaware render(@NotNull ChatContext context) {

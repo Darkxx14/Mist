@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public final class MistProcessorBuilder {
+public class MistProcessorBuilder {
 
 	private final List<Entry> entries = new ArrayList<>();
 

@@ -7,7 +7,7 @@ import com.xyrisdev.mist.module.replacement.stage.ReplacementStage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class ChatReplacementModule implements ChatModule {
+public class ChatReplacementModule implements ChatModule {
 
 	private final ReplacementsConfiguration config;
 

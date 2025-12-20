@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class RenderCache {
+public class RenderCache {
 
 	private static final int MAX_ENTRIES = 5;
 

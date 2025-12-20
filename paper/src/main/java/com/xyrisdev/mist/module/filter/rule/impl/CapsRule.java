@@ -6,7 +6,7 @@ import com.xyrisdev.mist.module.filter.rule.FilterRule;
 import org.jetbrains.annotations.NotNull;
 import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 
-public final class CapsRule implements FilterRule {
+public class CapsRule implements FilterRule {
 
 	public enum Type {
 		RATIO, DEFINED

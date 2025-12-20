@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class FormatConfigurationLoader {
+public class FormatConfigurationLoader {
 
 	private static final String KEY = "formats";
 	private static final String DEFAULT_FALLBACK = "default";

@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 @UtilityClass
-public final class RegexGenerator {
+public class RegexGenerator {
 
 	public enum Level {
 		BASIC,
@@ -51,10 +51,7 @@ public final class RegexGenerator {
 			Map.entry('z', "[z2]")
 	);
 
-	public static @NotNull Pattern generate(
-			@NotNull String word,
-			@NotNull Level level
-	) {
+	public static @NotNull Pattern generate(@NotNull String word, @NotNull Level level) {
 		final String normalized = Normalizer.normalize(word, Normalizer.Form.NFKC).toLowerCase();
 		final Map<Character, String> map = level == Level.BASIC ? BASIC_MAP : AGGRESSIVE_MAP;
 

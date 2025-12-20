@@ -11,7 +11,7 @@ import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class FormatStage implements ChatStage {
+public class FormatStage implements ChatStage {
 
 	private final FormatConfiguration config;
 

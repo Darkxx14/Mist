@@ -17,7 +17,9 @@ public record RenderConfiguration(
 			@NotNull String processor,
 			@NotNull List<String> hoverText
 	) {
+
 		public static final SectionConfig DISABLED =
 				new SectionConfig(false, List.of(), "", List.of());
 	}
+
 }

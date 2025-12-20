@@ -1,0 +1,24 @@
+prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray>"
+
+messages:
+  mist_reloaded:
+    type: chat, action bar
+    chat:
+      text: "<prefix> <gray>Successfully reloaded in <time_taken>ms.</gray>"
+    action_bar:
+      text: "<prefix> <gray>Successfully reloaded in <time_taken>ms.</gray>"
+
+  modules:
+    filtering:
+      similarity:
+        type: chat
+        chat:
+          text: "<prefix> <gray>Please avoid repeating a similar message."
+      cooldown:
+        type: chat
+        chat:
+          text: "<prefix> <gray>Please wait <remaining> seconds before sending a message again."
+
+# DO NOT EDIT THIS VALUE
+# Used for automatic migration
+config_version: 1

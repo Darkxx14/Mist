@@ -6,7 +6,7 @@ import com.xyrisdev.mist.module.filter.rule.FilterRule;
 import com.xyrisdev.mist.module.filter.rule.factory.FilterRuleFactory;
 import org.jetbrains.annotations.NotNull;
 
-public final class FloodRule implements FilterRule {
+public class FloodRule implements FilterRule {
 
 	public static final FilterRuleFactory FACTORY = section ->
 			new FloodRule(
