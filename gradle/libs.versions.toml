@@ -6,6 +6,7 @@ lombok = "1.18.36"
 placeholderapi = "2.11.7"
 luckperms = "5.4"
 evo-inflector = "1.3"
+cloud-paper = "2.0.0-beta.10"
 
 [libraries]
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
@@ -15,3 +16,4 @@ lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 placeholder-api = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 luckperms = { module = "net.luckperms:api", version.ref = "luckperms" }
 evo-inflector = { module = "org.atteo:evo-inflector", version.ref = "evo-inflector" }
+cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-paper" }

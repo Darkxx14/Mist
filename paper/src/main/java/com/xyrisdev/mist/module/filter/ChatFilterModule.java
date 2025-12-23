@@ -22,6 +22,6 @@ public class ChatFilterModule implements ChatModule {
 
 	@Override
 	public void register(@NotNull StageRegistrar registrar) {
-		registrar.stage(new FilterStage(config), 0);
+		registrar.stage(new FilterStage(config), 1);
 	}
 }

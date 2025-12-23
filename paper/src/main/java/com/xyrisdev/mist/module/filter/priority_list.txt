@@ -1,0 +1,6 @@
+1  blocked_words
+2  regex
+3  flood
+4  caps
+5  cooldown
+6  similarity

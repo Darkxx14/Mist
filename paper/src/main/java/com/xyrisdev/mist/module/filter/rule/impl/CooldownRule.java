@@ -26,6 +26,11 @@ public class CooldownRule implements FilterRule {
 	}
 
 	@Override
+	public int priority() {
+		return 5;
+	}
+
+	@Override
 	public void load(@NotNull ConfigurationSection section) {
 		seconds = section.getInt("cooldown_seconds", 3);
 	}

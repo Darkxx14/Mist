@@ -3,6 +3,7 @@ package com.xyrisdev.mist.module.filter.rule.impl;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +16,11 @@ public class CapsRule implements FilterRule {
 	@Override
 	public @NotNull String key() {
 		return "caps";
+	}
+
+	@Override
+	public int priority() {
+		return 4;
 	}
 
 	@Override
@@ -34,11 +40,21 @@ public class CapsRule implements FilterRule {
 		}
 
 		if (type == CapsRuleType.DEFINED && caps > maxCaps) {
+			MistMessage.create(context.player())
+					.id("modules.filtering.caps")
+					.placeholder("max", String.valueOf(maxCaps))
+					.send();
+
 			return FilterResult.cancelled();
 		}
 
 		if (type == CapsRuleType.RATIO && !msg.isEmpty()) {
 			if ((double) caps / msg.length() > ratio) {
+				MistMessage.create(context.player())
+						.id("modules.filtering.caps")
+						.placeholder("max", String.valueOf(maxCaps))
+						.send();
+
 				return FilterResult.cancelled();
 			}
 		}

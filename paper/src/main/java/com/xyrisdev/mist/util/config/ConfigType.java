@@ -68,6 +68,17 @@ public enum ConfigType {
 					"backups",
 					true
 			)
+	),
+
+	// internal
+	LEETMAP(
+			"internal/leetmap.yml",
+			new MigrationContext(
+					"internal/leetmap.yml",
+					"config_version",
+					"backups",
+					true
+			)
 	);
 
 	private final String path;

@@ -8,16 +8,101 @@ messages:
     action_bar:
       text: "<prefix> <gray>Successfully reloaded in <time_taken>ms.</gray>"
 
+  mist_similarity:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Similarity</gray>"
+        - " "
+        - "<gray>· Similarity:</gray> <color:#E03261><similarity>%</color>"
+        - "<gray>· Threshold:</gray> <color:#E03261><threshold>%"
+        - "<gray>· Result:</gray> <color:#E03261><result></color>"
+        - " "
+
+  chat_cleared:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Chat</gray>"
+        - " "
+        - "<gray>· The chat has been cleared.</gray>"
+        - " "
+
+  chat_locked:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Chat</gray>"
+        - " "
+        - "<gray>· The chat has been locked.</gray>"
+        - " "
+
+  chat_unlocked:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Chat</gray>"
+        - " "
+        - "<gray>· The chat has been unlocked.</gray>"
+        - " "
+
+  chat_already_locked:
+    type: chat
+    chat:
+      text: "<prefix> <gray>Chat is already locked.</gray>"
+
+  chat_already_unlocked:
+    type: chat
+    chat:
+      text: "<prefix> <gray>Chat is already unlocked.</gray>"
+
+  chat_locked_blocked:
+    type: chat
+    chat:
+      text: "<prefix> <gray>Chat is currently locked.</gray>"
+
   modules:
     filtering:
+      flood:
+        length:
+          type: chat
+          chat:
+            text: "<prefix> <gray>Your message is too long.</gray>"
+        repeats:
+          type: chat
+          chat:
+            text: "<prefix> <gray>Please avoid flooding the chat.</gray>"
+
+      caps:
+        type: chat
+        chat:
+          text: "<prefix> <gray>Too many capital letters.</gray>"
+
+      blocked_words:
+        blocked:
+          type: chat
+          chat:
+            text: "<prefix> <gray>Your message contains inappropriate language and has been blocked.</gray>"
+
+      regex:
+        blocked:
+          type: chat
+          chat:
+            text: "<prefix> <gray>Your message contains forbidden content and has been blocked.</gray>"
+
       similarity:
         type: chat
         chat:
-          text: "<prefix> <gray>Please avoid repeating a similar message."
+          text: "<prefix> <gray>Please do not repeat the same messages.</gray>"
+
       cooldown:
         type: chat
         chat:
-          text: "<prefix> <gray>Please wait <remaining> seconds before sending a message again."
+          text: "<prefix> <gray>Please wait <remaining> seconds before sending another message.</gray>"
 
 # DO NOT EDIT THIS VALUE
 # Used for automatic migration

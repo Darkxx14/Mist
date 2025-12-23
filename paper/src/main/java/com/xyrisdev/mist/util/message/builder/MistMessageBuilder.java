@@ -8,6 +8,7 @@ import com.xyrisdev.mist.util.message.effect.SoundEffect;
 import com.xyrisdev.mist.util.message.render.ActionBarRenderer;
 import com.xyrisdev.mist.util.message.render.ChatRenderer;
 import com.xyrisdev.mist.util.message.render.TitleRenderer;
+import com.xyrisdev.mist.util.text.MistTextParser;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -70,10 +71,9 @@ public class MistMessageBuilder {
 				.get(ConfigType.LANGUAGE)
 				.getString("prefix", "");
 
-		final Map<String, String> resolved = new HashMap<>(placeholders);
-		resolved.put("prefix", prefix);
+		final MessageContext context = new MessageContext(placeholders);
 
-		final MessageContext context = new MessageContext(resolved);
+		context.component("prefix", MistTextParser.parse(audience, prefix));
 
 		if (types.contains(MessageType.CHAT)) {
 			final ConfigurationSection chat = section.getConfigurationSection("chat");

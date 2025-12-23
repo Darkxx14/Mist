@@ -22,6 +22,6 @@ public class ChatReplacementModule implements ChatModule {
 
 	@Override
 	public void register(@NotNull StageRegistrar registrar) {
-		registrar.stage(new ReplacementStage(config), 1);
+		registrar.stage(new ReplacementStage(config), 2);
 	}
 }

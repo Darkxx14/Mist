@@ -1,0 +1,33 @@
+package com.xyrisdev.mist.command.admin.subcommands;
+
+import com.xyrisdev.mist.MistPaperPlugin;
+import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
+import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.util.message.MistMessage;
+import org.incendo.cloud.context.CommandContext;
+import org.incendo.cloud.paper.util.sender.Source;
+import org.jetbrains.annotations.NotNull;
+
+public class SimilarityCommand {
+
+	public static void similarity(@NotNull CommandContext<Source> ctx) {
+		final String s1 = ctx.get("s1");
+		final String s2 = ctx.get("s2");
+
+		final double similarity = SimilarityMatcher.similarity(s1, s2);
+
+		final double threshold = MistPaperPlugin.instance()
+				.configRegistry()
+				.get(ConfigType.CHAT_FILTER)
+				.getDouble("similarity.threshold", 0.60);
+
+		final boolean blocked = similarity >= threshold;
+
+		MistMessage.create(ctx.sender().source())
+				.id("mist_similarity")
+				.placeholder("similarity", String.format("%.2f", similarity * 100))
+				.placeholder("threshold", String.format("%.2f", threshold * 100))
+				.placeholder("result", blocked ? "Blocked" : "Allowed")
+				.send();
+	}
+}

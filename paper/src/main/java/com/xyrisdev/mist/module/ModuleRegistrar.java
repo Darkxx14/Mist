@@ -29,9 +29,9 @@ public class ModuleRegistrar {
 		final RenderConfiguration renderConfig = RenderConfigurationLoader.load(registry.get(ConfigType.RENDER));
 
 		return new MistProcessorBuilder()
-				.group(0, filter -> filter.module(ChatFilterModule.create(filterConfig)))
-				.group(1, replacements -> replacements.module(ChatReplacementModule.create(replacementsConfig)))
-				.group(2, render -> render.module(RenderModule.create(renderConfig)))
+				.group(1, filter -> filter.module(ChatFilterModule.create(filterConfig)))
+				.group(2, replacements -> replacements.module(ChatReplacementModule.create(replacementsConfig)))
+				.group(3, render -> render.module(RenderModule.create(renderConfig)))
 				.group(100, format -> format.module(ChatFormatModule.create(formatConfig)))
 				.build();
 	}

@@ -1,10 +1,10 @@
-package com.xyrisdev.mist.util;
+package com.xyrisdev.mist.util.matcher;
 
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-public class SimilarityUtil {
+public class SimilarityMatcher {
 
 	public static double similarity(String a, String b) {
 		int distance = levenshtein(a, b);

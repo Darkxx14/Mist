@@ -8,6 +8,8 @@ public interface FilterRule {
 
 	@NotNull String key();
 
+	int priority();
+
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	default boolean enabled(@NotNull ConfigurationSection section) {
 		return section.getBoolean("enabled", false);

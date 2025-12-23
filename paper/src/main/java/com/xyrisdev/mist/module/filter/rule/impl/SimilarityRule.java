@@ -5,7 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
-import com.xyrisdev.mist.util.SimilarityUtil;
+import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
@@ -27,25 +27,34 @@ public class SimilarityRule implements FilterRule {
 	}
 
 	@Override
+	public int priority() {
+		return 6;
+	}
+
+	@Override
 	public void load(@NotNull ConfigurationSection section) {
 		threshold = section.getDouble("threshold", 0.75);
 	}
 
 	@Override
 	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
-		final UUID playerId = ctx.player().getUniqueId();
-		final String previous = CACHE.getIfPresent(playerId);
+		final UUID id = ctx.player().getUniqueId();
+		final String previous = CACHE.getIfPresent(id);
 		final String current = ctx.plain();
 
-		if (previous != null && SimilarityUtil.similarity(previous, current) >= threshold) {
-			MistMessage.create(ctx.player())
-					.id("modules.filtering.similarity")
-					.send();
+		if (previous != null) {
+			final double requiredSimilarity = 1.0 - threshold;
 
-			return FilterResult.cancelled();
+			if (SimilarityMatcher.similarity(previous, current) >= requiredSimilarity) {
+				MistMessage.create(ctx.player())
+						.id("modules.filtering.similarity")
+						.send();
+
+				return FilterResult.cancelled();
+			}
 		}
 
-		CACHE.put(playerId, current);
+		CACHE.put(id, current);
 		return FilterResult.pass();
 	}
 }

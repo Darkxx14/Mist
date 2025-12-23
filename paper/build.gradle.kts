@@ -24,6 +24,7 @@ dependencies {
 
     paperLibrary(libs.caffeine)
     paperLibrary(libs.evo.inflector)
+    paperLibrary(libs.cloud.paper)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -87,18 +88,37 @@ paper {
             description = "Full access to Mist"
             default = BukkitPluginDescription.Permission.Default.OP
             children = listOf(
-                "mist.reload",
-                "mist.broadcast"
+                "mist.commands.reload",
+                "mist.commands.broadcast",
+                "mist.commands.similarity",
+                "mist.commands.chat",
+                "mist.bypass.chat"
             )
         }
 
-        register("mist.reload") {
+        register("mist.commands.reload") {
             description = "Reload Mist configuration"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
-        register("mist.broadcast") {
+        register("mist.commands.broadcast") {
             description = "Broadcast"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        register("mist.commands.similarity") {
+            description = "Similarity"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        register("mist.commands.chat") {
+            description = "Chat"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        // bypass
+        register("mist.bypass.chat") {
+            description = "Bypass Chat Lock"
             default = BukkitPluginDescription.Permission.Default.OP
         }
     }

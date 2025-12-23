@@ -3,6 +3,7 @@ package com.xyrisdev.mist.module.filter.rule.impl;
 import com.xyrisdev.mist.api.context.ChatContext;
 import com.xyrisdev.mist.module.filter.rule.FilterResult;
 import com.xyrisdev.mist.module.filter.rule.FilterRule;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +18,11 @@ public class RegexRule implements FilterRule {
 	@Override
 	public @NotNull String key() {
 		return "regex";
+	}
+
+	@Override
+	public int priority() {
+		return 2;
 	}
 
 	@Override
@@ -57,6 +63,10 @@ public class RegexRule implements FilterRule {
 			}
 
 			if (e.cancel) {
+				MistMessage.create(context.player())
+						.id("modules.filtering.regex.blocked")
+						.send();
+
 				return FilterResult.cancelled();
 			}
 
