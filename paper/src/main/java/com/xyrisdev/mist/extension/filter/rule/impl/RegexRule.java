@@ -65,8 +65,8 @@ public class RegexRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		final String original = context.plain();
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
+		final String original = ctx.plain();
 		String msg = original;
 
 		for (Entry entry : entries) {
@@ -77,7 +77,7 @@ public class RegexRule implements FilterRule {
 			}
 
 			if (entry.cancel) {
-				MistMessage.create(context.sender())
+				MistMessage.create(ctx.sender())
 						.id("modules.filtering.regex.blocked")
 						.placeholder("rule", entry.id)
 						.send();

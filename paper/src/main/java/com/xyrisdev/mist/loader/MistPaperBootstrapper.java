@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 public class MistPaperBootstrapper implements PluginBootstrap {
 
 	@Override
-	public void bootstrap(@NotNull BootstrapContext context) {}
+	public void bootstrap(@NotNull BootstrapContext ctx) {}
 
 	@Override
-	public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
-		return PluginBootstrap.super.createPlugin(context);
+	public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext ctx) {
+		return PluginBootstrap.super.createPlugin(ctx);
 	}
 }

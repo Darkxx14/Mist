@@ -57,8 +57,8 @@ public class BlockedWordsRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		final String plain = context.plain();
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
+		final String plain = ctx.plain();
 		final String normalized = normalize(plain);
 
 		for (Map.Entry<String, Entry> e : entries.entrySet()) {
@@ -76,7 +76,7 @@ public class BlockedWordsRule implements FilterRule {
 			}
 
 			if (entry.cancel) {
-				MistMessage.create(context.sender())
+				MistMessage.create(ctx.sender())
 						.id("modules.filtering.blocked_words.blocked")
 						.send();
 				return FilterResult.cancelled();

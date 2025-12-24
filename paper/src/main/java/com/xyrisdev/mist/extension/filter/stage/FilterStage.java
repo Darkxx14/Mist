@@ -16,18 +16,18 @@ public class FilterStage implements ChatProcessStage {
 	}
 
 	@Override
-	public void process(@NotNull ChatContext context) {
+	public void process(@NotNull ChatContext ctx) {
 		for (FilterRule rule : config.rules()) {
 
-			final FilterResult result = rule.process(context);
+			final FilterResult result = rule.process(ctx);
 
 			if (result.cancel()) {
-				context.cancel();
+				ctx.cancel();
 				return;
 			}
 
 			if (result.modifiedMessage() != null) {
-				context.plain(result.modifiedMessage());
+				ctx.plain(result.modifiedMessage());
 			}
 		}
 	}

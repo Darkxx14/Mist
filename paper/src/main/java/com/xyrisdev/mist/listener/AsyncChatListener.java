@@ -28,24 +28,24 @@ public class AsyncChatListener {
 					}
 					// chat lock - end
 
-					final ChatContext context = new ChatContext(
+					final ChatContext ctx = new ChatContext(
 							event.getPlayer(),
 							event.message()
 					);
 
 					MistPaperPlugin.instance()
 							.chatProcessor()
-							.process(context);
+							.process(ctx);
 
-					if (context.result() == ChatResult.CANCEL) {
+					if (ctx.result() == ChatResult.CANCEL) {
 						event.setCancelled(true);
 						return;
 					}
 
-					event.message(context.message());
+					event.message(ctx.message());
 
 					event.renderer(
-							RoutedChatRenderer.route(context)
+							RoutedChatRenderer.route(ctx)
 					);
 
 				})

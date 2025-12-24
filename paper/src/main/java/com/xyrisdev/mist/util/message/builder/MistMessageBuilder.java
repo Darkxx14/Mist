@@ -80,16 +80,16 @@ public class MistMessageBuilder {
 				.get(ConfigType.LANGUAGE)
 				.getString("prefix", "");
 
-		final MessageContext context = new MessageContext(placeholders);
-		context.interceptor(this.interceptor);
+		final MessageContext ctx = new MessageContext(placeholders);
 
-		context.component("prefix", TextParser.parse(audience, prefix));
+		ctx.interceptor(this.interceptor);
+		ctx.component("prefix", TextParser.parse(audience, prefix));
 
 		if (types.contains(MessageType.CHAT)) {
 			final ConfigurationSection chat = section.getConfigurationSection("chat");
 
 			if (chat != null) {
-				ChatRenderer.render(audience, player, chat, context);
+				ChatRenderer.render(audience, player, chat, ctx);
 			}
 		}
 
@@ -97,7 +97,7 @@ public class MistMessageBuilder {
 			final ConfigurationSection bar = section.getConfigurationSection("action_bar");
 
 			if (bar != null) {
-				ActionBarRenderer.render(player, bar, context);
+				ActionBarRenderer.render(player, bar, ctx);
 			}
 		}
 
@@ -105,7 +105,7 @@ public class MistMessageBuilder {
 			final ConfigurationSection title = section.getConfigurationSection("title");
 
 			if (title != null) {
-				TitleRenderer.render(player, title, context);
+				TitleRenderer.render(player, title, ctx);
 			}
 		}
 

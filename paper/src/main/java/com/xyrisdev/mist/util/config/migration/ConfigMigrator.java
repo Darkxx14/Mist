@@ -19,10 +19,10 @@ import java.util.logging.Logger;
 public class ConfigMigrator {
 
 	private final Logger logger;
-	private final MigrationContext context;
+	private final MigrationContext ctx;
 
-	public ConfigMigrator(@NotNull MigrationContext context) {
-		this.context = Objects.requireNonNull(context, "context");
+	public ConfigMigrator(@NotNull MigrationContext ctx) {
+		this.ctx = Objects.requireNonNull(ctx, "ctx");
 		this.logger = Library.plugin().getLogger();
 	}
 
@@ -30,8 +30,8 @@ public class ConfigMigrator {
 		final YamlConfiguration latest = latest();
 		final YamlConfiguration current = current();
 
-		final int currentVersion = current.getInt(context.version(), 0);
-		final int latestVersion = latest.getInt(context.version(), 0);
+		final int currentVersion = current.getInt(ctx.version(), 0);
+		final int latestVersion = latest.getInt(ctx.version(), 0);
 
 		if (currentVersion >= latestVersion) {
 			return false;
@@ -52,7 +52,7 @@ public class ConfigMigrator {
 	private void merge(@NotNull YamlConfiguration source, @NotNull YamlConfiguration target) {
 		for (String key : source.getKeys(true)) {
 
-			if (key.equals(context.version())) {
+			if (key.equals(ctx.version())) {
 				continue;
 			}
 
@@ -63,22 +63,22 @@ public class ConfigMigrator {
 	}
 
 	private void backup(int version) {
-		if (!context.backupEnabled() || !context.configFile().exists()) {
+		if (!ctx.backupEnabled() || !ctx.configFile().exists()) {
 			return;
 		}
 
-		final File backupDir = context.backupDirectory();
+		final File backupDir = ctx.backupDirectory();
 
 		if (!backupDir.exists() && !backupDir.mkdirs()) {
 			logger.warning("Failed to create config backup directory");
 			return;
 		}
 
-		final Path target = new File(backupDir, context.file() + "_" + version + ".yml").toPath();
+		final Path target = new File(backupDir, ctx.file() + "_" + version + ".yml").toPath();
 
 		try {
 			Files.copy(
-					context.configFile().toPath(),
+					ctx.configFile().toPath(),
 					target,
 					StandardCopyOption.REPLACE_EXISTING
 			);
@@ -89,7 +89,7 @@ public class ConfigMigrator {
 
 	private void save(@NotNull YamlConfiguration config) {
 		try {
-			config.save(context.configFile());
+			config.save(ctx.configFile());
 		} catch (IOException e) {
 			throw new IllegalStateException(
 					"Failed to save migrated config",
@@ -99,11 +99,11 @@ public class ConfigMigrator {
 	}
 
 	private @NotNull YamlConfiguration latest() {
-		final InputStream stream = Library.plugin().getResource(context.file());
+		final InputStream stream = Library.plugin().getResource(ctx.file());
 
 		if (stream == null) {
 			throw new IllegalStateException(
-					"Missing config resource: " + context.file()
+					"Missing config resource: " + ctx.file()
 			);
 		}
 
@@ -118,10 +118,10 @@ public class ConfigMigrator {
 	}
 
 	private @NotNull YamlConfiguration current() {
-		if (!context.configFile().exists()) {
-			Library.plugin().saveResource(context.file(), false);
+		if (!ctx.configFile().exists()) {
+			Library.plugin().saveResource(ctx.file(), false);
 		}
 
-		return YamlConfiguration.loadConfiguration(context.configFile());
+		return YamlConfiguration.loadConfiguration(ctx.configFile());
 	}
 }

@@ -5,5 +5,5 @@ import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface ChatProcessStage {
-	void process(@NotNull ChatContext context);
+	void process(@NotNull ChatContext ctx);
 }

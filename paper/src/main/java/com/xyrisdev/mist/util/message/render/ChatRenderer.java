@@ -13,7 +13,10 @@ import org.jetbrains.annotations.Nullable;
 @UtilityClass
 public class ChatRenderer {
 
-	public static void render(@NotNull Audience audience, @Nullable Player player, @Nullable ConfigurationSection section, @NotNull MessageContext context) {
+	public static void render(
+			@NotNull Audience audience, @Nullable Player player,
+			@Nullable ConfigurationSection section, @NotNull MessageContext ctx
+	) {
 		if (section == null) {
 			return;
 		}
@@ -21,7 +24,7 @@ public class ChatRenderer {
 		if (section.isList("list")) {
 			for (String line : section.getStringList("list")) {
 				audience.sendMessage(
-						context.apply(
+						ctx.apply(
 								parse(audience, player, line)
 						)
 				);
@@ -33,7 +36,7 @@ public class ChatRenderer {
 
 		if (text != null) {
 			audience.sendMessage(
-					context.apply(
+					ctx.apply(
 							parse(audience, player, text)
 					)
 			);

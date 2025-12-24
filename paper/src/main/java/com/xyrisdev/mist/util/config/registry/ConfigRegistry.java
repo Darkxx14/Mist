@@ -29,7 +29,7 @@ public class ConfigRegistry {
 
 		for (ConfigType type : ConfigType.values()) {
 			if (migrationEnabled) {
-				type.migration().ifPresent(context -> new ConfigMigrator(context).migrate());
+				type.migration().ifPresent(ctx -> new ConfigMigrator(ctx).migrate());
 			}
 
 			map.put(

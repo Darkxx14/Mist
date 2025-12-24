@@ -29,11 +29,11 @@ public class FloodRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		final String msg = context.plain();
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
+		final String msg = ctx.plain();
 
 		if (msg.length() > maxLength) {
-			MistMessage.create(context.sender())
+			MistMessage.create(ctx.sender())
 					.id("modules.filtering.flood.length")
 					.placeholder("max", String.valueOf(maxLength))
 					.send();
@@ -46,7 +46,7 @@ public class FloodRule implements FilterRule {
 		for (int i = 1; i < msg.length(); i++) {
 			if (msg.charAt(i) == msg.charAt(i - 1)) {
 				if (++streak > maxRepeats) {
-					MistMessage.create(context.sender())
+					MistMessage.create(ctx.sender())
 							.id("modules.filtering.flood.repeats")
 							.placeholder("max", String.valueOf(maxRepeats))
 							.send();

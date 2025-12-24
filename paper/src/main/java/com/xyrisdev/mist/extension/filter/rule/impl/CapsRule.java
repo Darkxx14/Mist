@@ -31,8 +31,8 @@ public class CapsRule implements FilterRule {
 	}
 
 	@Override
-	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		final String msg = context.plain();
+	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
+		final String msg = ctx.plain();
 		int caps = 0;
 
 		for (char c : msg.toCharArray()) {
@@ -40,7 +40,7 @@ public class CapsRule implements FilterRule {
 		}
 
 		if (type == CapsRuleType.DEFINED && caps > maxCaps) {
-			MistMessage.create(context.sender())
+			MistMessage.create(ctx.sender())
 					.id("modules.filtering.caps")
 					.placeholder("max", String.valueOf(maxCaps))
 					.send();
@@ -50,7 +50,7 @@ public class CapsRule implements FilterRule {
 
 		if (type == CapsRuleType.RATIO && !msg.isEmpty()) {
 			if ((double) caps / msg.length() > ratio) {
-				MistMessage.create(context.sender())
+				MistMessage.create(ctx.sender())
 						.id("modules.filtering.caps")
 						.placeholder("max", String.valueOf(maxCaps))
 						.send();

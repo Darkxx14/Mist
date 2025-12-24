@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 @UtilityClass
 public class ActionBarRenderer {
 
-	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext context) {
+	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext ctx) {
 		if (section == null) {
 			return;
 		}
@@ -20,7 +20,7 @@ public class ActionBarRenderer {
 
 		if (text != null) {
 			player.sendActionBar(
-					context.apply(
+					ctx.apply(
 							TextParser.parse(player, text)
 					)
 			);

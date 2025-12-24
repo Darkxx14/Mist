@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 public class ChatFormatRenderer {
 
 	@SuppressWarnings("deprecation")
-	public static @NotNull ChatRenderer.ViewerUnaware render(@NotNull ChatContext context) {
+	public static @NotNull ChatRenderer.ViewerUnaware render(@NotNull ChatContext ctx) {
 		return (player, displayName, message) -> {
-			final FormatEntry entry = context.attributes(Key.key("mist", "render"), FormatEntry.class);
+			final FormatEntry entry = ctx.attributes(Key.key("mist", "render"), FormatEntry.class);
 
 			if (entry == null) {
 				return message;

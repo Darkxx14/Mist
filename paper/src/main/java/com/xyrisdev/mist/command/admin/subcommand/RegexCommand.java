@@ -33,7 +33,6 @@ public class RegexCommand {
 
 	private void generate(@NotNull CommandContext<Source> ctx) {
 		final String input = ctx.get("text");
-
 		final String regex = RegexGenerator.generate(input);
 
 		MistMessage.create(ctx.sender().source())
@@ -56,10 +55,7 @@ public class RegexCommand {
 				.placeholder("verdict", r.verdict().name())
 				.placeholder("risk", r.risk().name())
 				.placeholder(
-						"notes",
-						r.notes().isEmpty()
-								? "Looks solid <3"
-								: String.join(", ", r.notes())
+						"notes", r.notes().isEmpty() ? "Looks solid <3" : String.join(", ", r.notes())
 				)
 				.send();
 	}

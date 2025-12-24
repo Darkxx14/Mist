@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// todo: make menus configurable
 public class RenderStage implements ChatProcessStage {
 
 	private final RenderConfiguration config;
@@ -32,14 +33,14 @@ public class RenderStage implements ChatProcessStage {
 	}
 
 	@Override
-	public void process(@NotNull ChatContext context) {
-		final String message = context.plain();
-		final Player player = context.sender();
+	public void process(@NotNull ChatContext ctx) {
+		final String message = ctx.plain();
+		final Player player = ctx.sender();
 
 		if (config.inventory().enable()) {
 			for (String prefix : config.inventory().prefix()) {
 				if (message.contains(prefix)) {
-					render(context, player, RenderType.INVENTORY, config.inventory().processor(), prefix);
+					render(ctx, player, RenderType.INVENTORY, config.inventory().processor(), prefix);
 					return;
 				}
 			}
@@ -48,7 +49,7 @@ public class RenderStage implements ChatProcessStage {
 		if (config.item().enable()) {
 			for (String prefix : config.item().prefix()) {
 				if (message.contains(prefix)) {
-					render(context, player, RenderType.ITEM, config.item().processor(), prefix);
+					render(ctx, player, RenderType.ITEM, config.item().processor(), prefix);
 					return;
 				}
 			}
@@ -57,7 +58,7 @@ public class RenderStage implements ChatProcessStage {
 		if (config.enderChest().enable()) {
 			for (String prefix : config.enderChest().prefix()) {
 				if (message.contains(prefix)) {
-					render(context, player, RenderType.ENDER_CHEST, config.enderChest().processor(), prefix);
+					render(ctx, player, RenderType.ENDER_CHEST, config.enderChest().processor(), prefix);
 					return;
 				}
 			}
@@ -66,14 +67,14 @@ public class RenderStage implements ChatProcessStage {
 		if (config.shulkerBox().enable()) {
 			for (String prefix : config.shulkerBox().prefix()) {
 				if (message.contains(prefix)) {
-					render(context, player, RenderType.SHULKER_BOX, config.shulkerBox().processor(), prefix);
+					render(ctx, player, RenderType.SHULKER_BOX, config.shulkerBox().processor(), prefix);
 					return;
 				}
 			}
 		}
 	}
 
-	private void render(@NotNull ChatContext context, @NotNull Player player, @NotNull RenderType type, @NotNull String processor, @NotNull String prefix) {
+	private void render(@NotNull ChatContext ctx, @NotNull Player player, @NotNull RenderType type, @NotNull String processor, @NotNull String prefix) {
 		final List<ItemStack> items = collect(player, type);
 
 		final UUID id = RenderRequest.builder()
@@ -99,7 +100,7 @@ public class RenderStage implements ChatProcessStage {
 				hoverText
 		);
 
-		context.message(context.message().replaceText(builder ->
+		ctx.message(ctx.message().replaceText(builder ->
 				builder.matchLiteral(prefix).replacement(display)
 		));
 	}

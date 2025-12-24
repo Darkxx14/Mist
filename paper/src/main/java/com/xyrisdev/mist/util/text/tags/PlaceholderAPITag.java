@@ -23,7 +23,7 @@ public class PlaceholderAPITag implements Modifying {
 	}
 
 	public static @NotNull TagResolver create(@NotNull Audience audience) {
-		return TagResolver.resolver(Set.of("papi", "placeholderapi"), (argumentQueue, context) -> {
+		return TagResolver.resolver(Set.of("papi", "placeholderapi"), (argumentQueue, ctx) -> {
 			final String placeholder = argumentQueue.popOr("The papi tag must be a placeholder.").value();
 
 			if (audience instanceof Player) {

@@ -9,14 +9,14 @@ import org.jetbrains.annotations.NotNull;
 public class RoutedChatRenderer {
 
 	@SuppressWarnings("OverrideOnly")
-	public static @NotNull ChatRenderer route(@NotNull ChatContext context) {
-		final ChatRenderer base = ChatRenderer.viewerUnaware(ChatFormatRenderer.render(context));
+	public static @NotNull ChatRenderer route(@NotNull ChatContext ctx) {
+		final ChatRenderer base = ChatRenderer.viewerUnaware(ChatFormatRenderer.render(ctx));
 
 		return (source, displayName, message, viewer) -> {
 
 			if (viewer instanceof Player target) {
 				// future routing:
-				// if (context.isStaffChat() && !target.hasPermission("mist.staff")) {
+				// if (ctx.isStaffChat() && !target.hasPermission("mist.staff")) {
 				//     return Component.empty();
 				// }
 			}

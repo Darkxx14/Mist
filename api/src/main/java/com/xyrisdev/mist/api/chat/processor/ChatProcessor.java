@@ -20,11 +20,11 @@ public class ChatProcessor {
 				.toList();
 	}
 
-	public void process(@NotNull ChatContext context) {
+	public void process(@NotNull ChatContext ctx) {
 		for (ChatProcessStage stage : stages) {
-			stage.process(context);
+			stage.process(ctx);
 
-			if (context.result() == ChatResult.CANCEL) {
+			if (ctx.result() == ChatResult.CANCEL) {
 				return;
 			}
 		}

@@ -17,9 +17,9 @@ public class ReplacementStage implements ChatProcessStage {
 	}
 
 	@Override
-	public void process(@NotNull ChatContext context) {
-		final Player player = context.sender();
-		Component message = context.message();
+	public void process(@NotNull ChatContext ctx) {
+		final Player player = ctx.sender();
+		Component message = ctx.message();
 
 		for (UnifiedReplacement replacement : config.replacements()) {
 
@@ -30,6 +30,6 @@ public class ReplacementStage implements ChatProcessStage {
 			message = replacement.apply(player, message);
 		}
 
-		context.message(message);
+		ctx.message(message);
 	}
 }

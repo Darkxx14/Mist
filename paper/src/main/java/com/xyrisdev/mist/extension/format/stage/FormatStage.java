@@ -20,8 +20,8 @@ public class FormatStage implements ChatProcessStage {
 	}
 
 	@Override
-	public void process(@NotNull ChatContext context) {
-		final Player player = context.sender();
+	public void process(@NotNull ChatContext ctx) {
+		final Player player = ctx.sender();
 
 		final String group = group(player);
 		final FormatEntry entry = config.resolve(group);
@@ -30,7 +30,7 @@ public class FormatStage implements ChatProcessStage {
 			return;
 		}
 
-		context.attribute(Key.key("mist", "render"), entry);
+		ctx.attribute(Key.key("mist", "render"), entry);
 	}
 
 	private static @NotNull String group(@NotNull Player player) {

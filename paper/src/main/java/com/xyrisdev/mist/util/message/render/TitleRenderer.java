@@ -15,20 +15,20 @@ import java.time.Duration;
 @UtilityClass
 public class TitleRenderer {
 
-	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext context) {
+	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext ctx) {
 		if (section == null) {
 			return;
 		}
 
 		final Component title = parse(
 				player,
-				context,
+				ctx,
 				section.getString("text")
 		);
 
 		final Component subtitle = parse(
 				player,
-				context,
+				ctx,
 				section.getString("subtitle")
 		);
 
@@ -45,12 +45,12 @@ public class TitleRenderer {
 		player.showTitle(Title.title(title, subtitle, titleTimes));
 	}
 
-	private static Component parse(@NotNull Player player, @NotNull MessageContext context, String input) {
+	private static Component parse(@NotNull Player player, @NotNull MessageContext ctx, String input) {
 		if (input == null || input.isBlank()) {
 			return Component.empty();
 		}
 
-		return context.apply(
+		return ctx.apply(
 				TextParser.parse(player, input)
 		);
 	}

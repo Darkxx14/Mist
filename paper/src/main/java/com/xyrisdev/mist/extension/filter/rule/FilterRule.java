@@ -18,5 +18,5 @@ public interface FilterRule {
 	void load(@NotNull ConfigurationSection section);
 
 	@NotNull
-	FilterResult process(@NotNull ChatContext context);
+	FilterResult process(@NotNull ChatContext ctx);
 }
