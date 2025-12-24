@@ -3,7 +3,8 @@ package com.xyrisdev.mist.listener;
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
 import com.xyrisdev.mist.MistPaperPlugin;
-import com.xyrisdev.mist.api.context.ChatContext;
+import com.xyrisdev.mist.api.chat.context.ChatContext;
+import com.xyrisdev.mist.api.chat.processor.result.ChatResult;
 import com.xyrisdev.mist.command.admin.subcommands.ChatCommand;
 import com.xyrisdev.mist.listener.render.route.RoutedChatRenderer;
 import com.xyrisdev.mist.util.message.MistMessage;
@@ -36,7 +37,7 @@ public class AsyncChatListener {
 							.chatProcessor()
 							.process(context);
 
-					if (context.cancelled()) {
+					if (context.result() == ChatResult.CANCEL) {
 						event.setCancelled(true);
 						return;
 					}

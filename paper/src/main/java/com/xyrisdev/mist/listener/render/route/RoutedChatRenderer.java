@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.listener.render.route;
 
-import com.xyrisdev.mist.api.context.ChatContext;
+import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.listener.render.ChatFormatRenderer;
 import io.papermc.paper.chat.ChatRenderer;
 import org.bukkit.entity.Player;

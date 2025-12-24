@@ -2,7 +2,7 @@ package com.xyrisdev.mist.command.internal;
 
 import com.xyrisdev.mist.MistPaperPlugin;
 import com.xyrisdev.mist.command.MistCommandManager;
-import com.xyrisdev.mist.module.render.impl.RenderService;
+import com.xyrisdev.mist.extension.render.impl.RenderService;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.PlayerSource;

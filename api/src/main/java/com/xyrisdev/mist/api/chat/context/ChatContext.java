@@ -3,6 +3,7 @@ package com.xyrisdev.mist.api.chat.context;
 import com.xyrisdev.mist.api.chat.processor.result.ChatResult;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +14,9 @@ public final class ChatContext {
 
 	private final Player sender;
 	private Component message;
+	private String plainMessage;
 
+	private static final PlainTextComponentSerializer PLAIN = PlainTextComponentSerializer.plainText();
 	private final Map<Key, Object> attributes = new ConcurrentHashMap<>();
 	private ChatResult result = ChatResult.CONTINUE;
 
@@ -30,8 +33,18 @@ public final class ChatContext {
 		return message;
 	}
 
+	public String plain() {
+		return plainMessage;
+	}
+
+	public void plain(String plain) {
+		this.plainMessage = plain;
+		this.message = Component.text(plain);
+	}
+
 	public void message(Component message) {
 		this.message = message;
+		this.plainMessage = PLAIN.serialize(message);
 	}
 
 	public <T> void attribute(Key key, T value) {

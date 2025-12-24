@@ -31,9 +31,9 @@ public enum ConfigType {
 	),
 
 	CHAT_FORMAT(
-			"modules/chat_format.yml",
+			"extension/chat_format.yml",
 			new MigrationContext(
-					"modules/chat_format.yml",
+					"extension/chat_format.yml",
 					"config_version",
 					"backups",
 					true
@@ -41,9 +41,9 @@ public enum ConfigType {
 	),
 
 	CHAT_REPLACEMENTS(
-			"modules/chat_replacement.yml",
+			"extension/chat_replacement.yml",
 			new MigrationContext(
-					"modules/chat_replacement.yml",
+					"extension/chat_replacement.yml",
 					"config_version",
 					"backups",
 					true
@@ -51,9 +51,9 @@ public enum ConfigType {
 	),
 
 	RENDER(
-			"modules/render.yml",
+			"extension/render.yml",
 			new MigrationContext(
-					"modules/render.yml",
+					"extension/render.yml",
 					"config_version",
 					"backups",
 					true
@@ -61,9 +61,9 @@ public enum ConfigType {
 	),
 
 	CHAT_FILTER(
-			"modules/chat_filter.yml",
+			"extension/chat_filter.yml",
 			new MigrationContext(
-					"modules/chat_filter.yml",
+					"extension/chat_filter.yml",
 					"config_version",
 					"backups",
 					true

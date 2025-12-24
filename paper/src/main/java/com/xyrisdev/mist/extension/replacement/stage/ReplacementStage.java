@@ -1,0 +1,35 @@
+package com.xyrisdev.mist.extension.replacement.stage;
+
+import com.xyrisdev.mist.api.chat.context.ChatContext;
+import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessorStage;
+import com.xyrisdev.mist.extension.replacement.config.ReplacementsConfiguration;
+import com.xyrisdev.mist.extension.replacement.entry.UnifiedReplacement;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+public class ReplacementStage implements ChatProcessorStage {
+
+	private final ReplacementsConfiguration config;
+
+	public ReplacementStage(@NotNull ReplacementsConfiguration config) {
+		this.config = config;
+	}
+
+	@Override
+	public void process(@NotNull ChatContext context) {
+		final Player player = context.sender();
+		Component message = context.message();
+
+		for (UnifiedReplacement replacement : config.replacements()) {
+
+			if (!replacement.canApply(player)) {
+				continue;
+			}
+
+			message = replacement.apply(player, message);
+		}
+
+		context.message(message);
+	}
+}

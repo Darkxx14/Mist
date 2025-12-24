@@ -6,12 +6,12 @@ import com.xyrisdev.library.lib.feature.FeatureFlags;
 import com.xyrisdev.library.lib.feature.FeatureRegistry;
 import com.xyrisdev.library.scheduler.XScheduler;
 import com.xyrisdev.library.scheduler.scheduling.schedulers.TaskScheduler;
-import com.xyrisdev.mist.api.processor.ChatProcessor;
+import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.command.MistCommandManager;
+import com.xyrisdev.mist.extension.ExtensionRegistrar;
 import com.xyrisdev.mist.hook.LuckPermsHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
-import com.xyrisdev.mist.module.ModuleRegistrar;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public final class MistPaperPlugin extends AbstractPlugin {
 
         this.configRegistry = ConfigRegistry.load();
         this.scheduler = XScheduler.of(this);
-        this.chatProcessor = ModuleRegistrar.build();
+        this.chatProcessor = ExtensionRegistrar.build();
         LeetMap.load(this.configRegistry);
 
         if (plugins().isPluginEnabled("LuckPerms")) {
@@ -76,7 +76,7 @@ public final class MistPaperPlugin extends AbstractPlugin {
 
     public void reload() {
         this.configRegistry.reloadAll();
-        this.chatProcessor = ModuleRegistrar.build();
+        this.chatProcessor = ExtensionRegistrar.build();
         LeetMap.load(this.configRegistry);
     }
 }

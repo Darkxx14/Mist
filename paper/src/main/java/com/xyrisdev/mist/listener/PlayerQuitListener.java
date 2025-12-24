@@ -2,7 +2,7 @@ package com.xyrisdev.mist.listener;
 
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
-import com.xyrisdev.mist.module.render.impl.RenderService;
+import com.xyrisdev.mist.extension.render.impl.RenderService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
