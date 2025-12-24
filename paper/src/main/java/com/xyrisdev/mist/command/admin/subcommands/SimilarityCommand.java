@@ -4,13 +4,26 @@ import com.xyrisdev.mist.MistPaperPlugin;
 import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
 import com.xyrisdev.mist.util.config.ConfigType;
 import com.xyrisdev.mist.util.message.MistMessage;
+import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
+import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.Source;
+import org.incendo.cloud.parser.standard.StringParser;
 import org.jetbrains.annotations.NotNull;
 
 public class SimilarityCommand {
 
-	public static void similarity(@NotNull CommandContext<Source> ctx) {
+	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
+		manager.command(
+				root.literal("similarity")
+						.permission("mist.commands.similarity")
+						.required("s1", StringParser.stringParser())
+						.required("s2", StringParser.stringParser())
+						.handler(this::similarity)
+		);
+	}
+
+	private void similarity(@NotNull CommandContext<Source> ctx) {
 		final String s1 = ctx.get("s1");
 		final String s2 = ctx.get("s2");
 

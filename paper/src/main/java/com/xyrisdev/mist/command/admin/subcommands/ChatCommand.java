@@ -2,7 +2,9 @@ package com.xyrisdev.mist.command.admin.subcommands;
 
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.Bukkit;
+import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
+import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.Source;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,9 +20,31 @@ public class ChatCommand {
 		return LOCKED.get();
 	}
 
-	public static void clear(@NotNull CommandContext<Source> ignored) {
+	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
+		manager.command(root.literal("chat")
+				.permission("mist.commands.chat")
+				.literal("clear")
+				.handler(this::clear)
+		);
+
+		manager.command(root.literal("chat")
+				.permission("mist.commands.chat")
+				.literal("lock")
+				.handler(this::lock)
+		);
+
+		manager.command(root.literal("chat")
+				.permission("mist.commands.chat")
+				.literal("unlock")
+				.handler(this::unlock)
+		);
+	}
+
+	private void clear(@NotNull CommandContext<Source> ignored) {
 		Bukkit.getOnlinePlayers().forEach(player -> {
-			IntStream.range(0, CLEAR_LINES).mapToObj(i -> " ").forEach(player::sendMessage);
+			IntStream.range(0, CLEAR_LINES)
+					.mapToObj(i -> " ")
+					.forEach(player::sendMessage);
 
 			MistMessage.create(player)
 					.id("chat_cleared")
@@ -28,7 +52,7 @@ public class ChatCommand {
 		});
 	}
 
-	public static void lock(@NotNull CommandContext<Source> ctx) {
+	private void lock(@NotNull CommandContext<Source> ctx) {
 		if (!LOCKED.compareAndSet(false, true)) {
 			MistMessage.create(ctx.sender().source())
 					.id("chat_already_locked")
@@ -43,7 +67,7 @@ public class ChatCommand {
 		);
 	}
 
-	public static void unlock(@NotNull CommandContext<Source> ctx) {
+	private void unlock(@NotNull CommandContext<Source> ctx) {
 		if (!LOCKED.compareAndSet(true, false)) {
 			MistMessage.create(ctx.sender().source())
 					.id("chat_already_unlocked")
