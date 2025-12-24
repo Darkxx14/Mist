@@ -24,9 +24,10 @@ public class MistCallbackCommand {
 							final Player player = ctx.sender().source();
 							final UUID id = ctx.get("id");
 
-							MistPaperPlugin.instance()
-									.scheduler()
-									.runTask(player, () -> RenderService.get().render(player, id));
+							MistPaperPlugin.instance().scheduler()
+									.runAtEntity(player, task ->
+											RenderService.get().render(player, id)
+									);
 						})
 		);
 	}

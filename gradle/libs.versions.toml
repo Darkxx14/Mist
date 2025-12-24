@@ -3,17 +3,19 @@ paper = "1.21.8-R0.1-SNAPSHOT"
 xlibrary = "1.0.0"
 caffeine = "3.2.3"
 lombok = "1.18.36"
-placeholderapi = "2.11.7"
+placeholder-api = "2.11.7"
 luckperms = "5.4"
 evo-inflector = "1.3"
 cloud-paper = "2.0.0-beta.10"
+folia-lib = "0.5.1"
 
 [libraries]
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
 xlibrary = { module = "com.xyrisdev:XLibrary", version.ref = "xlibrary" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
-placeholder-api = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+placeholder-api = { module = "me.clip:placeholderapi", version.ref = "placeholder-api" }
 luckperms = { module = "net.luckperms:api", version.ref = "luckperms" }
 evo-inflector = { module = "org.atteo:evo-inflector", version.ref = "evo-inflector" }
 cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-paper" }
+folia-lib = { module = "com.tcoded:FoliaLib", version.ref = "folia-lib" }

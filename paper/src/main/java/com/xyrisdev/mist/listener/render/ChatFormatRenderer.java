@@ -2,7 +2,7 @@ package com.xyrisdev.mist.listener.render;
 
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.extension.format.entry.FormatEntry;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import io.papermc.paper.chat.ChatRenderer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -23,7 +23,7 @@ public class ChatFormatRenderer {
 				return message;
 			}
 
-			Component base = MistTextParser.parse(player, entry.message())
+			Component base = TextParser.parse(player, entry.message())
 					.replaceText(b -> b.matchLiteral("<player>").replacement(displayName))
 					.replaceText(b -> b.matchLiteral("<message>").replacement(message));
 
@@ -31,7 +31,7 @@ public class ChatFormatRenderer {
 				final Component hover = Component.join(
 						JoinConfiguration.separator(Component.newline()),
 						entry.hoverText().stream()
-								.map(line -> MistTextParser.parse(player, line))
+								.map(line -> TextParser.parse(player, line))
 								.toList()
 				);
 
@@ -39,7 +39,7 @@ public class ChatFormatRenderer {
 			}
 
 			if (entry.action() != null) {
-				final Component parsedComponent = MistTextParser.parse(player, entry.action().value());
+				final Component parsedComponent = TextParser.parse(player, entry.action().value());
 				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComponent);
 
 				base = base.clickEvent(

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.List;
 
 public class ConfigRegistry {
 
@@ -52,6 +53,15 @@ public class ConfigRegistry {
 		}
 
 		return config;
+	}
+
+	public @NotNull List<String> all() {
+		return configs.keySet()
+				.stream()
+				.map(ConfigType::getPath)
+				.map(Object::toString)
+				.sorted()
+				.toList();
 	}
 
 	public void reload(@NotNull ConfigType type) {

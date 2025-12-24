@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.util.message.render;
 
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -41,7 +41,7 @@ public class ChatRenderer {
 	}
 
 	private static @NotNull Component parse(@NotNull Audience audience, @Nullable Player player, @NotNull String input) {
-		return MistTextParser.parse(
+		return TextParser.parse(
 				player != null ? player : audience,
 				input
 		);

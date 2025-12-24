@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.util.message.render;
 
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import lombok.experimental.UtilityClass;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class ActionBarRenderer {
 		if (text != null) {
 			player.sendActionBar(
 					context.apply(
-							MistTextParser.parse(player, text)
+							TextParser.parse(player, text)
 					)
 			);
 		}

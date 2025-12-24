@@ -12,11 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.Normalizer;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BlockedWordsRule implements FilterRule {
 
 	private final AhoCorasickMatcher matcher = new AhoCorasickMatcher();
-	private final Map<String, Entry> entries = new HashMap<>();
+	private final Map<String, Entry> entries = new ConcurrentHashMap<>();
 
 	@Override
 	public @NotNull String key() {

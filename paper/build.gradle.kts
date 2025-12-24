@@ -7,8 +7,19 @@ plugins {
     id("com.gradleup.shadow") version "9.0.0-beta10"
 }
 
+val branch = BuildInformation.branch()
+val module = BuildInformation.module(project)
+val version = BuildInformation.version(project)
+
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+repositories {
+    mavenCentral()
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://repo.xyrisdev.com/repository/maven-public/")
+    maven("https://repo.tcoded.com/releases")
 }
 
 dependencies {
@@ -25,6 +36,7 @@ dependencies {
     paperLibrary(libs.caffeine)
     paperLibrary(libs.evo.inflector)
     paperLibrary(libs.cloud.paper)
+    paperLibrary(libs.folia.lib)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -36,30 +48,49 @@ tasks.withType<Javadoc>().configureEach {
     options.encoding = "UTF-8"
 }
 
-base {
-    archivesName.set("mist-paper")
-}
-
 tasks.withType<AbstractArchiveTask>().configureEach {
-    archiveVersion.set(project.version.toString())
+    archiveBaseName.set("mist-$module")
+    archiveVersion.set(version)
+    archiveClassifier.set(branch)
 }
 
 tasks.shadowJar {
-    archiveClassifier.set("")
+    archiveClassifier.set(branch)
+}
 
-    relocate(
-         "com.xyrisdev.library",
-         "com.xyrisdev.mist.shaded.library"
-    )
+tasks.jar {
+    enabled = false
+}
+
+artifacts {
+    archives(tasks.shadowJar)
 }
 
 tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
+tasks.processResources {
+    inputs.properties(
+        mapOf(
+            "module" to module,
+            "version" to version,
+            "branch" to branch
+        )
+    )
+
+    filesMatching("**/build.properties") {
+        expand(
+            "module" to module,
+            "version" to version,
+            "branch" to branch
+        )
+    }
+}
+
 paper {
     name = "Mist"
-    version = project.version.toString()
+    version = project.version.toString() + "-" + branch
     apiVersion = "1.21"
 
     main = "com.xyrisdev.mist.MistPaperPlugin"
@@ -67,7 +98,6 @@ paper {
     loader = "com.xyrisdev.mist.loader.MistPaperLibraryLoader"
 
     generateLibrariesJson = true
-
     foliaSupported = true
     authors = listOf("XyrisDevelopment", "Darkxx")
 
@@ -76,7 +106,6 @@ paper {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             required = true
         }
-
         register("LuckPerms") {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             required = true
@@ -116,7 +145,6 @@ paper {
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
-        // bypass
         register("mist.bypass.chat") {
             description = "Bypass Chat Lock"
             default = BukkitPluginDescription.Permission.Default.OP
@@ -124,8 +152,6 @@ paper {
     }
 }
 
-tasks {
-    generatePaperPluginDescription {
-        useDefaultCentralProxy()
-    }
+tasks.generatePaperPluginDescription {
+    useDefaultCentralProxy()
 }

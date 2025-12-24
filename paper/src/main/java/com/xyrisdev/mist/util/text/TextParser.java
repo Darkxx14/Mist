@@ -8,7 +8,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-public class MistTextParser {
+public class TextParser {
 
 	private static final TagRegistry TAG_REGISTRY = new TagRegistry();
 	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();

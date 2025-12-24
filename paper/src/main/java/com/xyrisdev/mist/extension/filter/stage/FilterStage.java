@@ -1,13 +1,13 @@
 package com.xyrisdev.mist.extension.filter.stage;
 
 import com.xyrisdev.mist.api.chat.context.ChatContext;
-import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessorStage;
+import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessStage;
 import com.xyrisdev.mist.extension.filter.config.FilterConfiguration;
 import com.xyrisdev.mist.extension.filter.rule.FilterResult;
 import com.xyrisdev.mist.extension.filter.rule.FilterRule;
 import org.jetbrains.annotations.NotNull;
 
-public class FilterStage implements ChatProcessorStage {
+public class FilterStage implements ChatProcessStage {
 
 	private final FilterConfiguration config;
 

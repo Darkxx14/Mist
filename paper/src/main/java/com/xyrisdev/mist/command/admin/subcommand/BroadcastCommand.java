@@ -1,6 +1,6 @@
-package com.xyrisdev.mist.command.admin.subcommands;
+package com.xyrisdev.mist.command.admin.subcommand;
 
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -45,7 +45,7 @@ public class BroadcastCommand {
 		final String input = ctx.get("message");
 
 		Bukkit.getOnlinePlayers().forEach(player ->
-				player.sendMessage(MistTextParser.parse(player, input))
+				player.sendMessage(TextParser.parse(player, input))
 		);
 	}
 
@@ -53,7 +53,7 @@ public class BroadcastCommand {
 		final String input = ctx.get("message");
 
 		Bukkit.getOnlinePlayers().forEach(player ->
-				player.sendActionBar(MistTextParser.parse(player, input))
+				player.sendActionBar(TextParser.parse(player, input))
 		);
 	}
 
@@ -61,9 +61,9 @@ public class BroadcastCommand {
 		final String[] parts = ctx.<String>get("message").split(":", 2);
 
 		Bukkit.getOnlinePlayers().forEach(player -> {
-			final Component title = MistTextParser.parse(player, parts[0]);
+			final Component title = TextParser.parse(player, parts[0]);
 			final Component subtitle = parts.length > 1
-					? MistTextParser.parse(player, parts[1])
+					? TextParser.parse(player, parts[1])
 					: Component.empty();
 
 			player.showTitle(

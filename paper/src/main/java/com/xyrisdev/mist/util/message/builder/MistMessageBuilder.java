@@ -8,7 +8,7 @@ import com.xyrisdev.mist.util.message.effect.SoundEffect;
 import com.xyrisdev.mist.util.message.render.ActionBarRenderer;
 import com.xyrisdev.mist.util.message.render.ChatRenderer;
 import com.xyrisdev.mist.util.message.render.TitleRenderer;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -73,7 +73,7 @@ public class MistMessageBuilder {
 
 		final MessageContext context = new MessageContext(placeholders);
 
-		context.component("prefix", MistTextParser.parse(audience, prefix));
+		context.component("prefix", TextParser.parse(audience, prefix));
 
 		if (types.contains(MessageType.CHAT)) {
 			final ConfigurationSection chat = section.getConfigurationSection("chat");

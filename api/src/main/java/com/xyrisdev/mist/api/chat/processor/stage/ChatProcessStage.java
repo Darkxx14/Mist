@@ -4,7 +4,6 @@ import com.xyrisdev.mist.api.chat.context.ChatContext;
 import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
-public interface ChatProcessorStage {
-
+public interface ChatProcessStage {
 	void process(@NotNull ChatContext context);
 }

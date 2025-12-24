@@ -1,4 +1,4 @@
-package com.xyrisdev.mist.command.admin.subcommands;
+package com.xyrisdev.mist.command.admin.subcommand;
 
 import com.xyrisdev.mist.MistPaperPlugin;
 import com.xyrisdev.mist.util.matcher.SimilarityMatcher;

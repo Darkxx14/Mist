@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.util.message.render;
 
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -51,7 +51,7 @@ public class TitleRenderer {
 		}
 
 		return context.apply(
-				MistTextParser.parse(player, input)
+				TextParser.parse(player, input)
 		);
 	}
 }

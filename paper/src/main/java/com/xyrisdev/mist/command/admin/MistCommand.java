@@ -1,10 +1,10 @@
 package com.xyrisdev.mist.command.admin;
 
 import com.xyrisdev.mist.command.MistCommandManager;
-import com.xyrisdev.mist.command.admin.subcommands.BroadcastCommand;
-import com.xyrisdev.mist.command.admin.subcommands.ChatCommand;
-import com.xyrisdev.mist.command.admin.subcommands.ReloadCommand;
-import com.xyrisdev.mist.command.admin.subcommands.SimilarityCommand;
+import com.xyrisdev.mist.command.admin.subcommand.BroadcastCommand;
+import com.xyrisdev.mist.command.admin.subcommand.ChatCommand;
+import com.xyrisdev.mist.command.admin.subcommand.ReloadCommand;
+import com.xyrisdev.mist.command.admin.subcommand.SimilarityCommand;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.Source;

@@ -1,11 +1,11 @@
 package com.xyrisdev.mist.extension.render.stage;
 
 import com.xyrisdev.mist.api.chat.context.ChatContext;
-import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessorStage;
+import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessStage;
 import com.xyrisdev.mist.extension.render.config.RenderConfiguration;
 import com.xyrisdev.mist.extension.render.impl.object.RenderRequest;
 import com.xyrisdev.mist.extension.render.impl.object.RenderType;
-import com.xyrisdev.mist.util.text.MistTextParser;
+import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RenderStage implements ChatProcessorStage {
+public class RenderStage implements ChatProcessStage {
 
 	private final RenderConfiguration config;
 
@@ -159,7 +159,7 @@ public class RenderStage implements ChatProcessorStage {
 			@NotNull String processor, @NotNull UUID id,
 			@NotNull List<ItemStack> items, @NotNull List<String> hoverText
 	) {
-		Component result = MistTextParser.parse(player, processor)
+		Component result = TextParser.parse(player, processor)
 				.clickEvent(ClickEvent.runCommand("/mistcallback " + id));
 
 		if (type == RenderType.ITEM && !items.isEmpty()) {
@@ -192,7 +192,7 @@ public class RenderStage implements ChatProcessorStage {
 			final Component hover = Component.join(
 					JoinConfiguration.separator(Component.newline()),
 					hoverText.stream()
-							.map(line -> MistTextParser.parse(player, line))
+							.map(line -> TextParser.parse(player, line))
 							.toList()
 			);
 

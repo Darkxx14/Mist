@@ -1,15 +1,16 @@
 package com.xyrisdev.mist;
 
+import com.tcoded.folialib.FoliaLib;
+import com.tcoded.folialib.impl.PlatformScheduler;
 import com.xyrisdev.library.AbstractPlugin;
 import com.xyrisdev.library.lib.Library;
 import com.xyrisdev.library.lib.feature.FeatureFlags;
 import com.xyrisdev.library.lib.feature.FeatureRegistry;
-import com.xyrisdev.library.scheduler.XScheduler;
-import com.xyrisdev.library.scheduler.scheduling.schedulers.TaskScheduler;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.command.MistCommandManager;
-import com.xyrisdev.mist.extension.ExtensionRegistrar;
-import com.xyrisdev.mist.hook.LuckPermsHook;
+import com.xyrisdev.mist.extension.ExtensionManager;
+import com.xyrisdev.mist.hook.HookManager;
+import com.xyrisdev.mist.hook.impl.LuckPermsHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.util.matcher.LeetMap;
@@ -28,7 +29,10 @@ public final class MistPaperPlugin extends AbstractPlugin {
     private ConfigRegistry configRegistry;
 
     @Getter
-    private TaskScheduler scheduler;
+    private FoliaLib folia;
+
+    @Getter
+    private PlatformScheduler scheduler;
 
     @Getter
     private ChatProcessor chatProcessor;
@@ -43,15 +47,12 @@ public final class MistPaperPlugin extends AbstractPlugin {
         Library.of(this, "mist-paper");
 
         this.configRegistry = ConfigRegistry.load();
-        this.scheduler = XScheduler.of(this);
-        this.chatProcessor = ExtensionRegistrar.build();
+        this.folia = new FoliaLib(this);
+        this.scheduler = folia.getScheduler();
+        this.chatProcessor = ExtensionManager.register();
         LeetMap.load(this.configRegistry);
 
-        if (plugins().isPluginEnabled("LuckPerms")) {
-            LuckPermsHook.init();
-        } else {
-            this.disable();
-        }
+        HookManager.of().load(this);
 
         AsyncChatListener.listener().register();
         PlayerQuitListener.listener().register();
@@ -61,6 +62,12 @@ public final class MistPaperPlugin extends AbstractPlugin {
 
     @Override
     protected void shutdown() {
+        HookManager.of().unload();
+
+        if (this.folia != null) {
+            this.folia.getScheduler().cancelAllTasks();
+        }
+
         instance = null;
     }
 
@@ -76,7 +83,7 @@ public final class MistPaperPlugin extends AbstractPlugin {
 
     public void reload() {
         this.configRegistry.reloadAll();
-        this.chatProcessor = ExtensionRegistrar.build();
+        this.chatProcessor = ExtensionManager.register();
         LeetMap.load(this.configRegistry);
     }
 }

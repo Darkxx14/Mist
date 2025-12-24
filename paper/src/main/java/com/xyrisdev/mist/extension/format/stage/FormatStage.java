@@ -1,8 +1,8 @@
 package com.xyrisdev.mist.extension.format.stage;
 
 import com.xyrisdev.mist.api.chat.context.ChatContext;
-import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessorStage;
-import com.xyrisdev.mist.hook.LuckPermsHook;
+import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessStage;
+import com.xyrisdev.mist.hook.impl.LuckPermsHook;
 import com.xyrisdev.mist.extension.format.config.FormatConfiguration;
 import com.xyrisdev.mist.extension.format.entry.FormatEntry;
 import net.kyori.adventure.key.Key;
@@ -11,7 +11,7 @@ import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class FormatStage implements ChatProcessorStage {
+public class FormatStage implements ChatProcessStage {
 
 	private final FormatConfiguration config;
 
@@ -34,7 +34,7 @@ public class FormatStage implements ChatProcessorStage {
 	}
 
 	private static @NotNull String group(@NotNull Player player) {
-		final LuckPerms luckPerms = LuckPermsHook.api();
+		final LuckPerms luckPerms = LuckPermsHook.luckPerms();
 
 		final User user = luckPerms
 				.getPlayerAdapter(Player.class)
