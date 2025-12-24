@@ -1,9 +1,15 @@
-# Project exclude paths
-.idea
-/.gradle/
-/api/build/
-/api/build/classes/java/main/
-/paper/build/
-/paper/build/classes/java/main/
-buildSrc/.gradle
-buildSrc/build
+.idea/
+*.iml
+*.ipr
+*.iws
+.gradle/
+**/.gradle/
+build/
+**/build/
+buildSrc/build/
+buildSrc/.gradle/
+*.log
+hs_err_pid*
+.DS_Store
+Thumbs.db
+.run/
