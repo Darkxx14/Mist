@@ -10,11 +10,11 @@ import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.command.MistCommandManager;
 import com.xyrisdev.mist.extension.ExtensionManager;
 import com.xyrisdev.mist.hook.HookManager;
-import com.xyrisdev.mist.hook.impl.LuckPermsHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.util.regex.RegexGenerator;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +50,9 @@ public final class MistPaperPlugin extends AbstractPlugin {
         this.folia = new FoliaLib(this);
         this.scheduler = folia.getScheduler();
         this.chatProcessor = ExtensionManager.register();
+
         LeetMap.load(this.configRegistry);
+        RegexGenerator.index();
 
         HookManager.of().load(this);
 
@@ -84,6 +86,8 @@ public final class MistPaperPlugin extends AbstractPlugin {
     public void reload() {
         this.configRegistry.reloadAll();
         this.chatProcessor = ExtensionManager.register();
+
         LeetMap.load(this.configRegistry);
+        RegexGenerator.index();
     }
 }

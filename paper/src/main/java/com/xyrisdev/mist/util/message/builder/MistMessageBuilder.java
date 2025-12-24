@@ -10,6 +10,7 @@ import com.xyrisdev.mist.util.message.render.ChatRenderer;
 import com.xyrisdev.mist.util.message.render.TitleRenderer;
 import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 public class MistMessageBuilder {
 
@@ -27,6 +29,8 @@ public class MistMessageBuilder {
 
 	private final Map<String, String> placeholders = new HashMap<>();
 	private String id;
+
+	private UnaryOperator<Component> interceptor;
 
 	public MistMessageBuilder(@NotNull CommandSender sender) {
 		this.audience = sender;
@@ -45,6 +49,11 @@ public class MistMessageBuilder {
 
 	public @NotNull MistMessageBuilder placeholder(@NotNull String key, @NotNull String value) {
 		placeholders.put(key, value);
+		return this;
+	}
+
+	public @NotNull MistMessageBuilder interceptor(@NotNull UnaryOperator<Component> interceptor) {
+		this.interceptor = interceptor;
 		return this;
 	}
 
@@ -72,6 +81,7 @@ public class MistMessageBuilder {
 				.getString("prefix", "");
 
 		final MessageContext context = new MessageContext(placeholders);
+		context.interceptor(this.interceptor);
 
 		context.component("prefix", TextParser.parse(audience, prefix));
 

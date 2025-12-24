@@ -1,91 +1,95 @@
 package com.xyrisdev.mist.util.regex;
 
+import com.xyrisdev.mist.util.matcher.LeetMap;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.Normalizer;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
-//todo: needs a recode
 @UtilityClass
 public class RegexGenerator {
 
-	public enum Level {
-		BASIC,
-		AGGRESSIVE,
-		AGGRESSIVE_V2
-	}
+	private static volatile Map<Character, String> REVERSE_LEET = Map.of();
 
-	private static final Set<Character> REPEATABLE =
-			Set.of('a', 'e', 'i', 'o', 'u', 's');
+	public static void index() {
+		final Map<Character, Set<Character>> temp = new HashMap<>();
 
-	private static final Map<Character, String> BASIC_MAP = Map.ofEntries(
-			Map.entry('a', "[a@4]"),
-			Map.entry('e', "[e3]"),
-			Map.entry('i', "[i1!]"),
-			Map.entry('o', "[o0]"),
-			Map.entry('s', "[s$5]"),
-			Map.entry('t', "[t7]")
-	);
+		for (char c = 32; c < 127; c++) {
+			final char mapped = LeetMap.map(c);
 
-	private static final Map<Character, String> AGGRESSIVE_MAP = Map.ofEntries(
-			Map.entry('a', "[a@4àáâãäåα]"),
-			Map.entry('b', "[b8ß]"),
-			Map.entry('c', "[cçk(¢]"),
-			Map.entry('d', "[dđ]"),
-			Map.entry('e', "[e3€èéêëε]"),
-			Map.entry('f', "[fƒ]"),
-			Map.entry('g', "[g69]"),
-			Map.entry('h', "[h#ħ]"),
-			Map.entry('i', "[i1!|ìíîïι]"),
-			Map.entry('k', "[kκ]"),
-			Map.entry('l', "[l1|!ɩ]"),
-			Map.entry('n', "[nñη]"),
-			Map.entry('o', "[o0°òóôõöο]"),
-			Map.entry('p', "[pρ]"),
-			Map.entry('s', "[s$5§]"),
-			Map.entry('t', "[t7+τ]"),
-			Map.entry('u', "[uµvυ]"),
-			Map.entry('y', "[y¥γ]"),
-			Map.entry('z', "[z2]")
-	);
-
-	public static @NotNull Pattern generate(@NotNull String word, @NotNull Level level) {
-		final String normalized = Normalizer.normalize(word, Normalizer.Form.NFKC).toLowerCase();
-		final Map<Character, String> map = level == Level.BASIC ? BASIC_MAP : AGGRESSIVE_MAP;
-
-		final String separator = level == Level.AGGRESSIVE_V2
-						? "[\\p{Z}\\p{C}\\W_]*+"
-						: level == Level.AGGRESSIVE
-						? "[\\W_]*+"
-						: "[\\W_]*";
-
-		final StringBuilder regex = new StringBuilder(128).append("(?<![\\p{L}\\p{N}])");
-
-		for (char c : normalized.toCharArray()) {
-			if (!Character.isLetterOrDigit(c)) {
+			if (mapped == c) {
 				continue;
 			}
 
-			final String token = map.getOrDefault(c, Pattern.quote(String.valueOf(c)));
-
-			final String repeat = level == Level.AGGRESSIVE_V2
-							? (REPEATABLE.contains(c) ? "{1,8}" : "{1,3}")
-							: level == Level.AGGRESSIVE
-							? (REPEATABLE.contains(c) ? "{1,6}" : "{1,2}")
-							: (REPEATABLE.contains(c) ? "{1,3}" : "{1,1}");
-
-			regex.append("(?:").append(token).append(")").append(repeat);
-			regex.append(separator);
+			temp.computeIfAbsent(mapped, __ -> new HashSet<>()).add(c);
 		}
 
-		regex.append("(?![\\p{L}\\p{N}])");
+		final Map<Character, String> resolved = new HashMap<>();
 
-		return Pattern.compile(
-				regex.toString(),
-				Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
-		);
+		for (Map.Entry<Character, Set<Character>> e : temp.entrySet()) {
+			final StringBuilder set = new StringBuilder();
+
+			set.append(e.getKey());
+
+			for (char variant : e.getValue()) {
+				set.append(escape(variant));
+			}
+
+			resolved.put(e.getKey(), set.toString());
+		}
+
+		REVERSE_LEET = resolved;
+	}
+
+	public static @NotNull String generate(@NotNull String input) {
+		if (input.isEmpty()) {
+			return "(?i)";
+		}
+
+		final StringBuilder output = new StringBuilder("(?i)\\b");
+
+		char last = 0;
+
+		for (char raw : input.toLowerCase().toCharArray()) {
+			if (Character.isWhitespace(raw)) {
+				output.append("\\s+");
+				last = 0;
+				continue;
+			}
+
+			if (!Character.isLetterOrDigit(raw)) {
+				output.append("\\Q").append(raw).append("\\E");
+				last = raw;
+				continue;
+			}
+
+			if (raw == last) {
+				output.append("+");
+				continue;
+			}
+
+			last = raw;
+
+			final String variants = REVERSE_LEET.get(raw);
+
+			if (variants != null) {
+				output.append('[').append(variants).append(']');
+			} else {
+				output.append('[').append(raw).append(']');
+			}
+		}
+
+		output.append("\\b");
+		return output.toString();
+	}
+
+	private static char escape(char ch) {
+		return switch (ch) {
+			case '\\', '-', '^', ']' -> '\\';
+			default -> ch;
+		};
 	}
 }

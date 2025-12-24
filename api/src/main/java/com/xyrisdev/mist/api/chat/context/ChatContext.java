@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class ChatContext {
+public class ChatContext {
 
 	private final Player sender;
 	private Component message;
@@ -23,6 +23,7 @@ public final class ChatContext {
 	public ChatContext(Player sender, Component message) {
 		this.sender = sender;
 		this.message = message;
+		this.plainMessage = PLAIN.serialize(message);
 	}
 
 	public Player sender() {

@@ -50,6 +50,33 @@ messages:
         - "<gray>· The chat has been unlocked.</gray>"
         - " "
 
+  mist_regex_generate:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Regex Generator</gray>"
+        - " "
+        - "<gray>· Input:</gray> <color:#E03261><input></color>"
+        - "<gray>· Generated:</gray>"
+        - "<click:copy_to_clipboard:<regex>><hover:show_text:'<gray>Click to copy'><color:#E03261><regex></color></hover></click>"
+        - " "
+        - "<dark_gray>(Click the regex to copy)</dark_gray>"
+        - " "
+
+  mist_regex_check:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>Regex Analysis</gray>"
+        - " "
+        - "<gray>· Score:</gray> <color:#E03261><score>/100</color>"
+        - "<gray>· Verdict:</gray> <color:#E03261><verdict></color>"
+        - "<gray>· Risk:</gray> <color:#E03261><risk></color>"
+        - "<gray>· Notes:</gray> <gray><notes></gray>"
+        - " "
+
   chat_already_locked:
     type: chat
     chat:

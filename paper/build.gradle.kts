@@ -1,8 +1,10 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import net.minecrell.pluginyml.paper.PaperPluginDescription
+import xyz.jpenilla.runtask.task.AbstractRun
 
 plugins {
     java
+    id("xyz.jpenilla.run-paper") version "2.3.1"
     id("de.eldoria.plugin-yml.paper") version "0.8.0"
     id("com.gradleup.shadow") version "9.0.0-beta10"
 }
@@ -88,9 +90,33 @@ tasks.processResources {
     }
 }
 
+tasks {
+    runServer {
+        minecraftVersion("1.21.8")
+        legacyPluginLoading()
+
+    }
+}
+
+@Suppress("UnstableApiUsage")
+tasks.withType<AbstractRun>().configureEach {
+    javaLauncher = javaToolchains.launcherFor {
+        vendor = JvmVendorSpec.JETBRAINS
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+    runDirectory = rootDir.resolve("dev-env/")
+
+    jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-Dcom.mojang.eula.agree=true")
+}
+
+tasks.runServer {
+    dependsOn(tasks.shadowJar)
+}
+
 paper {
     name = "Mist"
-    version = project.version.toString() + "-" + branch
+    version = "$version-$branch"
     apiVersion = "1.21"
 
     main = "com.xyrisdev.mist.MistPaperPlugin"
@@ -99,6 +125,7 @@ paper {
 
     generateLibrariesJson = true
     foliaSupported = true
+
     authors = listOf("XyrisDevelopment", "Darkxx")
 
     serverDependencies {

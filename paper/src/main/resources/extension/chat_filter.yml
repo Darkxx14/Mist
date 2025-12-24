@@ -31,34 +31,38 @@ blocked_words:
   enabled: true
   words:
     fuck:
-      cancel_message: true
-      allow_in_words: false
+      cancel: true
+      detect_in_words: true
 
-    nigger:
-      cancel_message: true
-      allow_in_words: false
+    nigga:
+      cancel: true
+      detect_in_words: true
 
     retard:
-      cancel_message: false
-      replace_with: "*****"
-      allow_in_words: false
+      cancel: false
+      replace: "*****"
+      detect_in_words: true
 
     ass:
-      cancel_message: false
-      replace_with: "***"
-      allow_in_words: true
+      cancel: false
+      replace: "***"
+      detect_in_words: false
 
 regex:
   enabled: true
   patterns:
-    "(?i)kys":
-      cancel_message: true
-      replace_with: ""
+    kys:
+      pattern: (?i)kys
+      cancel: true
 
-    "(?i)(ez|ezz|ezzz)":
-      cancel_message: false
-      replace_with: "<gray>gg</gray>"
+    sexy:
+      pattern: '(?i)\b[s][e][x][y]'
+      cancel: false
+      replace: "hot"
 
-    "(?i)(https?|www\\.)":
-      cancel_message: true
-      replace_with: ""
+    links:
+      pattern: (?i)(https?|www\\.)
+      cancel: true
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1

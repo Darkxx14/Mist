@@ -5,9 +5,6 @@
 # Supports simple text replacements and PAPI placeholders
 # ──────────────────────────────────────────────
 
-# Used for migrations. DO NOT EDIT.
-config_version: 1
-
 replacements:
   heart:
     type: STATIC
@@ -43,5 +40,8 @@ replacements:
   location:
     type: PAPI
     match: "<loc>"
-    processor: "<gray>At <papi:player_x>, <papi:player_y>, <papi:player_z></gray>"
+    processor: "At <papi:player_x>, <papi:player_y>, <papi:player_z>"
     permission: "" # no permission required
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1

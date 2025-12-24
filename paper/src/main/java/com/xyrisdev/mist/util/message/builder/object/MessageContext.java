@@ -5,11 +5,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 
 public class MessageContext {
 
 	private final Map<String, String> stringPlaceholders;
 	private final Map<String, Component> componentPlaceholders;
+
+	private UnaryOperator<Component> interceptor;
 
 	public MessageContext(@NotNull Map<String, String> stringPlaceholders) {
 		this.stringPlaceholders = stringPlaceholders;
@@ -18,6 +21,10 @@ public class MessageContext {
 
 	public void component(@NotNull String key, @NotNull Component component) {
 		componentPlaceholders.put(key, component);
+	}
+
+	public void interceptor(@NotNull UnaryOperator<Component> interceptor) {
+		this.interceptor = interceptor;
 	}
 
 	public @NotNull Component apply(@NotNull Component component) {
@@ -37,6 +44,6 @@ public class MessageContext {
 			);
 		}
 
-		return result;
+		return interceptor != null ? interceptor.apply(result) : result;
 	}
 }

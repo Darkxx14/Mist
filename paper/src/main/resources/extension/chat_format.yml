@@ -23,24 +23,20 @@
 # https://xyrisdev.com/discord
 #
 
-# Used for migrations. DO NOT EDIT.
-config_version: 1
-
 # Fallback format used when no LP group matches
 fallback_format: default
 
 formats:
   default:
-    message: "<#cfd6e2><papi:luckperms_prefix></#cfd6e2><#f4f7fb><papi:player_name></#f4f7fb> <#a5adba>·</#a5adba> <#dde3ee><message>"
+    message: "<shadow:black><#cfd6e2><papi:luckperms_prefix></#cfd6e2><#f4f7fb><papi:player_name></#f4f7fb> <#a5adba>·</#a5adba> <#dde3ee><message></shadow>"
 
     hover_text:
       - "<gradient:#f7f9fc:#dde3ee><papi:player_name></gradient>"
-      - "<#b1b9c7>wandering through the mist</#b1b9c7>"
       - ""
-      - "<#e9eef6>┆</#e9eef6> <#bcc5d4>health</#bcc5d4> <gradient:#ff9b9b:#ffe1e1><papi:player_health_rounded> ❤</gradient>"
-      - "<#e9eef6>┆</#e9eef6> <#bcc5d4>ping</#bcc5d4> <gradient:#9bbcff:#e1ecff><papi:player_ping>ms</gradient>"
-      - "<#e9eef6>┆</#e9eef6> <#bcc5d4>balance</#bcc5d4> <gradient:#a8e6c6:#edfff6>$<papi:vault_eco_balance_formatted></gradient>"
-      - "<#e9eef6>┆</#e9eef6> <#bcc5d4>rank</#bcc5d4> <gradient:#e6dbb5:#fff4d6><papi:luckperms_primary_group_name></gradient>"
+      - "<gray>·</gray> <#bcc5d4>health</#bcc5d4> <gradient:#ff9b9b:#ffe1e1><papi:player_health_rounded> ❤</gradient>"
+      - "<gray>·</gray> <#bcc5d4>ping</#bcc5d4> <gradient:#9bbcff:#e1ecff><papi:player_ping>ms</gradient>"
+      - "<gray>·</gray> <#bcc5d4>balance</#bcc5d4> <gradient:#a8e6c6:#edfff6>$<papi:vault_eco_balance_formatted></gradient>"
+      - "<gray>·</gray> <#bcc5d4>rank</#bcc5d4> <gradient:#e6dbb5:#fff4d6><papi:luckperms_primary_group_name></gradient>"
       - ""
       - "<gradient:#d9dfeb:#b1b9c7>· click to whisper ·</gradient>"
 
@@ -65,3 +61,6 @@ formats:
     action:
       action: SUGGEST_COMMAND
       value: "/msg <papi:player_name> Hello..."
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1

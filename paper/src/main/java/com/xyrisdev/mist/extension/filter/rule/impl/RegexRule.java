@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexRule implements FilterRule {
@@ -35,50 +36,65 @@ public class RegexRule implements FilterRule {
 			return;
 		}
 
-		for (String raw : patterns.getKeys(false)) {
-			final ConfigurationSection p = patterns.getConfigurationSection(raw);
+		for (String id : patterns.getKeys(false)) {
+			final ConfigurationSection rule = patterns.getConfigurationSection(id);
 
-			if (p == null) {
+			if (rule == null) {
+				continue;
+			}
+
+			final String regex = rule.getString("pattern");
+
+			if (regex == null || regex.isBlank()) {
 				continue;
 			}
 
 			try {
 				entries.add(new Entry(
-						Pattern.compile(raw),
-						p.getBoolean("cancel_message", true),
-						p.getString("replace_with", "***")
+						id,
+						Pattern.compile(regex),
+						rule.getBoolean("cancel", false),
+						rule.getString("replace", "***")
 				));
-
-			} catch (Exception ignored) {}
+			} catch (Exception ex) {
+				System.out.println(
+						"[RegexRule] Invalid regex '" + id + "': " + ex.getMessage()
+				);
+			}
 		}
 	}
 
 	@Override
 	public @NotNull FilterResult process(@NotNull ChatContext context) {
-		String msg = context.plain();
+		final String original = context.plain();
+		String msg = original;
 
-		for (Entry e : entries) {
-			if (!e.pattern.matcher(msg).find()) {
+		for (Entry entry : entries) {
+			final Matcher matcher = entry.pattern.matcher(msg);
+
+			if (!matcher.find()) {
 				continue;
 			}
 
-			if (e.cancel) {
+			if (entry.cancel) {
 				MistMessage.create(context.sender())
 						.id("modules.filtering.regex.blocked")
+						.placeholder("rule", entry.id)
 						.send();
 
 				return FilterResult.cancelled();
 			}
 
-			msg = e.pattern.matcher(msg).replaceAll(e.replace);
+			msg = matcher.replaceAll(entry.replace);
 		}
 
-		return msg.equals(context.plain())
+		return msg.equals(original)
 				? FilterResult.pass()
 				: FilterResult.modify(msg);
 	}
 
 	private record Entry(
+			@NotNull String id,
 			@NotNull Pattern pattern,
 			boolean cancel,
 			@NotNull String replace

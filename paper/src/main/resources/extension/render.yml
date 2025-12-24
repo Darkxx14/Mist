@@ -2,8 +2,6 @@
 # Mist Rendering
 # ───────────────────────────────────────────────────────
 
-config_version: 1
-
 inventory:
   enable: true
   prefix:
@@ -40,3 +38,6 @@ shulker_box:
   processor: "<light_purple><italic>[<papi:player_name>'s Shulker]</light_purple>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s shulker box"
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1
