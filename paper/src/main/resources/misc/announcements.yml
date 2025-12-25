@@ -1,19 +1,25 @@
 # ──────────────────────────────────────────────
-#           Mist Chat Announcements
+#            Mist Chat Announcements
 # ──────────────────────────────────────────────
 enabled: true
+# Type: sequential / random
 type: sequential
 interval: 1 minute
 
 announcements:
-  discord:
+  mist:
     type: chat
     chat:
       list:
         - " "
-        - "Discord"
-        - "<m_dark_gray>(Click to join discord)</m_dark_gray>"
+        - "<gradient:#E03261:#811937><bold>Mist</bold></gradient>"
         - " "
+        - "<m_gray>A modern, lightweight chat plugin.</m_gray>"
+        - "<m_gray>Built for performance and clean design.</m_gray>"
+        - " "
+        - "<color:#E03261><click:open_url:https://github.com/Darkxx14/Mist>github.com/Darkxx14/Mist</click></color>"
+        - " "
+
 
 # Used for migrations. DO NOT EDIT.
 config_version: 1
