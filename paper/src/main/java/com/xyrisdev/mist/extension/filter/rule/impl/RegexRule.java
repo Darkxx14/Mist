@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class RegexRule implements FilterRule {
 
-	private final List<Entry> entries = new ArrayList<>();
+	private final List<RegexEntry> entries = new ArrayList<>();
 
 	@Override
 	public @NotNull String key() {
@@ -50,7 +50,7 @@ public class RegexRule implements FilterRule {
 			}
 
 			try {
-				entries.add(new Entry(
+				entries.add(new RegexEntry(
 						id,
 						Pattern.compile(regex),
 						rule.getBoolean("cancel", false),
@@ -69,7 +69,7 @@ public class RegexRule implements FilterRule {
 		final String original = ctx.plain();
 		String msg = original;
 
-		for (Entry entry : entries) {
+		for (RegexEntry entry : entries) {
 			final Matcher matcher = entry.pattern.matcher(msg);
 
 			if (!matcher.find()) {
@@ -93,7 +93,7 @@ public class RegexRule implements FilterRule {
 				: FilterResult.modify(msg);
 	}
 
-	private record Entry(
+	private record RegexEntry(
 			@NotNull String id,
 			@NotNull Pattern pattern,
 			boolean cancel,

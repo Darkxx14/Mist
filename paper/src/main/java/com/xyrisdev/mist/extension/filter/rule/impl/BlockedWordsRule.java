@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BlockedWordsRule implements FilterRule {
 
-	private final Map<String, Entry> entries = new ConcurrentHashMap<>();
+	private final Map<String, BlockedWordsEntry> entries = new ConcurrentHashMap<>();
 
 	@Override
 	public @NotNull String key() {
@@ -47,7 +47,7 @@ public class BlockedWordsRule implements FilterRule {
 
 			entries.put(
 					normalized,
-					new Entry(
+					new BlockedWordsEntry(
 							word.getBoolean("cancel", true),
 							word.getString("replace", "***"),
 							word.getBoolean("detect_in_words", true)
@@ -61,9 +61,9 @@ public class BlockedWordsRule implements FilterRule {
 		final String plain = ctx.plain();
 		final String normalized = normalize(plain);
 
-		for (Map.Entry<String, Entry> e : entries.entrySet()) {
+		for (Map.Entry<String, BlockedWordsEntry> e : entries.entrySet()) {
 			final String word = e.getKey();
-			final Entry entry = e.getValue();
+			final BlockedWordsEntry entry = e.getValue();
 
 			final int index = normalized.indexOf(word);
 
@@ -117,7 +117,7 @@ public class BlockedWordsRule implements FilterRule {
 		return s.trim().replaceAll("\\s+", " ");
 	}
 
-	private record Entry(
+	private record BlockedWordsEntry(
 			boolean cancel,
 			@NotNull String replace,
 			boolean detectInWords

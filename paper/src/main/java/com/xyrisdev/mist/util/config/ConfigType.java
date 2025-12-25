@@ -30,6 +30,7 @@ public enum ConfigType {
 			)
 	),
 
+	// extensions
 	CHAT_FORMAT(
 			"extension/chat_format.yml",
 			new MigrationContext(
@@ -64,6 +65,17 @@ public enum ConfigType {
 			"extension/chat_filter.yml",
 			new MigrationContext(
 					"extension/chat_filter.yml",
+					"config_version",
+					"backups",
+					true
+			)
+	),
+
+	// misc extensions
+	ANNOUNCEMENTS(
+			"misc/announcements.yml",
+			new MigrationContext(
+					"misc/announcements.yml",
 					"config_version",
 					"backups",
 					true
