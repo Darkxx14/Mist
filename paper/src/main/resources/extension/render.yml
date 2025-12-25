@@ -1,13 +1,12 @@
 # ───────────────────────────────────────────────────────
 # Mist Rendering
 # ───────────────────────────────────────────────────────
-
 inventory:
   enable: true
   prefix:
     - "[inv]"
     - "[inventory]"
-  processor: "<aqua><italic>[<papi:player_name>'s Inventory]</aqua>"
+  processor: "<m_light_blue><italic>[<papi:player_name>'s Inventory]</italic></m_light_blue>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s inventory"
 
@@ -16,7 +15,7 @@ item:
   prefix:
     - "[item]"
     - "[hand]"
-  processor: "<yellow>[<item><reset><yellow>]</yellow>"
+  processor: "<m_light_green>[<item><reset><m_light_green>]</m_light_green>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s held item"
 
@@ -26,7 +25,7 @@ ender_chest:
     - "[enderchest]"
     - "[ec]"
     - "[ender]"
-  processor: "<yellow><italic>[<papi:player_name>'s Ender Chest]</yellow>"
+  processor: "<m_light_yellow><italic>[<papi:player_name>'s Ender Chest]</italic></m_light_yellow>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s ender chest"
 
@@ -35,7 +34,7 @@ shulker_box:
   prefix:
     - "[shulker]"
     - "[shulkerbox]"
-  processor: "<light_purple><italic>[<papi:player_name>'s Shulker]</light_purple>"
+  processor: "<m_light_purple><italic>[<papi:player_name>'s Shulker]</italic></m_light_purple>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s shulker box"
 

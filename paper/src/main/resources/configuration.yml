@@ -1,4 +1,69 @@
-example_text: "Test"
+# ───────────────────────────────────────────────────────
+# Mist Data
+# ───────────────────────────────────────────────────────
+#
+# Supported database types:
+# - h2       (embedded, fast, single-file)
+# - sqlite   (embedded, simple, file-based)
+# - mysql    (recommended for production)
+# - mongo    (advanced / document-based)
+#
+data:
+  type: h2
+
+  # Connection pooling settings (for SQL databases)
+  pool:
+    size: 10
+    min_idle: 2
+    max_lifetime_ms: 1800000
+    connection_timeout_ms: 5000
+
+  # H2 - (Embedded)
+  h2:
+    file: "data/mist-h2"
+    auto_reconnect: true
+
+  # SQLite - (Embedded)
+  sqlite:
+    file: "data/mist-sqlite.db"
+
+  # MySQL / MariaDB - (External)
+  mysql:
+    host: "127.0.0.1"
+    port: 3306
+    database: "mist_chat"
+    username: "mist"
+    password: "password"
+    use_ssl: false
+    parameters: "?useUnicode=true&characterEncoding=utf8&useSSL=false"
+
+  # MongoDB - (External)
+  mongo:
+    uri: "mongodb://localhost:27017"
+    database: "mist_chat"
+
+# ───────────────────────────────────────────────────────
+# Mist Communication (Redis)
+# ───────────────────────────────────────────────────────
+#
+# Used for cross-server chat synchronization.
+# Enable only if running multiple servers behind a proxy.
+#
+communication:
+  enabled: false
+
+  redis:
+    host: "127.0.0.1"
+    port: 6379
+    password: ""
+
+    # Pub/Sub channel for chat messages
+    channel: "mist:chat"
+
+    client:
+      timeout_ms: 3000
+      reconnect_delay_ms: 2000
+      pool_size: 4
 
 # Enables automatic config migration on server startup.
 #
@@ -6,8 +71,6 @@ example_text: "Test"
 # - Migration will normalize YAML formatting.
 # - Quotes, inline comments, and exact spacing are NOT preserved.
 # - Values and section comments ARE preserved.
-#
-# Disable this if you want to fully control config updates manually.
 config_migration:
   enabled: true
 

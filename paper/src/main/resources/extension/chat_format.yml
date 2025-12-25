@@ -28,35 +28,34 @@ fallback_format: default
 
 formats:
   default:
-    message: "<shadow:black><#cfd6e2><papi:luckperms_prefix></#cfd6e2><#f4f7fb><papi:player_name></#f4f7fb> <#a5adba>·</#a5adba> <#dde3ee><message></shadow>"
+    message: "<shadow:black><papi:luckperms_prefix><m_white><papi:player_name></m_white> <m_gray>·</m_gray> <m_white><message></m_white></shadow>"
 
     hover_text:
-      - "<gradient:#f7f9fc:#dde3ee><papi:player_name></gradient>"
+      - "<color:#E03261><papi:player_name></color>"
       - ""
-      - "<gray>·</gray> <#bcc5d4>health</#bcc5d4> <gradient:#ff9b9b:#ffe1e1><papi:player_health_rounded> ❤</gradient>"
-      - "<gray>·</gray> <#bcc5d4>ping</#bcc5d4> <gradient:#9bbcff:#e1ecff><papi:player_ping>ms</gradient>"
-      - "<gray>·</gray> <#bcc5d4>balance</#bcc5d4> <gradient:#a8e6c6:#edfff6>$<papi:vault_eco_balance_formatted></gradient>"
-      - "<gray>·</gray> <#bcc5d4>rank</#bcc5d4> <gradient:#e6dbb5:#fff4d6><papi:luckperms_primary_group_name></gradient>"
+      - "<m_gray>·</m_gray> <m_white>health</m_white> <color:#E03261><papi:player_health_rounded> ❤</color>"
+      - "<m_gray>·</m_gray> <m_white>ping</m_white> <color:#E03261><papi:player_ping>ms</color>"
+      - "<m_gray>·</m_gray> <m_white>balance</m_white> <color:#E03261>$<papi:vault_eco_balance_formatted></color>"
+      - "<m_gray>·</m_gray> <m_white>rank</m_white> <color:#E03261><papi:luckperms_primary_group_name></color>"
       - ""
-      - "<gradient:#d9dfeb:#b1b9c7>· click to whisper ·</gradient>"
+      - "<m_white>· click to whisper ·</m_white>"
 
     action:
       action: SUGGEST_COMMAND
       value: "/msg <papi:player_name> Hello..."
 
   vip:
-    message: "<gradient:#f1e3b6:#fff2cf><bold>VIP</bold></gradient> <#faf7f1><papi:player_name></#faf7f1> <#bdb6a6>·</#bdb6a6> <#eee7d8><message>"
+    message: "<shadow:black><papi:luckperms_prefix><m_white><papi:player_name></m_white> <m_gray>·</m_gray> <m_light_yellow><message></m_light_yellow></shadow>"
 
     hover_text:
-      - "<gradient:#fff7e6:#e8d9b2><papi:player_name></gradient> <#d8caa3>◆ VIP</#d8caa3>"
-      - "<#c2b9a6>moving softly through golden mist</#c2b9a6>"
+      - "<m_light_yellow><papi:player_name></m_light_yellow>"
       - ""
-      - "<#f0eadb>┆</#f0eadb> <#cbbfa8>health</#cbbfa8> <gradient:#ffb3b3:#ffe8e8><papi:player_health_rounded> ❤</gradient>"
-      - "<#f0eadb>┆</#f0eadb> <#cbbfa8>ping</#cbbfa8> <gradient:#a9c7ff:#eef3ff><papi:player_ping>ms</gradient>"
-      - "<#f0eadb>┆</#f0eadb> <#cbbfa8>balance</#cbbfa8> <gradient:#b6edd2:#f2fff9>$<papi:vault_eco_balance_formatted></gradient>"
-      - "<#f0eadb>┆</#f0eadb> <#cbbfa8>rank</#cbbfa8> <gradient:#f1e3b6:#fff2cf>VIP</gradient>"
+      - "<m_gray>·</m_gray> <m_white>health</m_white> <m_light_yellow><papi:player_health_rounded> ❤</m_light_yellow>"
+      - "<m_gray>·</m_gray> <m_white>ping</m_white> <m_light_yellow><papi:player_ping>ms</m_light_yellow>"
+      - "<m_gray>·</m_gray> <m_white>balance</m_white> <m_light_yellow>$<papi:vault_eco_balance_formatted></m_light_yellow>"
+      - "<m_gray>·</m_gray> <m_white>rank</m_white> <m_light_yellow><papi:luckperms_primary_group_name></m_light_yellow>"
       - ""
-      - "<gradient:#e6dcc4:#c2b9a6>· click to whisper ·</gradient>"
+      - "<m_light_yellow>· click to whisper ·</m_light_yellow>"
 
     action:
       action: SUGGEST_COMMAND

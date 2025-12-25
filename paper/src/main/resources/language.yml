@@ -1,4 +1,4 @@
-prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray>"
+prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <m_dark_gray>·</m_dark_gray>"
 
 messages:
   mist_about:
@@ -6,35 +6,34 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>About</gray>"
+        - "<prefix> <m_gray>About</m_gray>"
+        - "<smallcaps><m_light_yellow>★</m_light_yellow> <m_gray>Star On GitHub <3</m_gray></smallcaps>"
         - " "
-        - "<gray>· Author(s):</gray> <color:#E03261><authors></color>"
-        - "<gray>· Version:</gray> <color:#E03261><version></color>"
-        - "<gray>· Branch:</gray> <color:#E03261><branch></color>"
-        - "<gray>· Commit:</gray> <color:#E03261><commit_short></color>"
-        - "<gray>· Built:</gray> <color:#E03261><build_time></color>"
-        - "<gray>· Build Time:</gray> <color:#E03261><build_time_taken></color>"
+        - "<m_gray>· Author(s):</m_gray> <color:#E03261><authors></color>"
+        - "<m_gray>· Version:</m_gray> <color:#E03261><version></color>"
+        - "<m_gray>· Branch:</m_gray> <color:#E03261><branch></color>"
+        - "<m_gray>· Commit:</m_gray> <color:#E03261><commit_short></color>"
         - " "
-        - "<yellow>★</yellow> <gray>at<click:open_url:'https://github.com/Darkxx14/Mist'>GitHub</click></gray>"
+        - "<m_dark_gray>(Click to open GitHub)</m_dark_gray>"
         - " "
 
   mist_reloaded:
     type: chat, action bar
     chat:
-      text: "<prefix> <gray>Successfully reloaded in <time_taken>ms.</gray>"
+      text: "<prefix> <m_gray>Successfully reloaded in <time_taken>ms.</m_gray>"
     action_bar:
-      text: "<prefix> <gray>Successfully reloaded in <time_taken>ms.</gray>"
+      text: "<prefix> <m_gray>Successfully reloaded in <time_taken>ms.</m_gray>"
 
   mist_similarity:
     type: chat
     chat:
       list:
         - " "
-        - "<prefix> <gray>Similarity</gray>"
+        - "<prefix> <m_gray>Similarity</m_gray>"
         - " "
-        - "<gray>· Similarity:</gray> <color:#E03261><similarity>%</color>"
-        - "<gray>· Threshold:</gray> <color:#E03261><threshold>%"
-        - "<gray>· Result:</gray> <color:#E03261><result></color>"
+        - "<m_gray>· Similarity:</m_gray> <color:#E03261><similarity>%</color>"
+        - "<m_gray>· Threshold:</m_gray> <color:#E03261><threshold>%</color>"
+        - "<m_gray>· Result:</m_gray> <color:#E03261><result></color>"
         - " "
 
   chat_cleared:
@@ -42,9 +41,9 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>Chat</gray>"
+        - "<prefix> <m_gray>Chat</m_gray>"
         - " "
-        - "<gray>· The chat has been cleared.</gray>"
+        - "<m_gray>· The chat has been cleared.</m_gray>"
         - " "
 
   chat_locked:
@@ -52,9 +51,9 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>Chat</gray>"
+        - "<prefix> <m_gray>Chat</m_gray>"
         - " "
-        - "<gray>· The chat has been locked.</gray>"
+        - "<m_gray>· The chat has been locked.</m_gray>"
         - " "
 
   chat_unlocked:
@@ -62,9 +61,9 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>Chat</gray>"
+        - "<prefix> <m_gray>Chat</m_gray>"
         - " "
-        - "<gray>· The chat has been unlocked.</gray>"
+        - "<m_gray>· The chat has been unlocked.</m_gray>"
         - " "
 
   mist_regex_generate:
@@ -72,13 +71,13 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>Regex Generator</gray>"
+        - "<prefix> <m_gray>Regex Generator</m_gray>"
         - " "
-        - "<gray>· Input:</gray> <color:#E03261><input></color>"
-        - "<gray>· Generated:</gray>"
-        - "<hover:show_text:'<gray>Click to copy'><color:#E03261><regex></color></hover>"
+        - "<m_gray>· Input:</m_gray> <color:#E03261><input></color>"
+        - "<m_gray>· Generated:</m_gray>"
+        - " <hover:show_text:'<m_gray>Click to copy'><color:#E03261><regex></color></hover>"
         - " "
-        - "<dark_gray>(Click the regex to copy)</dark_gray>"
+        - "<m_dark_gray>(Click the regex to copy)</m_dark_gray>"
         - " "
 
   mist_regex_analyze:
@@ -86,28 +85,28 @@ messages:
     chat:
       list:
         - " "
-        - "<prefix> <gray>Regex Analysis</gray>"
+        - "<prefix> <m_gray>Regex Analysis</m_gray>"
         - " "
-        - "<gray>· Score:</gray> <color:#E03261><score>/100</color>"
-        - "<gray>· Verdict:</gray> <color:#E03261><verdict></color>"
-        - "<gray>· Risk:</gray> <color:#E03261><risk></color>"
-        - "<gray>· Notes:</gray> <gray><notes></gray>"
+        - "<m_gray>· Score:</m_gray> <color:#E03261><score>/100</color>"
+        - "<m_gray>· Verdict:</m_gray> <color:#E03261><verdict></color>"
+        - "<m_gray>· Risk:</m_gray> <color:#E03261><risk></color>"
+        - "<m_gray>· Notes:</m_gray> <m_gray><notes></m_gray>"
         - " "
 
   chat_already_locked:
     type: chat
     chat:
-      text: "<prefix> <gray>Chat is already locked.</gray>"
+      text: "<prefix> <m_gray>Chat is already locked.</m_gray>"
 
   chat_already_unlocked:
     type: chat
     chat:
-      text: "<prefix> <gray>Chat is already unlocked.</gray>"
+      text: "<prefix> <m_gray>Chat is already unlocked.</m_gray>"
 
   chat_locked_blocked:
     type: chat
     chat:
-      text: "<prefix> <gray>Chat is currently locked.</gray>"
+      text: "<prefix> <m_gray>Chat is currently locked.</m_gray>"
 
   modules:
     filtering:
@@ -115,39 +114,37 @@ messages:
         length:
           type: chat
           chat:
-            text: "<prefix> <gray>Your message is too long.</gray>"
+            text: "<prefix> <m_gray>Your message is too long.</m_gray>"
         repeats:
           type: chat
           chat:
-            text: "<prefix> <gray>Please avoid flooding the chat.</gray>"
+            text: "<prefix> <m_gray>Please avoid flooding the chat.</m_gray>"
 
       caps:
         type: chat
         chat:
-          text: "<prefix> <gray>Too many capital letters.</gray>"
+          text: "<prefix> <m_gray>Too many capital letters.</m_gray>"
 
       blocked_words:
         blocked:
           type: chat
           chat:
-            text: "<prefix> <gray>Your message contains inappropriate language and has been blocked.</gray>"
+            text: "<prefix> <m_gray>Your message contains inappropriate language and has been blocked.</m_gray>"
 
       regex:
         blocked:
           type: chat
           chat:
-            text: "<prefix> <gray>Your message contains forbidden content and has been blocked.</gray>"
+            text: "<prefix> <m_gray>Your message contains forbidden content and has been blocked.</m_gray>"
 
       similarity:
         type: chat
         chat:
-          text: "<prefix> <gray>Please do not repeat the same messages.</gray>"
+          text: "<prefix> <m_gray>Please do not repeat the same messages.</m_gray>"
 
       cooldown:
         type: chat
         chat:
-          text: "<prefix> <gray>Please wait <remaining> seconds before sending another message.</gray>"
+          text: "<prefix> <m_gray>Please wait <remaining> seconds before sending another message.</m_gray>"
 
-# DO NOT EDIT THIS VALUE
-# Used for automatic migration
 config_version: 1

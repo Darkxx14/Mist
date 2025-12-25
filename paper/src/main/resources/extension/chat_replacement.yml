@@ -4,38 +4,38 @@
 # Replaces message content before formatting
 # Supports simple text replacements and PAPI placeholders
 # ──────────────────────────────────────────────
-
 replacements:
   heart:
     type: STATIC
     match: "<3"
-    replace: "<red>❤</red>"
+    replace: "<m_red>❤</m_red>"
 
   smile:
     type: STATIC
     match: ":)"
-    replace: "<yellow>😊</yellow>"
+    replace: "<m_yellow>😊</m_yellow>"
 
   grin:
     type: STATIC
     match: ":D"
-    replace: "<gold>😃</gold>"
-
-  sad:
-    type: STATIC
-    match: ":("
-    replace: "<gray>☹</gray>"
+    replace: "<m_orange>😃</m_orange>"
 
   wave:
     type: STATIC
     match: "o/"
-    replace: "<yellow>👋</yellow>"
+    replace: "<m_yellow>👋</m_yellow>"
 
   balance:
     type: PAPI
     match: "<bal>"
-    processor: "<yellow><papi:player_name>'s has <papi:vault_eco_balance_formatted> Money!</yellow>"
+    processor: "<m_yellow><papi:player_name>'s has <papi:vault_eco_balance_formatted> Money!</m_yellow>"
     permission: "mist.replacements.balance"
+
+  ping:
+    type: PAPI
+    match: "<ping>"
+    processor: "<m_green><papi:player_name>'s <papi:player_ping>ms Ping!</m_green>"
+    permission: "mist.replacements.ping"
 
   location:
     type: PAPI
