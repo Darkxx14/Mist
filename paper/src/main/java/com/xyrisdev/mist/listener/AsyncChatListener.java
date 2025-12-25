@@ -5,7 +5,7 @@ import com.xyrisdev.library.event.builder.EventHandler;
 import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.api.chat.processor.result.ChatResult;
-import com.xyrisdev.mist.command.admin.subcommand.ChatCommand;
+import com.xyrisdev.mist.command.subcommand.ChatCommand;
 import com.xyrisdev.mist.listener.render.route.RoutedChatRenderer;
 import com.xyrisdev.mist.util.message.MistMessage;
 import io.papermc.paper.event.player.AsyncChatEvent;

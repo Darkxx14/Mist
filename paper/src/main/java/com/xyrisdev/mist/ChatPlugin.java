@@ -7,7 +7,7 @@ import com.xyrisdev.library.lib.Library;
 import com.xyrisdev.library.lib.feature.FeatureFlags;
 import com.xyrisdev.library.lib.feature.FeatureRegistry;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
-import com.xyrisdev.mist.command.MistCommandManager;
+import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.extension.ExtensionManager;
 import com.xyrisdev.mist.hook.HookManager;
 import com.xyrisdev.mist.listener.AsyncChatListener;

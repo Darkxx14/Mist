@@ -1,8 +1,8 @@
-package com.xyrisdev.mist.command.admin;
+package com.xyrisdev.mist.command;
 
 import com.xyrisdev.mist.ChatPlugin;
-import com.xyrisdev.mist.command.MistCommandManager;
-import com.xyrisdev.mist.command.admin.subcommand.*;
+import com.xyrisdev.mist.command.internal.MistCommandManager;
+import com.xyrisdev.mist.command.subcommand.*;
 import com.xyrisdev.mist.util.build.BuildInformation;
 import com.xyrisdev.mist.util.message.MistMessage;
 import io.papermc.paper.plugin.configuration.PluginMeta;

@@ -1,7 +1,7 @@
-package com.xyrisdev.mist.command.internal;
+package com.xyrisdev.mist.command;
 
 import com.xyrisdev.mist.ChatPlugin;
-import com.xyrisdev.mist.command.MistCommandManager;
+import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.extension.render.impl.RenderService;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.paper.PaperCommandManager;

@@ -5,10 +5,13 @@ import com.xyrisdev.mist.util.text.TextParser;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @UtilityClass
 public class ChatRenderer {
@@ -22,13 +25,20 @@ public class ChatRenderer {
 		}
 
 		if (section.isList("list")) {
-			for (String line : section.getStringList("list")) {
-				audience.sendMessage(
-						ctx.apply(
-								parse(audience, player, line)
-						)
-				);
+			final List<String> lines = section.getStringList("list");
+			if (lines.isEmpty()) {
+				return;
 			}
+
+			final Component combined = Component.join(
+					JoinConfiguration.separator(Component.newline()),
+					lines.stream()
+							.map(line -> parse(audience, player, line))
+							.map(ctx::apply)
+							.toList()
+			);
+
+			audience.sendMessage(combined);
 			return;
 		}
 

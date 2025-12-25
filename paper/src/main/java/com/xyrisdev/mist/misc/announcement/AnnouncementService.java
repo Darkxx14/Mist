@@ -4,20 +4,13 @@ import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.misc.announcement.config.AnnouncementConfiguration;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.scheduler.AnnouncementScheduler;
-import com.xyrisdev.mist.util.message.builder.object.MessageContext;
-import com.xyrisdev.mist.util.message.builder.object.MessageType;
-import com.xyrisdev.mist.util.message.effect.SoundEffect;
-import com.xyrisdev.mist.util.message.render.ActionBarRenderer;
-import com.xyrisdev.mist.util.message.render.ChatRenderer;
-import com.xyrisdev.mist.util.message.render.TitleRenderer;
+import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class AnnouncementService {
@@ -44,7 +37,7 @@ public class AnnouncementService {
 
 		scheduler.start(
 				config.interval().toMillis(),
-				this::announceOnce
+				this::announce
 		);
 	}
 
@@ -52,8 +45,9 @@ public class AnnouncementService {
 		scheduler.stop();
 	}
 
-	private void announceOnce() {
+	private void announce() {
 		final Announcement announcement = config.next();
+
 		if (announcement == null) {
 			return;
 		}
@@ -63,7 +57,7 @@ public class AnnouncementService {
 		}
 	}
 
-	public Optional<Announcement> nextPreview() {
+	public Optional<Announcement> previewNext() {
 		return config == null ? Optional.empty() : config.peekNext();
 	}
 
@@ -73,7 +67,7 @@ public class AnnouncementService {
 		}
 	}
 
-	public void forceNow(@NotNull String name) {
+	public void force(@NotNull String name) {
 		if (config == null) {
 			return;
 		}
@@ -86,34 +80,11 @@ public class AnnouncementService {
 	}
 
 	private void send(@NotNull Player player, @NotNull Announcement announcement) {
-		final EnumSet<MessageType> types = announcement.type();
-		if (types.isEmpty()) {
-			return;
-		}
-
-		final ConfigurationSection section = announcement.section();
-		final MessageContext ctx = new MessageContext(Map.of());
-
-		if (types.contains(MessageType.CHAT)) {
-			ChatRenderer.render(player, player, section, ctx);
-		}
-
-		if (types.contains(MessageType.ACTION_BAR)) {
-			ActionBarRenderer.render(player, section, ctx);
-		}
-
-		if (types.contains(MessageType.TITLE)) {
-			TitleRenderer.render(player, section, ctx);
-		}
-
-		final ConfigurationSection sound = section.getConfigurationSection("sound");
-
-		if (sound != null) {
-			SoundEffect.play(
-					player,
-					sound
-			);
-		}
+		MistMessage.create(player)
+				.config(ConfigType.ANNOUNCEMENTS)
+				.base("announcements")
+				.id(announcement.name())
+				.send();
 	}
 
 	public Optional<Announcement> find(@NotNull String name) {

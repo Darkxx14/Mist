@@ -1,11 +1,10 @@
-package com.xyrisdev.mist.command.admin.subcommand;
+package com.xyrisdev.mist.command.subcommand;
 
 import com.xyrisdev.mist.ChatPlugin;
-import com.xyrisdev.mist.command.parser.AnnouncementParser;
+import com.xyrisdev.mist.command.internal.parser.AnnouncementParser;
 import com.xyrisdev.mist.misc.announcement.AnnouncementService;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.util.message.MistMessage;
-import org.bukkit.entity.Player;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.paper.PaperCommandManager;
@@ -22,13 +21,15 @@ public class AnnouncementsCommand {
 				root.literal("announcements")
 						.permission("mist.command.announcements")
 						.literal("next")
-						.handler(this::next)
+						.literal("check")
+						.handler(this::checkNext)
 		);
 
 		manager.command(
 				root.literal("announcements")
 						.permission("mist.command.announcements")
-						.literal("setnext")
+						.literal("next")
+						.literal("set")
 						.required(
 								"announcement",
 								ParserDescriptor.of(new AnnouncementParser(), Announcement.class)
@@ -39,17 +40,17 @@ public class AnnouncementsCommand {
 		manager.command(
 				root.literal("announcements")
 						.permission("mist.command.announcements")
-						.literal("forcenow")
+						.literal("force")
 						.required(
 								"announcement",
 								ParserDescriptor.of(new AnnouncementParser(), Announcement.class)
 						)
-						.handler(this::forceNow)
+						.handler(this::force)
 		);
 	}
 
-	private void next(@NotNull CommandContext<Source> ctx) {
-		service.nextPreview().ifPresentOrElse(
+	private void checkNext(@NotNull CommandContext<Source> ctx) {
+		service.previewNext().ifPresentOrElse(
 				a -> MistMessage.create(ctx.sender().source())
 						.id("mist_announcement_next")
 						.placeholder("name", a.name())
@@ -71,16 +72,12 @@ public class AnnouncementsCommand {
 				.send();
 	}
 
-	private void forceNow(@NotNull CommandContext<Source> ctx) {
-		if (!(ctx.sender().source() instanceof Player player)) {
-			return;
-		}
-
+	private void force(@NotNull CommandContext<Source> ctx) {
 		final Announcement announcement = ctx.get("announcement");
 
-		service.forceNow(announcement.name());
+		service.force(announcement.name());
 
-		MistMessage.create(player)
+		MistMessage.create(ctx.sender().source())
 				.id("mist_announcement_forced")
 				.placeholder("name", announcement.name())
 				.send();

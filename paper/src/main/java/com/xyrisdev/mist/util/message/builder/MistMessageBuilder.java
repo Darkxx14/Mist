@@ -32,6 +32,9 @@ public class MistMessageBuilder {
 
 	private UnaryOperator<Component> interceptor;
 
+	private ConfigType configType = ConfigType.LANGUAGE;
+	private String basePath = "messages";
+
 	public MistMessageBuilder(@NotNull CommandSender sender) {
 		this.audience = sender;
 		this.player = sender instanceof Player p ? p : null;
@@ -52,6 +55,16 @@ public class MistMessageBuilder {
 		return this;
 	}
 
+	public @NotNull MistMessageBuilder config(@NotNull ConfigType type) {
+		this.configType = type;
+		return this;
+	}
+
+	public @NotNull MistMessageBuilder base(@NotNull String basePath) {
+		this.basePath = basePath;
+		return this;
+	}
+
 	public @NotNull MistMessageBuilder interceptor(@NotNull UnaryOperator<Component> interceptor) {
 		this.interceptor = interceptor;
 		return this;
@@ -61,9 +74,9 @@ public class MistMessageBuilder {
 		Objects.requireNonNull(id, "Message id must be set");
 
 		final ConfigurationSection section = ChatPlugin.instance()
-						.configRegistry()
-						.get(ConfigType.LANGUAGE)
-						.getSection("messages." + id);
+				.configRegistry()
+				.get(configType)
+				.getSection(basePath + "." + id);
 
 		if (section == null) {
 			return;

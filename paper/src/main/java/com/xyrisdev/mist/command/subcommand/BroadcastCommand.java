@@ -1,4 +1,4 @@
-package com.xyrisdev.mist.command.admin.subcommand;
+package com.xyrisdev.mist.command.subcommand;
 
 import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;

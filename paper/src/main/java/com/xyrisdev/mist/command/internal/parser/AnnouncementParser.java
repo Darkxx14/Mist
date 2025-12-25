@@ -1,20 +1,17 @@
-package com.xyrisdev.mist.command.parser;
+package com.xyrisdev.mist.command.internal.parser;
 
 import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.command.internal.exception.HandledParseException;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
-import org.incendo.cloud.component.CommandComponent;
+import com.xyrisdev.mist.util.message.MistMessage;
 import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.context.CommandInput;
-import org.incendo.cloud.exception.ArgumentParseException;
 import org.incendo.cloud.parser.ArgumentParseResult;
 import org.incendo.cloud.parser.ArgumentParser;
 import org.incendo.cloud.paper.util.sender.Source;
 import org.incendo.cloud.suggestion.BlockingSuggestionProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-@SuppressWarnings("unchecked")
 public class AnnouncementParser implements ArgumentParser<Source, Announcement> {
 
 	@Override
@@ -25,12 +22,12 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 				.announcements()
 				.find(name)
 				.map(ArgumentParseResult::success)
-				.orElseGet(() -> ArgumentParseResult.failure(
-						new ArgumentParseException(
-								new IllegalArgumentException("Unknown announcement: " + name),
-								name,
-								(List<CommandComponent<?>>) (List<?>) ctx.command().components()
-						)
+				.orElseThrow(() -> HandledParseException.handle(
+						name,
+						() -> MistMessage.create(ctx.sender().source())
+								.id("mist_announcement_invalid")
+								.placeholder("name", name)
+								.send()
 				));
 	}
 

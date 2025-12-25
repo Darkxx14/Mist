@@ -1,4 +1,4 @@
-package com.xyrisdev.mist.command.admin.subcommand;
+package com.xyrisdev.mist.command.subcommand;
 
 import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.util.message.MistMessage;

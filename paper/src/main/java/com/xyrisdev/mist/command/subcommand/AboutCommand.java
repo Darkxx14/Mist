@@ -1,6 +1,6 @@
-package com.xyrisdev.mist.command.admin.subcommand;
+package com.xyrisdev.mist.command.subcommand;
 
-import com.xyrisdev.mist.command.admin.MistCommand;
+import com.xyrisdev.mist.command.MistCommand;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.Source;

@@ -13,13 +13,15 @@ public class AnnouncementScheduler {
 		this.plugin = plugin;
 	}
 
-	public void start(long intervalMillis, @NotNull Runnable action) {
+	public void start(long intervalMs, @NotNull Runnable action) {
 		stop();
+
+		final long ticks = Math.max(1L, intervalMs / 50L);
 
 		this.task = plugin.scheduler().runTimerAsync(
 				action,
-				intervalMillis,
-				intervalMillis
+				ticks,
+				ticks
 		);
 	}
 
