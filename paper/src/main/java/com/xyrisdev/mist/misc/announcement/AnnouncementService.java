@@ -6,10 +6,12 @@ import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.scheduler.AnnouncementScheduler;
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
+import com.xyrisdev.mist.util.message.effect.SoundEffect;
 import com.xyrisdev.mist.util.message.render.ActionBarRenderer;
 import com.xyrisdev.mist.util.message.render.ChatRenderer;
 import com.xyrisdev.mist.util.message.render.TitleRenderer;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +52,6 @@ public class AnnouncementService {
 
 	private void announceOnce() {
 		final Announcement announcement = config.next();
-
 		if (announcement == null) {
 			return;
 		}
@@ -66,18 +67,28 @@ public class AnnouncementService {
 			return;
 		}
 
+		final ConfigurationSection section = announcement.section();
 		final MessageContext ctx = new MessageContext(Map.of());
 
 		if (types.contains(MessageType.CHAT)) {
-			ChatRenderer.render(player, player, announcement.section(), ctx);
+			ChatRenderer.render(player, player, section, ctx);
 		}
 
 		if (types.contains(MessageType.ACTION_BAR)) {
-			ActionBarRenderer.render(player, announcement.section(), ctx);
+			ActionBarRenderer.render(player, section, ctx);
 		}
 
 		if (types.contains(MessageType.TITLE)) {
-			TitleRenderer.render(player, announcement.section(), ctx);
+			TitleRenderer.render(player, section, ctx);
+		}
+
+		final ConfigurationSection sound = section.getConfigurationSection("sound");
+
+		if (sound != null) {
+			SoundEffect.play(
+					player,
+					sound
+			);
 		}
 	}
 }
