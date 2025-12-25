@@ -1,0 +1,83 @@
+package com.xyrisdev.mist.misc.announcement;
+
+import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.misc.announcement.config.AnnouncementConfiguration;
+import com.xyrisdev.mist.misc.announcement.object.Announcement;
+import com.xyrisdev.mist.misc.announcement.scheduler.AnnouncementScheduler;
+import com.xyrisdev.mist.util.message.builder.object.MessageContext;
+import com.xyrisdev.mist.util.message.builder.object.MessageType;
+import com.xyrisdev.mist.util.message.render.ActionBarRenderer;
+import com.xyrisdev.mist.util.message.render.ChatRenderer;
+import com.xyrisdev.mist.util.message.render.TitleRenderer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.EnumSet;
+import java.util.Map;
+
+public class AnnouncementService {
+
+	private final AnnouncementScheduler scheduler;
+	private AnnouncementConfiguration config;
+
+	public AnnouncementService(@NotNull ChatPlugin plugin) {
+		this.scheduler = new AnnouncementScheduler(plugin);
+	}
+
+	public void start() {
+		reload();
+	}
+
+	public void reload() {
+		scheduler.stop();
+
+		this.config = AnnouncementConfiguration.load();
+
+		if (!config.enabled()) {
+			return;
+		}
+
+		scheduler.start(
+				config.interval().toMillis(),
+				this::announceOnce
+		);
+	}
+
+	public void stop() {
+		scheduler.stop();
+	}
+
+	private void announceOnce() {
+		final Announcement announcement = config.next();
+
+		if (announcement == null) {
+			return;
+		}
+
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			send(player, announcement);
+		}
+	}
+
+	private void send(@NotNull Player player, @NotNull Announcement announcement) {
+		final EnumSet<MessageType> types = announcement.type();
+		if (types.isEmpty()) {
+			return;
+		}
+
+		final MessageContext ctx = new MessageContext(Map.of());
+
+		if (types.contains(MessageType.CHAT)) {
+			ChatRenderer.render(player, player, announcement.section(), ctx);
+		}
+
+		if (types.contains(MessageType.ACTION_BAR)) {
+			ActionBarRenderer.render(player, announcement.section(), ctx);
+		}
+
+		if (types.contains(MessageType.TITLE)) {
+			TitleRenderer.render(player, announcement.section(), ctx);
+		}
+	}
+}

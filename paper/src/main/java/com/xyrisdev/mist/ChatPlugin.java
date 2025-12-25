@@ -12,14 +12,15 @@ import com.xyrisdev.mist.extension.ExtensionManager;
 import com.xyrisdev.mist.hook.HookManager;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
-import com.xyrisdev.mist.util.matcher.LeetMap;
+import com.xyrisdev.mist.misc.announcement.AnnouncementService;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
-@Accessors(chain = true, fluent = true)
+@Accessors(fluent = true)
 public final class ChatPlugin extends AbstractPlugin {
 
     @Getter
@@ -37,18 +38,22 @@ public final class ChatPlugin extends AbstractPlugin {
     @Getter
     private ChatProcessor chatProcessor;
 
+    @Getter
+    private AnnouncementService announcements;
+
     @Override
     protected void load() {
         instance = this;
+        Library.of(this, "mist-paper");
     }
 
     @Override
     protected void run() {
-        Library.of(this, "mist-paper");
-
         this.configRegistry = ConfigRegistry.load();
+
         this.folia = new FoliaLib(this);
         this.scheduler = folia.getScheduler();
+
         this.chatProcessor = ExtensionManager.register();
 
         LeetMap.load(this.configRegistry);
@@ -60,16 +65,23 @@ public final class ChatPlugin extends AbstractPlugin {
         PlayerQuitListener.listener().register();
 
         MistCommandManager.of(this);
+
+        // misc
+        this.announcements = new AnnouncementService(this);
+        this.announcements.start();
     }
 
     @Override
     protected void shutdown() {
-        HookManager.of().unload();
-
-        if (this.folia != null) {
-            this.folia.getScheduler().cancelAllTasks();
+        if (this.scheduler != null) {
+            this.scheduler.cancelAllTasks();
         }
 
+        if (this.announcements != null) {
+            this.announcements.stop();
+        }
+
+        HookManager.of().unload();
         instance = null;
     }
 
@@ -89,5 +101,7 @@ public final class ChatPlugin extends AbstractPlugin {
 
         LeetMap.load(this.configRegistry);
         RegexGenerator.index();
+
+        this.announcements.reload();
     }
 }

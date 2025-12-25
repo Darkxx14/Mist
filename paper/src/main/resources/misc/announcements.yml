@@ -1,0 +1,19 @@
+# ──────────────────────────────────────────────
+#           Mist Chat Announcements
+# ──────────────────────────────────────────────
+enabled: true
+type: sequential
+interval: 1 minute
+
+announcements:
+  discord:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "Discord"
+        - "<m_dark_gray>(Click to join discord)</m_dark_gray>"
+        - " "
+
+# Used for migrations. DO NOT EDIT.
+config_version: 1
