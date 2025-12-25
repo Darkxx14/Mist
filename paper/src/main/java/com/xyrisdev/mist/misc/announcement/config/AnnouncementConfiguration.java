@@ -23,6 +23,7 @@ public class AnnouncementConfiguration {
 	private final List<Announcement> announcements;
 
 	private int index;
+	private Announcement forcedNext;
 
 	private AnnouncementConfiguration(boolean enabled, AnnouncementType type, Duration interval, List<Announcement> announcements) {
 		this.enabled = enabled;
@@ -59,7 +60,11 @@ public class AnnouncementConfiguration {
 					continue;
 				}
 
-				list.add(new Announcement(types, section));
+				list.add(new Announcement(
+						key,
+						types,
+						section
+				));
 			}
 		}
 
@@ -79,7 +84,37 @@ public class AnnouncementConfiguration {
 		return interval;
 	}
 
+	public Optional<Announcement> peekNext() {
+		if (forcedNext != null) {
+			return Optional.of(forcedNext);
+		}
+
+		if (announcements.isEmpty()) {
+			return Optional.empty();
+		}
+
+		if (type == AnnouncementType.RANDOM) {
+			return Optional.of(
+					announcements.get(
+							ThreadLocalRandom.current().nextInt(announcements.size())
+					)
+			);
+		}
+
+		return Optional.of(
+				announcements.get(
+						Math.floorMod(index, announcements.size())
+				)
+		);
+	}
+
 	public Announcement next() {
+		if (forcedNext != null) {
+			final Announcement a = forcedNext;
+			forcedNext = null;
+			return a;
+		}
+
 		if (type == AnnouncementType.RANDOM) {
 			return announcements.get(
 					ThreadLocalRandom.current().nextInt(announcements.size())
@@ -89,5 +124,24 @@ public class AnnouncementConfiguration {
 		return announcements.get(
 				Math.floorMod(index++, announcements.size())
 		);
+	}
+
+	public Optional<Announcement> find(@NotNull String name) {
+		return announcements.stream()
+				.filter(a -> a.name().equalsIgnoreCase(name))
+				.findFirst();
+	}
+
+	public void next(@NotNull String name) {
+		for (int i = 0; i < announcements.size(); i++) {
+			if (announcements.get(i).name().equalsIgnoreCase(name)) {
+				this.index = i;
+				return;
+			}
+		}
+	}
+
+	public List<Announcement> announcements() {
+		return announcements;
 	}
 }

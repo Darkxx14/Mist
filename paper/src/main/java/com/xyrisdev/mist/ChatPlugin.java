@@ -61,14 +61,14 @@ public final class ChatPlugin extends AbstractPlugin {
 
         HookManager.of().load(this);
 
+        // misc
+        this.announcements = new AnnouncementService(this);
+        this.announcements.start();
+
         AsyncChatListener.listener().register();
         PlayerQuitListener.listener().register();
 
         MistCommandManager.of(this);
-
-        // misc
-        this.announcements = new AnnouncementService(this);
-        this.announcements.start();
     }
 
     @Override

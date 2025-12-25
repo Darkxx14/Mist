@@ -33,6 +33,7 @@ public class MistCommand {
 		new ChatCommand().register(manager, root);
 		new RegexCommand().register(manager, root);
 		new AboutCommand().register(manager, root);
+		new AnnouncementsCommand().register(manager, root);
 	}
 
 	public static void about(@NotNull CommandContext<Source> ctx) {

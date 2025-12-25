@@ -136,7 +136,7 @@ paper {
     foliaSupported = true
     generateLibrariesJson = true
 
-    authors = listOf("Darkxx")
+    authors = listOf("darkxx16")
 
     serverDependencies {
         register("PlaceholderAPI") {
@@ -161,6 +161,7 @@ paper {
                 "mist.command.chat",
                 "mist.command.regex",
                 "mist.command.about",
+                "mist.command.announcements",
 
                 //bypass
                 "mist.bypass.chat"
@@ -199,6 +200,11 @@ paper {
 
         register("mist.command.about") {
             description = "About"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        register("mist.command.announcements") {
+            description = "Announcements"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 

@@ -108,6 +108,36 @@ messages:
     chat:
       text: "<prefix> <m_gray>Chat is currently locked.</m_gray>"
 
+  mist_announcement_next:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Announcements</m_gray>"
+        - " "
+        - "<m_gray>· Next announcement:</m_gray> <color:#E03261><name></color>"
+        - " "
+
+  mist_announcement_none:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>No announcements are currently configured.</m_gray>"
+
+  mist_announcement_invalid:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Unknown announcement:</m_gray> <color:#E03261><name></color>"
+
+  mist_announcement_setnext:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Next announcement set to</m_gray> <color:#E03261><name></color>."
+
+  mist_announcement_forced:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Announcement</m_gray> <color:#E03261><name></color> <m_gray>sent immediately.</m_gray>"
+
   modules:
     filtering:
       flood:

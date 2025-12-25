@@ -16,7 +16,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class AnnouncementService {
 
@@ -61,6 +63,28 @@ public class AnnouncementService {
 		}
 	}
 
+	public Optional<Announcement> nextPreview() {
+		return config == null ? Optional.empty() : config.peekNext();
+	}
+
+	public void setNext(@NotNull String name) {
+		if (config != null) {
+			config.next(name);
+		}
+	}
+
+	public void forceNow(@NotNull String name) {
+		if (config == null) {
+			return;
+		}
+
+		config.find(name).ifPresent(announcement -> {
+			for (Player online : Bukkit.getOnlinePlayers()) {
+				send(online, announcement);
+			}
+		});
+	}
+
 	private void send(@NotNull Player player, @NotNull Announcement announcement) {
 		final EnumSet<MessageType> types = announcement.type();
 		if (types.isEmpty()) {
@@ -90,5 +114,21 @@ public class AnnouncementService {
 					sound
 			);
 		}
+	}
+
+	public Optional<Announcement> find(@NotNull String name) {
+		return config == null
+				? Optional.empty()
+				: config.find(name);
+	}
+
+	public List<String> announcementNames() {
+		if (config == null) {
+			return List.of();
+		}
+
+		return config.announcements().stream()
+				.map(Announcement::name)
+				.toList();
 	}
 }

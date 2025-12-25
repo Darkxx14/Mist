@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.EnumSet;
 
 public record Announcement(
+		@NotNull String name,
 		@NotNull EnumSet<MessageType> type,
 		@NotNull ConfigurationSection section
 ) {}
