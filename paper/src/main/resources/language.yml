@@ -1,6 +1,23 @@
 prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray>"
 
 messages:
+  mist_about:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <gray>About</gray>"
+        - " "
+        - "<gray>· Author(s):</gray> <color:#E03261><authors></color>"
+        - "<gray>· Version:</gray> <color:#E03261><version></color>"
+        - "<gray>· Branch:</gray> <color:#E03261><branch></color>"
+        - "<gray>· Commit:</gray> <color:#E03261><commit_short></color>"
+        - "<gray>· Built:</gray> <color:#E03261><build_time></color>"
+        - "<gray>· Build Time:</gray> <color:#E03261><build_time_taken></color>"
+        - " "
+        - "<yellow>★</yellow> <gray>at<click:open_url:'https://github.com/Darkxx14/Mist'>GitHub</click></gray>"
+        - " "
+
   mist_reloaded:
     type: chat, action bar
     chat:
@@ -59,12 +76,12 @@ messages:
         - " "
         - "<gray>· Input:</gray> <color:#E03261><input></color>"
         - "<gray>· Generated:</gray>"
-        - "<click:copy_to_clipboard:<regex>><hover:show_text:'<gray>Click to copy'><color:#E03261><regex></color></hover></click>"
+        - "<hover:show_text:'<gray>Click to copy'><color:#E03261><regex></color></hover>"
         - " "
         - "<dark_gray>(Click the regex to copy)</dark_gray>"
         - " "
 
-  mist_regex_check:
+  mist_regex_analyze:
     type: chat
     chat:
       list:

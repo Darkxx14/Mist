@@ -1,5 +1,6 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import net.minecrell.pluginyml.paper.PaperPluginDescription
+import xyz.jpenilla.runpaper.task.RunServer
 import xyz.jpenilla.runtask.task.AbstractRun
 
 plugins {
@@ -11,7 +12,10 @@ plugins {
 
 val branch = BuildInformation.branch()
 val module = BuildInformation.module(project)
-val version = BuildInformation.version(project)
+val buildVersion = BuildInformation.version(project)
+
+val commit = BuildInformation.commit()
+val commitShort = BuildInformation.commitShort()
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
@@ -52,12 +56,12 @@ tasks.withType<Javadoc>().configureEach {
 
 tasks.withType<AbstractArchiveTask>().configureEach {
     archiveBaseName.set("mist-$module")
-    archiveVersion.set(version)
-    archiveClassifier.set(branch)
+    archiveVersion.set(buildVersion)
+    archiveClassifier.set(commitShort)
 }
 
 tasks.shadowJar {
-    archiveClassifier.set(branch)
+    archiveClassifier.set(commitShort)
 }
 
 tasks.jar {
@@ -73,29 +77,37 @@ tasks.build {
 }
 
 tasks.processResources {
-    inputs.properties(
-        mapOf(
-            "module" to module,
-            "version" to version,
-            "branch" to branch
-        )
-    )
-
     filesMatching("**/build.properties") {
         expand(
             "module" to module,
-            "version" to version,
-            "branch" to branch
+            "version" to buildVersion,
+            "branch" to branch,
+            "commit" to commit,
+            "commit_short" to commitShort
         )
     }
 }
 
-tasks {
-    runServer {
-        minecraftVersion("1.21.8")
-        legacyPluginLoading()
+runPaper.folia.registerTask()
 
-    }
+val plugins = runPaper.downloadPluginsSpec {
+    modrinth("viaversion", "5.6.0")
+    modrinth("viabackwards", "5.6.0")
+    modrinth("placeholderapi", "2.11.7")
+    url("https://ci.lucko.me/job/LuckPerms-Folia/lastBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-5.5.11.jar")
+}
+
+tasks.withType<RunServer>().configureEach {
+    minecraftVersion("1.21.8")
+    downloadPlugins.from(plugins)
+}
+
+tasks.named<RunServer>("runServer") {
+    runDirectory.set(rootProject.layout.projectDirectory.dir("servers/paper"))
+}
+
+tasks.named<RunServer>("runFolia") {
+    runDirectory.set(rootProject.layout.projectDirectory.dir("servers/folia"))
 }
 
 @Suppress("UnstableApiUsage")
@@ -105,28 +117,26 @@ tasks.withType<AbstractRun>().configureEach {
         languageVersion = JavaLanguageVersion.of(21)
     }
 
-    runDirectory = rootDir.resolve("dev-env/")
-
-    jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-Dcom.mojang.eula.agree=true")
-}
-
-tasks.runServer {
-    dependsOn(tasks.shadowJar)
+    jvmArgs(
+        "-XX:+AllowEnhancedClassRedefinition",
+        "-Dcom.mojang.eula.agree=true",
+        "-Dnet.kyori.ansi.colorLevel=truecolor"
+    )
 }
 
 paper {
     name = "Mist"
-    version = "$version-$branch"
+    version = "$buildVersion-$commitShort"
     apiVersion = "1.21"
 
-    main = "com.xyrisdev.mist.MistPaperPlugin"
+    main = "com.xyrisdev.mist.ChatPlugin"
     bootstrapper = "com.xyrisdev.mist.loader.MistPaperBootstrapper"
     loader = "com.xyrisdev.mist.loader.MistPaperLibraryLoader"
 
-    generateLibrariesJson = true
     foliaSupported = true
+    generateLibrariesJson = true
 
-    authors = listOf("XyrisDevelopment", "Darkxx")
+    authors = listOf("Darkxx")
 
     serverDependencies {
         register("PlaceholderAPI") {
@@ -144,34 +154,55 @@ paper {
             description = "Full access to Mist"
             default = BukkitPluginDescription.Permission.Default.OP
             children = listOf(
-                "mist.commands.reload",
-                "mist.commands.broadcast",
-                "mist.commands.similarity",
-                "mist.commands.chat",
+                "mist.command",
+                "mist.command.reload",
+                "mist.command.broadcast",
+                "mist.command.similarity",
+                "mist.command.chat",
+                "mist.command.regex",
+                "mist.command.about",
+
+                //bypass
                 "mist.bypass.chat"
             )
         }
 
-        register("mist.commands.reload") {
+        register("mist.command") {
+            description = "Access to /mist"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        register("mist.command.reload") {
             description = "Reload Mist configuration"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
-        register("mist.commands.broadcast") {
+        register("mist.command.broadcast") {
             description = "Broadcast"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
-        register("mist.commands.similarity") {
+        register("mist.command.similarity") {
             description = "Similarity"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
-        register("mist.commands.chat") {
+        register("mist.command.chat") {
             description = "Chat"
             default = BukkitPluginDescription.Permission.Default.OP
         }
 
+        register("mist.command.regex") {
+            description = "Regex"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        register("mist.command.about") {
+            description = "About"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+
+        // bypass
         register("mist.bypass.chat") {
             description = "Bypass Chat Lock"
             default = BukkitPluginDescription.Permission.Default.OP

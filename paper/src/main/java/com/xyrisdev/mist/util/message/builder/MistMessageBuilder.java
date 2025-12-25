@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.util.message.builder;
 
-import com.xyrisdev.mist.MistPaperPlugin;
+import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.util.config.ConfigType;
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
@@ -60,7 +60,7 @@ public class MistMessageBuilder {
 	public void send() {
 		Objects.requireNonNull(id, "Message id must be set");
 
-		final ConfigurationSection section = MistPaperPlugin.instance()
+		final ConfigurationSection section = ChatPlugin.instance()
 						.configRegistry()
 						.get(ConfigType.LANGUAGE)
 						.getSection("messages." + id);
@@ -75,7 +75,7 @@ public class MistMessageBuilder {
 			return;
 		}
 
-		final String prefix = MistPaperPlugin.instance()
+		final String prefix = ChatPlugin.instance()
 				.configRegistry()
 				.get(ConfigType.LANGUAGE)
 				.getString("prefix", "");

@@ -2,7 +2,7 @@ package com.xyrisdev.mist.listener;
 
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
-import com.xyrisdev.mist.MistPaperPlugin;
+import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.api.chat.processor.result.ChatResult;
 import com.xyrisdev.mist.command.admin.subcommand.ChatCommand;
@@ -33,7 +33,7 @@ public class AsyncChatListener {
 							event.message()
 					);
 
-					MistPaperPlugin.instance()
+					ChatPlugin.instance()
 							.chatProcessor()
 							.process(ctx);
 

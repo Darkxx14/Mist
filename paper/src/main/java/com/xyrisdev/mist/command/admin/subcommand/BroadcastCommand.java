@@ -18,7 +18,7 @@ public class BroadcastCommand {
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(
 				root.literal("broadcast")
-						.permission("mist.commands.broadcast")
+						.permission("mist.command.broadcast")
 						.literal("chat")
 						.required("message", StringParser.greedyStringParser())
 						.handler(this::chat)
@@ -26,7 +26,7 @@ public class BroadcastCommand {
 
 		manager.command(
 				root.literal("broadcast")
-						.permission("mist.commands.broadcast")
+						.permission("mist.command.broadcast")
 						.literal("actionbar")
 						.required("message", StringParser.greedyStringParser())
 						.handler(this::actionBar)
@@ -34,7 +34,7 @@ public class BroadcastCommand {
 
 		manager.command(
 				root.literal("broadcast")
-						.permission("mist.commands.broadcast")
+						.permission("mist.command.broadcast")
 						.literal("title")
 						.required("message", StringParser.greedyStringParser())
 						.handler(this::title)

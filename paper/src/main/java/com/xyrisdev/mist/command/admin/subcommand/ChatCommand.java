@@ -22,19 +22,19 @@ public class ChatCommand {
 
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(root.literal("chat")
-				.permission("mist.commands.chat")
+				.permission("mist.command.chat")
 				.literal("clear")
 				.handler(this::clear)
 		);
 
 		manager.command(root.literal("chat")
-				.permission("mist.commands.chat")
+				.permission("mist.command.chat")
 				.literal("lock")
 				.handler(this::lock)
 		);
 
 		manager.command(root.literal("chat")
-				.permission("mist.commands.chat")
+				.permission("mist.command.chat")
 				.literal("unlock")
 				.handler(this::unlock)
 		);

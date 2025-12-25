@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.extension;
 
-import com.xyrisdev.mist.MistPaperPlugin;
+import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.api.chat.extension.ExtensionRegistry;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.extension.filter.ChatFilterExtension;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class ExtensionManager {
 
 	public static @NotNull ChatProcessor register() {
-		final ConfigRegistry registry = MistPaperPlugin.instance().configRegistry();
+		final ConfigRegistry registry = ChatPlugin.instance().configRegistry();
 
 		final FilterConfiguration filterConfig = FilterConfigurationLoader.load(registry.get(ConfigType.CHAT_FILTER));
 		final ReplacementsConfiguration replacementsConfig = ReplacementsConfigurationLoader.load(registry.get(ConfigType.CHAT_REPLACEMENTS));

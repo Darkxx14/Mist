@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.command.admin.subcommand;
 
-import com.xyrisdev.mist.MistPaperPlugin;
+import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
 import com.xyrisdev.mist.util.config.ConfigType;
 import com.xyrisdev.mist.util.message.MistMessage;
@@ -16,7 +16,7 @@ public class SimilarityCommand {
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(
 				root.literal("similarity")
-						.permission("mist.commands.similarity")
+						.permission("mist.command.similarity")
 						.required("s1", StringParser.stringParser())
 						.required("s2", StringParser.stringParser())
 						.handler(this::similarity)
@@ -29,7 +29,7 @@ public class SimilarityCommand {
 
 		final double similarity = SimilarityMatcher.similarity(s1, s2);
 
-		final double threshold = MistPaperPlugin.instance()
+		final double threshold = ChatPlugin.instance()
 				.configRegistry()
 				.get(ConfigType.CHAT_FILTER)
 				.getDouble("similarity.threshold", 0.60);

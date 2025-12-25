@@ -16,7 +16,7 @@ public class RegexCommand {
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(
 				root.literal("regex")
-						.permission("mist.commands.regex")
+						.permission("mist.command.regex")
 						.literal("generate")
 						.required("text", StringParser.greedyStringParser())
 						.handler(this::generate)
@@ -24,10 +24,10 @@ public class RegexCommand {
 
 		manager.command(
 				root.literal("regex")
-						.permission("mist.commands.regex")
-						.literal("check")
+						.permission("mist.command.regex")
+						.literal("analyze")
 						.required("regex", StringParser.greedyStringParser())
-						.handler(this::check)
+						.handler(this::analyze)
 		);
 	}
 
@@ -45,12 +45,12 @@ public class RegexCommand {
 				.send();
 	}
 
-	private void check(@NotNull CommandContext<Source> ctx) {
+	private void analyze(@NotNull CommandContext<Source> ctx) {
 		final String regex = ctx.get("regex");
 		final RegexHealthAnalyzer.Result r = RegexHealthAnalyzer.analyze(regex);
 
 		MistMessage.create(ctx.sender().source())
-				.id("mist_regex_check")
+				.id("mist_regex_analyze")
 				.placeholder("score", String.valueOf(r.score()))
 				.placeholder("verdict", r.verdict().name())
 				.placeholder("risk", r.risk().name())

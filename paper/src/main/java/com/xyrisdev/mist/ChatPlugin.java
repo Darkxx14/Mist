@@ -20,10 +20,10 @@ import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
 @Accessors(chain = true, fluent = true)
-public final class MistPaperPlugin extends AbstractPlugin {
+public final class ChatPlugin extends AbstractPlugin {
 
     @Getter
-    private static MistPaperPlugin instance;
+    private static ChatPlugin instance;
 
     @Getter
     private ConfigRegistry configRegistry;

@@ -51,17 +51,8 @@ blocked_words:
 regex:
   enabled: true
   patterns:
-    kys:
-      pattern: (?i)kys
-      cancel: true
-
-    sexy:
-      pattern: '(?i)\b[s][e][x][y]'
-      cancel: false
-      replace: "hot"
-
-    links:
-      pattern: (?i)(https?|www\\.)
+    ascii:
+      pattern: '[^\x20-\x7E\p{Sc}]'
       cancel: true
 
 # Used for migrations. DO NOT EDIT.
