@@ -22,8 +22,13 @@ public class SimilarityRule implements FilterRule {
 	private double threshold;
 
 	@Override
-	public @NotNull String key() {
+	public @NotNull String name() {
 		return "similarity";
+	}
+
+	@Override
+	public @NotNull String displayName() {
+		return "Similar Message";
 	}
 
 	@Override

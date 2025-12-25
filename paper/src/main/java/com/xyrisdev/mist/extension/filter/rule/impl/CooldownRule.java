@@ -21,8 +21,13 @@ public class CooldownRule implements FilterRule {
 	private int seconds;
 
 	@Override
-	public @NotNull String key() {
+	public @NotNull String name() {
 		return "cooldown";
+	}
+
+	@Override
+	public @NotNull String displayName() {
+		return "Cooldown";
 	}
 
 	@Override

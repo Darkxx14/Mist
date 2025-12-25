@@ -14,8 +14,13 @@ public class CapsRule implements FilterRule {
 	private double ratio;
 
 	@Override
-	public @NotNull String key() {
+	public @NotNull String name() {
 		return "caps";
+	}
+
+	@Override
+	public @NotNull String displayName() {
+		return "Excessive Caps";
 	}
 
 	@Override

@@ -6,7 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 public interface FilterRule {
 
-	@NotNull String key();
+	@NotNull String name();
+	@NotNull String displayName();
 
 	int priority();
 

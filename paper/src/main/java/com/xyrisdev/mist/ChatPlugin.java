@@ -44,13 +44,13 @@ public final class ChatPlugin extends AbstractPlugin {
     @Override
     protected void load() {
         instance = this;
-        Library.of(this, "mist-paper");
     }
 
     @Override
     protected void run() {
-        this.configRegistry = ConfigRegistry.load();
+        Library.of(this, "mist-paper");
 
+        this.configRegistry = ConfigRegistry.load();
         this.folia = new FoliaLib(this);
         this.scheduler = folia.getScheduler();
 

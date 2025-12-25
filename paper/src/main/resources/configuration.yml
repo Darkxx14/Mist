@@ -65,6 +65,14 @@ communication:
       reconnect_delay_ms: 2000
       pool_size: 4
 
+staff_alerts:
+  enabled: true
+  notify_on_cancel: true
+  notify_on_modify: true
+  disabled_rules:
+    - cooldown
+    - similarity
+
 # Enables automatic config migration on server startup.
 #
 # ⚠ IMPORTANT:

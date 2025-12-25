@@ -13,8 +13,13 @@ public class FloodRule implements FilterRule {
 	private int maxRepeats;
 
 	@Override
-	public @NotNull String key() {
+	public @NotNull String name() {
 		return "flood";
+	}
+
+	@Override
+	public @NotNull String displayName() {
+		return "Chat Flooding";
 	}
 
 	@Override

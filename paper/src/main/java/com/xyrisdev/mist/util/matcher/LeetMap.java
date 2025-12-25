@@ -41,7 +41,13 @@ public class LeetMap {
 					continue;
 				}
 
-				resolved.put(raw.charAt(0), target);
+				final char source = raw.charAt(0);
+
+				if (Character.isLetter(source)) {
+					continue;
+				}
+
+				resolved.put(source, target);
 			}
 		}
 
@@ -49,6 +55,10 @@ public class LeetMap {
 	}
 
 	public static char map(char input) {
+		if (Character.isLetter(input)) {
+			return input;
+		}
+
 		return MAP.getOrDefault(input, input);
 	}
 
@@ -56,13 +66,9 @@ public class LeetMap {
 		final StringBuilder out = new StringBuilder(input.length());
 
 		for (char c : input.toCharArray()) {
-			out.append(MAP.getOrDefault(c, c));
+			out.append(map(c));
 		}
 
 		return out.toString();
-	}
-
-	public static boolean isMapped(char input) {
-		return MAP.containsKey(input);
 	}
 }

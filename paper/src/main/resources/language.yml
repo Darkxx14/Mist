@@ -177,4 +177,31 @@ messages:
         chat:
           text: "<prefix> <m_gray>Please wait <remaining> seconds before sending another message.</m_gray>"
 
+  alert_cancelled:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Alert</m_gray>"
+        - " "
+        - "<m_gray>A message has been automatically blocked.</m_gray>"
+        - "<m_gray>· Player:</m_gray> <color:#E03261><player></color>"
+        - "<m_gray>· Content:</m_gray> <color:#E03261><message></color>"
+        - "<m_gray>· Rule:</m_gray> <color:#E03261><rule_display></color>"
+        - " "
+
+  alert_modified:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Alert</m_gray>"
+        - " "
+        - "<m_gray>A message has been automatically modified.</m_gray>"
+        - "<m_gray>· Player:</m_gray> <color:#E03261><player></color>"
+        - "<m_gray>· Original:</m_gray> <color:#E03261><message></color>"
+        - "<m_gray>· Updated:</m_gray> <color:#E03261><modified_message></color>"
+        - "<m_gray>· Rule:</m_gray> <color:#E03261><rule_display></color>"
+        - " "
+
 config_version: 1

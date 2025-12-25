@@ -17,8 +17,13 @@ public class RegexRule implements FilterRule {
 	private final List<RegexEntry> entries = new ArrayList<>();
 
 	@Override
-	public @NotNull String key() {
+	public @NotNull String name() {
 		return "regex";
+	}
+
+	@Override
+	public @NotNull String displayName() {
+		return "Regex Pattern";
 	}
 
 	@Override
