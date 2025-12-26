@@ -13,9 +13,7 @@ import java.nio.file.Path;
 public class DatabaseProviders {
 
 	public static @NotNull DatabaseProvider create(@NotNull CachableConfiguration config) {
-		final DatabaseType type = DatabaseType.parse(
-				config.getString("data.type", "sqlite")
-		);
+		final DatabaseType type = DatabaseType.parse(config.getString("data.type", "sqlite"));
 
 		final Path dataDir = ChatPlugin.instance()
 				.getDataFolder()

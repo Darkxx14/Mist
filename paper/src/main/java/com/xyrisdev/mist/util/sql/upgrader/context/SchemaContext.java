@@ -1,3 +1,7 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader.context;
 
 import com.xyrisdev.mist.util.sql.upgrader.runnable.SQLRunnable;
@@ -9,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public final class SchemaContext {
+public class SchemaContext {
 
 	private final Connection conn;
 
@@ -22,14 +26,13 @@ public final class SchemaContext {
 		this.table = new SchemaTable(conn, dialect);
 	}
 
-	public static @NotNull SchemaContext open(@NotNull Connection conn)
-			throws SQLException {
-
+	public static @NotNull SchemaContext open(@NotNull Connection conn) throws SQLException {
 		return new SchemaContext(conn, SqlDialect.detect(conn));
 	}
 
 	public void transaction(@NotNull SQLRunnable action) throws SQLException {
-		boolean auto = conn.getAutoCommit();
+		final boolean auto = conn.getAutoCommit();
+
 		conn.setAutoCommit(false);
 
 		try {

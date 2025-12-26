@@ -1,7 +1,12 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader.meta;
 
 import com.xyrisdev.mist.util.sql.object.SQLSchemaDefinition;
 import com.xyrisdev.mist.util.sql.upgrader.dialect.SqlDialect;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public final class SchemaMeta {
+public class SchemaMeta {
 
 	private static final String TABLE = "mist_schema_meta";
 	private static final String KEY = "schema_key";
@@ -23,7 +28,7 @@ public final class SchemaMeta {
 		this.dialect = dialect;
 	}
 
-	public int version(SQLSchemaDefinition schema) throws SQLException {
+	public int version(@NotNull SQLSchemaDefinition schema) throws SQLException {
 		ensure();
 
 		final String sql = "SELECT " + dialect.q(VALUE) +
@@ -41,7 +46,7 @@ public final class SchemaMeta {
 		}
 	}
 
-	public void write(SQLSchemaDefinition schema) throws SQLException {
+	public void write(@NotNull SQLSchemaDefinition schema) throws SQLException {
 		dialect.writeVersion(
 				conn,
 				schema.table() + "_version",

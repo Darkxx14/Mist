@@ -1,3 +1,7 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader.dialect;
 
 import org.jetbrains.annotations.NotNull;
@@ -113,15 +117,10 @@ public enum SqlDialect {
 
 	public abstract String metaDDL();
 
-	public abstract void writeVersion(Connection c, String k, String v)
-			throws SQLException;
+	public abstract void writeVersion(Connection c, String k, String v) throws SQLException;
 
-	protected void exec(
-			Connection c, String sqlFormat,
-			String key, String value, String @NotNull ... extra
-	) throws SQLException {
-
-		String sql = String.format(
+	protected void exec(Connection c, String sqlFormat, String key, String value, String @NotNull ... extra) throws SQLException {
+		final String sql = String.format(
 				sqlFormat,
 				q("mist_schema_meta"),
 				q("schema_key"),

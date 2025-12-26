@@ -1,3 +1,7 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader.table;
 
 import com.xyrisdev.mist.util.sql.object.SQLColumn;
@@ -14,7 +18,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public final class SchemaTable {
+public class SchemaTable {
 
 	private final Connection conn;
 	private final SqlDialect dialect;

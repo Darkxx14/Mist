@@ -1,3 +1,7 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader.runnable;
 
 import java.sql.SQLException;

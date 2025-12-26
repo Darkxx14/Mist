@@ -1,3 +1,7 @@
+/**
+ * External utility class.
+ * Maintained by Mist.
+ */
 package com.xyrisdev.mist.util.sql.upgrader;
 
 import com.xyrisdev.mist.util.sql.object.SQLSchemaDefinition;
@@ -13,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @UtilityClass
-public final class SchemaUpgrader {
+public class SchemaUpgrader {
 
 	private static final Logger log = LoggerFactory.getLogger(SchemaUpgrader.class);
 
