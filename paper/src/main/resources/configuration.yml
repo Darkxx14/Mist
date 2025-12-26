@@ -9,7 +9,7 @@
 # - mongo    (advanced / document-based)
 #
 data:
-  type: h2
+  type: sqlite
 
   # Connection pooling settings (for SQL databases)
   pool:
@@ -21,7 +21,6 @@ data:
   # H2 - (Embedded)
   h2:
     file: "data/mist-h2"
-    auto_reconnect: true
 
   # SQLite - (Embedded)
   sqlite:
@@ -31,16 +30,19 @@ data:
   mysql:
     host: "127.0.0.1"
     port: 3306
-    database: "mist_chat"
-    username: "mist"
+    database: "mist"
+    username: "darkxx16"
     password: "password"
     use_ssl: false
-    parameters: "?useUnicode=true&characterEncoding=utf8&useSSL=false"
+    parameters: "?useUnicode=true&characterEncoding=utf8"
 
   # MongoDB - (External)
   mongo:
     uri: "mongodb://localhost:27017"
-    database: "mist_chat"
+    database: "mist"
+
+    collections:
+      users: "mist_users"
 
 # ───────────────────────────────────────────────────────
 # Mist Communication (Redis)

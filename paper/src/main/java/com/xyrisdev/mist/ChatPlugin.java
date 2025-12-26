@@ -8,17 +8,26 @@ import com.xyrisdev.library.lib.feature.FeatureFlags;
 import com.xyrisdev.library.lib.feature.FeatureRegistry;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
+import com.xyrisdev.mist.data.DatabaseProvider;
+import com.xyrisdev.mist.data.DatabaseProviders;
 import com.xyrisdev.mist.extension.ExtensionManager;
 import com.xyrisdev.mist.hook.HookManager;
 import com.xyrisdev.mist.listener.AsyncChatListener;
+import com.xyrisdev.mist.listener.PlayerJoinListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.misc.announcement.AnnouncementService;
+import com.xyrisdev.mist.user.ChatUserManager;
+import com.xyrisdev.mist.util.config.ConfigType;
 import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
+import com.xyrisdev.mist.util.time.IntervalParseUtil;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 @Accessors(fluent = true)
 public final class ChatPlugin extends AbstractPlugin {
@@ -41,6 +50,12 @@ public final class ChatPlugin extends AbstractPlugin {
     @Getter
     private AnnouncementService announcements;
 
+    @Getter
+    private DatabaseProvider database;
+
+    @Getter
+    private ChatUserManager userManager;
+
     @Override
     protected void load() {
         instance = this;
@@ -54,20 +69,39 @@ public final class ChatPlugin extends AbstractPlugin {
         this.folia = new FoliaLib(this);
         this.scheduler = folia.getScheduler();
 
+        // database
+        this.database = DatabaseProviders.create(this.configRegistry.get(ConfigType.CONFIGURATION));
+        this.database.connect();
+
+        // user cache & manager
+        this.userManager = new ChatUserManager(this.database.users());
+        this.userManager.autoFlush(
+                IntervalParseUtil.parse(
+                        this.configRegistry.get(ConfigType.CONFIGURATION)
+                                .getString("data.auto_save_interval", "5m")
+                )
+        );
+
+        // chat processor
         this.chatProcessor = ExtensionManager.register();
 
+        // matcher utilities
         LeetMap.load(this.configRegistry);
         RegexGenerator.index();
 
+        // plugin hooks
         HookManager.of().load(this);
 
-        // misc
+        // misc features
         this.announcements = new AnnouncementService(this);
         this.announcements.start();
 
+        // listeners
         AsyncChatListener.listener().register();
+        PlayerJoinListener.listener().register();
         PlayerQuitListener.listener().register();
 
+        // commands
         MistCommandManager.of(this);
     }
 
@@ -75,10 +109,23 @@ public final class ChatPlugin extends AbstractPlugin {
     protected void shutdown() {
         if (this.scheduler != null) {
             this.scheduler.cancelAllTasks();
+            this.scheduler = null;
         }
 
         if (this.announcements != null) {
             this.announcements.stop();
+            this.announcements = null;
+        }
+
+        if (this.userManager != null) {
+            this.userManager.shutdown();
+            this.userManager.invalidateAll();
+            this.userManager = null;
+        }
+
+        if (this.database != null) {
+            this.database.shutdown();
+            this.database = null;
         }
 
         HookManager.of().unload();

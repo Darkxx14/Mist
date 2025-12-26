@@ -43,6 +43,13 @@ dependencies {
     paperLibrary(libs.evo.inflector)
     paperLibrary(libs.cloud.paper)
     paperLibrary(libs.folia.lib)
+    paperLibrary(libs.h2)
+    paperLibrary(libs.mongodb.driver.sync)
+    paperLibrary(libs.hikaricp)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.withType<JavaCompile>().configureEach {
