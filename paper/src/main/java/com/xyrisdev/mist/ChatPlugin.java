@@ -26,9 +26,6 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
 @Accessors(fluent = true)
 public final class ChatPlugin extends AbstractPlugin {
 
