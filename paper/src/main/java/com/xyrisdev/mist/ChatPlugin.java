@@ -11,7 +11,7 @@ import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.data.DatabaseProvider;
 import com.xyrisdev.mist.data.DatabaseProviders;
 import com.xyrisdev.mist.extension.ExtensionManager;
-import com.xyrisdev.mist.hook.HookManager;
+import com.xyrisdev.mist.hook.impl.*;
 import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerJoinListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
@@ -87,7 +87,8 @@ public final class ChatPlugin extends AbstractPlugin {
         RegexGenerator.index();
 
         // plugin hooks
-        HookManager.of().load(this);
+        LuckPermsHook.hook().register();
+        PlaceholderAPIHook.hook().register();
 
         // misc features
         this.announcements = new AnnouncementService(this);
@@ -125,7 +126,6 @@ public final class ChatPlugin extends AbstractPlugin {
             this.database = null;
         }
 
-        HookManager.of().unload();
         instance = null;
     }
 

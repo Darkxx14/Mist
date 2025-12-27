@@ -1,41 +1,35 @@
 package com.xyrisdev.mist.hook.impl;
 
-import com.xyrisdev.mist.hook.AbstractHook;
+import com.xyrisdev.mist.hook.MistHook;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+public class LuckPermsHook {
 
-public class LuckPermsHook extends AbstractHook {
+	private static @Nullable LuckPerms api;
 
-	private static LuckPerms luckPerms;
-
-	@Contract(pure = true)
-	@Override
-	protected @NotNull String id() {
-		return "LuckPerms";
+	public static @NotNull MistHook hook() {
+		return MistHook.builder()
+				.plugin("LuckPerms")
+				.onLoad(l -> {
+					api = Bukkit.getServicesManager().load(LuckPerms.class);
+				})
+				.onFail(() -> {
+					throw new IllegalStateException("LuckPerms is required");
+				})
+				.log(true)
+				.success("LuckPerms hooked")
+				.failure("LuckPerms not found")
+				.build();
 	}
 
-	@Override
-	protected boolean required() {
-		return true;
-	}
+	public static @NotNull LuckPerms luckPerms() {
+		if (api == null) {
+			throw new IllegalStateException("LuckPerms not initialized");
+		}
 
-	@Override
-	protected void run() {
-		luckPerms = Objects.requireNonNull(Bukkit.getServicesManager()
-						.getRegistration(LuckPerms.class))
-						.getProvider();
-	}
-
-	@Override
-	protected void shutdown() {
-		luckPerms = null;
-	}
-
-	public static LuckPerms luckPerms() {
-		return luckPerms;
+		return api;
 	}
 }
