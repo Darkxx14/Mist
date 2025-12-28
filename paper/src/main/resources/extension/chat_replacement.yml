@@ -1,9 +1,14 @@
-# ──────────────────────────────────────────────
-#           Mist Chat Replacements
-# ──────────────────────────────────────────────
-# Replaces message content before formatting
-# Supports simple text replacements and PAPI placeholders
-# ──────────────────────────────────────────────
+# ───────────────────────────────────────────────────────
+# chat replacements
+# ───────────────────────────────────────────────────────
+#
+# replaces message content before formatting is applied.
+# supports static text replacements and papi-based processors.
+#
+# types:
+# - static: simple text replacement
+# - papi: dynamic replacement using placeholderapi
+#
 replacements:
   heart:
     type: STATIC
@@ -43,5 +48,6 @@ replacements:
     processor: "At <papi:player_x>, <papi:player_y>, <papi:player_z>"
     permission: "" # no permission required
 
-# Used for migrations. DO NOT EDIT.
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

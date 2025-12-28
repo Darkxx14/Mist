@@ -29,18 +29,18 @@ public class FloodRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		maxLength = section.getInt("maximum_length", 100);
-		maxRepeats = section.getInt("maximum_repeated_chars", 5);
+		this.maxLength = section.getInt("maximum_length", 100);
+		this.maxRepeats = section.getInt("maximum_repeated_chars", 5);
 	}
 
 	@Override
 	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
 		final String msg = ctx.plain();
 
-		if (msg.length() > maxLength) {
+		if (msg.length() > this.maxLength) {
 			MistMessage.create(ctx.sender())
 					.id("modules.filtering.flood.length")
-					.placeholder("max", String.valueOf(maxLength))
+					.placeholder("max", String.valueOf(this.maxLength))
 					.send();
 
 			return FilterResult.cancelled();
@@ -50,10 +50,10 @@ public class FloodRule implements FilterRule {
 
 		for (int i = 1; i < msg.length(); i++) {
 			if (msg.charAt(i) == msg.charAt(i - 1)) {
-				if (++streak > maxRepeats) {
+				if (++streak > this.maxRepeats) {
 					MistMessage.create(ctx.sender())
 							.id("modules.filtering.flood.repeats")
-							.placeholder("max", String.valueOf(maxRepeats))
+							.placeholder("max", String.valueOf(this.maxRepeats))
 							.send();
 
 					return FilterResult.cancelled();

@@ -21,7 +21,7 @@ public class ReplacementStage implements ChatProcessStage {
 		final Player player = ctx.sender();
 		Component message = ctx.message();
 
-		for (UnifiedReplacement replacement : config.replacements()) {
+		for (UnifiedReplacement replacement : this.config.replacements()) {
 
 			if (!replacement.canApply(player)) {
 				continue;

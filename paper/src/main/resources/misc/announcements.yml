@@ -1,8 +1,19 @@
-# ──────────────────────────────────────────────
-#            Mist Chat Announcements
-# ──────────────────────────────────────────────
+# ───────────────────────────────────────────────────────
+# chat announcements
+# ───────────────────────────────────────────────────────
+#
+# controls automatic chat announcements.
+# announcements can be sent sequentially or randomly.
+#
+# settings:
+# - enabled: toggles announcements globally
+# - type: sequential / random
+# - interval: time between announcements
+#
 enabled: true
-# Type: sequential / random
+
+# sequential = in order
+# random     = random pick
 type: sequential
 interval: 1 minute
 
@@ -20,6 +31,6 @@ announcements:
         - "<color:#E03261><click:open_url:https://github.com/Darkxx14/Mist>github.com/Darkxx14/Mist</click></color>"
         - " "
 
-
-# Used for migrations. DO NOT EDIT.
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

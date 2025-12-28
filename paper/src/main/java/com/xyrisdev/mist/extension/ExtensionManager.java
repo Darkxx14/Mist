@@ -15,8 +15,8 @@ import com.xyrisdev.mist.extension.render.config.loader.RenderConfigurationLoade
 import com.xyrisdev.mist.extension.replacement.ChatReplacementExtension;
 import com.xyrisdev.mist.extension.replacement.config.ReplacementsConfiguration;
 import com.xyrisdev.mist.extension.replacement.config.loader.ReplacementsConfigurationLoader;
-import com.xyrisdev.mist.util.config.ConfigType;
-import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.config.ConfigType;
+import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import org.jetbrains.annotations.NotNull;
 
 public class ExtensionManager {

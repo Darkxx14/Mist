@@ -17,20 +17,16 @@ public class RenderService {
 	private final RenderCache cache = new RenderCache();
 
 	public @NotNull UUID capture(@NotNull RenderEntry entry) {
-		cache.put(entry);
+		this.cache.put(entry);
 		return entry.id();
 	}
 
-	public RenderEntry access(@NotNull UUID id) {
-		return cache.get(id);
-	}
-
 	public void invalidate(@NotNull Player player) {
-		cache.invalidate(player);
+		this.cache.invalidate(player);
 	}
 
 	public void render(@NotNull Player viewer, @NotNull UUID id) {
-		final RenderEntry entry = cache.get(id);
+		final RenderEntry entry = this.cache.get(id);
 
 		if (entry == null) {
 			return;

@@ -30,9 +30,9 @@ public class CapsRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		type = CapsRuleType.valueOf(section.getString("type", "RATIO").toUpperCase());
-		maxCaps = section.getInt("max_caps", 5);
-		ratio = section.getDouble("ratio", 0.7);
+		this.type = CapsRuleType.valueOf(section.getString("type", "RATIO").toUpperCase());
+		this.maxCaps = section.getInt("max_caps", 5);
+		this.ratio = section.getDouble("ratio", 0.7);
 	}
 
 	@Override
@@ -44,20 +44,20 @@ public class CapsRule implements FilterRule {
 			if (Character.isUpperCase(c)) caps++;
 		}
 
-		if (type == CapsRuleType.DEFINED && caps > maxCaps) {
+		if (this.type == CapsRuleType.DEFINED && caps > this.maxCaps) {
 			MistMessage.create(ctx.sender())
 					.id("modules.filtering.caps")
-					.placeholder("max", String.valueOf(maxCaps))
+					.placeholder("max", String.valueOf(this.maxCaps))
 					.send();
 
 			return FilterResult.cancelled();
 		}
 
-		if (type == CapsRuleType.RATIO && !msg.isEmpty()) {
-			if ((double) caps / msg.length() > ratio) {
+		if (this.type == CapsRuleType.RATIO && !msg.isEmpty()) {
+			if ((double) caps / msg.length() > this.ratio) {
 				MistMessage.create(ctx.sender())
 						.id("modules.filtering.caps")
-						.placeholder("max", String.valueOf(maxCaps))
+						.placeholder("max", String.valueOf(this.maxCaps))
 						.send();
 
 				return FilterResult.cancelled();

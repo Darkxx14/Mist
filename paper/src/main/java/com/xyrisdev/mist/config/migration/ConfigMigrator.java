@@ -1,7 +1,7 @@
-package com.xyrisdev.mist.util.config.migration;
+package com.xyrisdev.mist.config.migration;
 
 import com.xyrisdev.library.lib.Library;
-import com.xyrisdev.mist.util.config.migration.context.MigrationContext;
+import com.xyrisdev.mist.config.migration.context.MigrationContext;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 

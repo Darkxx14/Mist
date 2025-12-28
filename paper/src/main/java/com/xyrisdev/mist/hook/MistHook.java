@@ -13,12 +13,9 @@ import java.util.function.Consumer;
 @Builder
 @Accessors(fluent = true)
 public record MistHook(
-		@NotNull String plugin,
-		@NotNull Consumer<@NotNull Plugin> onLoad,
-		@Nullable Runnable onFail,
-		boolean log,
-		@Nullable String success,
-		@Nullable String failure
+		@NotNull String plugin, @NotNull Consumer<@NotNull Plugin> onLoad,
+		@Nullable Runnable onFail, boolean log,
+		@Nullable String success, @Nullable String failure
 ) {
 
 	public void register() {

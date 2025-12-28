@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.util.matcher;
 
-import com.xyrisdev.mist.util.config.ConfigType;
-import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.config.ConfigType;
+import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import lombok.experimental.UtilityClass;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;

@@ -3,6 +3,8 @@ package com.xyrisdev.mist.command.internal;
 import com.xyrisdev.mist.command.MistCallbackCommand;
 import com.xyrisdev.mist.command.MistCommand;
 import com.xyrisdev.mist.command.internal.exception.HandledParseException;
+import com.xyrisdev.mist.command.player.IgnoreCommand;
+import com.xyrisdev.mist.command.player.ToggleCommands;
 import org.bukkit.plugin.Plugin;
 import org.incendo.cloud.execution.ExecutionCoordinator;
 import org.incendo.cloud.paper.PaperCommandManager;
@@ -42,7 +44,14 @@ public class MistCommandManager {
 	}
 
 	private static void commands() {
+		// admin command
 		MistCommand.register();
+
+		// internal command
 		MistCallbackCommand.register();
+
+		// player commands
+		ToggleCommands.register();
+		IgnoreCommand.register();
 	}
 }

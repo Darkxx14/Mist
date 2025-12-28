@@ -1,4 +1,4 @@
-package com.xyrisdev.mist.util.config.migration.context;
+package com.xyrisdev.mist.config.migration.context;
 
 import com.xyrisdev.library.lib.Library;
 import org.jetbrains.annotations.Contract;

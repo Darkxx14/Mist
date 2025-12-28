@@ -20,7 +20,7 @@ public class MessageContext {
 	}
 
 	public void component(@NotNull String key, @NotNull Component component) {
-		componentPlaceholders.put(key, component);
+		this.componentPlaceholders.put(key, component);
 	}
 
 	public void interceptor(@NotNull UnaryOperator<Component> interceptor) {
@@ -30,20 +30,20 @@ public class MessageContext {
 	public @NotNull Component apply(@NotNull Component component) {
 		Component result = component;
 
-		for (Map.Entry<String, Component> entry : componentPlaceholders.entrySet()) {
+		for (Map.Entry<String, Component> entry : this.componentPlaceholders.entrySet()) {
 			result = result.replaceText(builder ->
 					builder.matchLiteral("<" + entry.getKey() + ">")
 							.replacement(entry.getValue())
 			);
 		}
 
-		for (Map.Entry<String, String> entry : stringPlaceholders.entrySet()) {
+		for (Map.Entry<String, String> entry : this.stringPlaceholders.entrySet()) {
 			result = result.replaceText(builder ->
 					builder.matchLiteral("<" + entry.getKey() + ">")
 							.replacement(entry.getValue())
 			);
 		}
 
-		return interceptor != null ? interceptor.apply(result) : result;
+		return this.interceptor != null ? this.interceptor.apply(result) : result;
 	}
 }

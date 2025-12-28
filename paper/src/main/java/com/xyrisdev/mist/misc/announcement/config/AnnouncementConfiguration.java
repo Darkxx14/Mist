@@ -4,7 +4,7 @@ import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.object.AnnouncementType;
-import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
 import com.xyrisdev.mist.util.time.IntervalParseUtil;
 import org.bukkit.configuration.ConfigurationSection;

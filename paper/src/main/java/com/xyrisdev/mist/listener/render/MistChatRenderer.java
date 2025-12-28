@@ -12,11 +12,11 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatFormatRenderer {
+public class MistChatRenderer {
 
 	@SuppressWarnings("deprecation")
-	public static @NotNull ChatRenderer.ViewerUnaware render(@NotNull ChatContext ctx) {
-		return (player, displayName, message) -> {
+	public static @NotNull ChatRenderer render(@NotNull ChatContext ctx) {
+		return (player, displayName, message, $$$$) -> {
 			final FormatEntry entry = ctx.attributes(Key.key("mist", "render"), FormatEntry.class);
 
 			if (entry == null) {

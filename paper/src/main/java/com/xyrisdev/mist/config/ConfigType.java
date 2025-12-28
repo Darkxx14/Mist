@@ -1,6 +1,6 @@
-package com.xyrisdev.mist.util.config;
+package com.xyrisdev.mist.config;
 
-import com.xyrisdev.mist.util.config.migration.context.MigrationContext;
+import com.xyrisdev.mist.config.migration.context.MigrationContext;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -87,6 +87,16 @@ public enum ConfigType {
 			"internal/leetmap.yml",
 			new MigrationContext(
 					"internal/leetmap.yml",
+					"config_version",
+					"backups",
+					true
+			)
+	),
+
+	COMMANDS(
+			"internal/commands.yml",
+			new MigrationContext(
+					"internal/commands.yml",
 					"config_version",
 					"backups",
 					true

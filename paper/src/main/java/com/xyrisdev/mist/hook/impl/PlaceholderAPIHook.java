@@ -46,8 +46,8 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 		}
 
 		final ChatUser user = ChatPlugin.instance()
-				.userManager()
-				.get(player.getUniqueId());
+							 .userManager()
+							 .get(player.getUniqueId());
 
 		if (user == null) {
 			return null;

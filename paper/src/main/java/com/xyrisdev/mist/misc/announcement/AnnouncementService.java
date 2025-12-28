@@ -1,10 +1,11 @@
 package com.xyrisdev.mist.misc.announcement;
 
 import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.misc.announcement.config.AnnouncementConfiguration;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.scheduler.AnnouncementScheduler;
-import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -52,9 +53,15 @@ public class AnnouncementService {
 			return;
 		}
 
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			send(player, announcement);
-		}
+		Bukkit.getOnlinePlayers().stream()
+				.filter(player -> {
+					final ChatUser user = ChatPlugin.instance()
+										 .userManager()
+										 .get(player.getUniqueId());
+
+					return user != null && user.settings().announcements();
+				})
+				.forEach(player -> send(player, announcement));
 	}
 
 	public Optional<Announcement> previewNext() {
@@ -72,11 +79,17 @@ public class AnnouncementService {
 			return;
 		}
 
-		config.find(name).ifPresent(announcement -> {
-			for (Player online : Bukkit.getOnlinePlayers()) {
-				send(online, announcement);
-			}
-		});
+		config.find(name).ifPresent(announcement ->
+				Bukkit.getOnlinePlayers().stream()
+						.filter(player -> {
+							final ChatUser user = ChatPlugin.instance()
+												 .userManager()
+												 .get(player.getUniqueId());
+
+							return user != null && user.settings().announcements();
+						})
+						.forEach(player -> send(player, announcement))
+		);
 	}
 
 	private void send(@NotNull Player player, @NotNull Announcement announcement) {

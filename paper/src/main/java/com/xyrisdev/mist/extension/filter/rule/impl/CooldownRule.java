@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class CooldownRule implements FilterRule {
 
 	private static final Cache<UUID, Long> CACHE = Caffeine.newBuilder()
-			.expireAfterWrite(5, TimeUnit.MINUTES)
-			.build();
+						  .expireAfterWrite(5, TimeUnit.MINUTES)
+						  .build();
 
 	private int seconds;
 
@@ -37,7 +37,7 @@ public class CooldownRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		seconds = section.getInt("cooldown_seconds", 3);
+		this.seconds = section.getInt("cooldown_seconds", 3);
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class CooldownRule implements FilterRule {
 		final UUID id = ctx.sender().getUniqueId();
 		final Long last = CACHE.getIfPresent(id);
 
-		if (last != null && (now - last) < seconds * 1000L) {
-			final long remaining = seconds - ((now - last) / 1000L);
+		if (last != null && (now - last) < this.seconds * 1000L) {
+			final long remaining = this.seconds - ((now - last) / 1000L);
 
 			MistMessage.create(ctx.sender())
 					.id("modules.filtering.cooldown")

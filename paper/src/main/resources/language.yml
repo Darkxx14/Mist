@@ -1,3 +1,40 @@
+# ───────────────────────────────────────────────────────
+# language configuration
+# ───────────────────────────────────────────────────────
+#
+# controls all user-facing messages used by mist.
+# messages can be rendered in chat, action bar, and titles.
+#
+# message structure:
+# each message defines one or more render targets via `type`.
+# supported targets: chat, action bar, title
+#
+# formatting:
+# - adventure minimessage + legacy color codes (&, &#hex)
+# - custom mist colors (<m_color>)
+#
+# placeholders:
+# - internal placeholders (<placeholder>)
+# - placeholderapi placeholders (<papi:...>)
+#
+# example:
+# example_message:
+#   type: chat, action bar, title
+#   chat:
+#     text: "Chat message"
+#     list:
+#       - "First line"
+#       - "Second line"
+#   action_bar:
+#     text: "Action bar message"
+#   title:
+#     text: "Title"
+#     subtitle: "Subtitle"
+#     fade_in: 10
+#     stay: 40
+#     fade_out: 10
+#
+
 prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <m_dark_gray>·</m_dark_gray>"
 
 messages:
@@ -138,6 +175,49 @@ messages:
     chat:
       text: "<prefix> <m_gray>Announcement</m_gray> <color:#E03261><name></color> <m_gray>sent immediately.</m_gray>"
 
+  mist_dump_start:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Creating dump...</m_gray>"
+
+  mist_dump_success:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Dump</m_gray>"
+        - " "
+        - "<m_gray>· Dump created successfully.</m_gray>"
+        - "<m_gray>· URL:</m_gray> <hover:show_text:'<m_gray>Click to open'><color:#E03261><url></color></hover>"
+        - " "
+        - "<m_dark_gray>(Click the link to open the dump)</m_dark_gray>"
+        - " "
+
+  mist_dump_failed:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Dump</m_gray>"
+        - " "
+        - "<m_gray>· Failed to create server dump.</m_gray>"
+        - "<m_gray>· Error:</m_gray> <m_red><error></m_red>"
+        - " "
+
+  alert_modified:
+    type: chat
+    chat:
+      list:
+        - " "
+        - "<prefix> <m_gray>Alert</m_gray>"
+        - " "
+        - "<m_gray>A message has been automatically modified.</m_gray>"
+        - "<m_gray>· Player:</m_gray> <color:#E03261><player></color>"
+        - "<m_gray>· Original:</m_gray> <color:#E03261><message></color>"
+        - "<m_gray>· Updated:</m_gray> <color:#E03261><modified_message></color>"
+        - "<m_gray>· Rule:</m_gray> <color:#E03261><rule_display></color>"
+        - " "
+
   modules:
     filtering:
       flood:
@@ -190,18 +270,26 @@ messages:
         - "<m_gray>· Rule:</m_gray> <color:#E03261><rule_display></color>"
         - " "
 
-  alert_modified:
+  toggle_global_chat:
     type: chat
     chat:
-      list:
-        - " "
-        - "<prefix> <m_gray>Alert</m_gray>"
-        - " "
-        - "<m_gray>A message has been automatically modified.</m_gray>"
-        - "<m_gray>· Player:</m_gray> <color:#E03261><player></color>"
-        - "<m_gray>· Original:</m_gray> <color:#E03261><message></color>"
-        - "<m_gray>· Updated:</m_gray> <color:#E03261><modified_message></color>"
-        - "<m_gray>· Rule:</m_gray> <color:#E03261><rule_display></color>"
-        - " "
+      text: "<prefix> <m_gray>Global chat has been <color:#E03261><state></color>.</m_gray>"
 
+  toggle_private_messages:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Private messages have been <color:#E03261><state></color>.</m_gray>"
+
+  toggle_mentions:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Mentions have been <color:#E03261><state></color>.</m_gray>"
+
+  toggle_announcements:
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>Announcements have been <color:#E03261><state></color>.</m_gray>"
+
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

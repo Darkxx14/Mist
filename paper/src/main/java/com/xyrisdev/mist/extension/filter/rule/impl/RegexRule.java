@@ -33,7 +33,7 @@ public class RegexRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		entries.clear();
+		this.entries.clear();
 
 		final ConfigurationSection patterns = section.getConfigurationSection("patterns");
 
@@ -55,7 +55,7 @@ public class RegexRule implements FilterRule {
 			}
 
 			try {
-				entries.add(new RegexEntry(
+				this.entries.add(new RegexEntry(
 						id,
 						Pattern.compile(regex),
 						rule.getBoolean("cancel", false),
@@ -74,7 +74,7 @@ public class RegexRule implements FilterRule {
 		final String original = ctx.plain();
 		String msg = original;
 
-		for (RegexEntry entry : entries) {
+		for (RegexEntry entry : this.entries) {
 			final Matcher matcher = entry.pattern.matcher(msg);
 
 			if (!matcher.find()) {

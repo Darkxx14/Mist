@@ -1,8 +1,8 @@
-package com.xyrisdev.mist.util.config.registry;
+package com.xyrisdev.mist.config.registry;
 
 import com.xyrisdev.library.config.CachableConfiguration;
-import com.xyrisdev.mist.util.config.ConfigType;
-import com.xyrisdev.mist.util.config.migration.ConfigMigrator;
+import com.xyrisdev.mist.config.ConfigType;
+import com.xyrisdev.mist.config.migration.ConfigMigrator;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

@@ -37,37 +37,37 @@ public class RenderStage implements ChatProcessStage {
 		final String message = ctx.plain();
 		final Player player = ctx.sender();
 
-		if (config.inventory().enable()) {
-			for (String prefix : config.inventory().prefix()) {
+		if (this.config.inventory().enable()) {
+			for (String prefix : this.config.inventory().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.INVENTORY, config.inventory().processor(), prefix);
+					render(ctx, player, RenderType.INVENTORY, this.config.inventory().processor(), prefix);
 					return;
 				}
 			}
 		}
 
-		if (config.item().enable()) {
-			for (String prefix : config.item().prefix()) {
+		if (this.config.item().enable()) {
+			for (String prefix : this.config.item().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.ITEM, config.item().processor(), prefix);
+					render(ctx, player, RenderType.ITEM, this.config.item().processor(), prefix);
 					return;
 				}
 			}
 		}
 
-		if (config.enderChest().enable()) {
-			for (String prefix : config.enderChest().prefix()) {
+		if (this.config.enderChest().enable()) {
+			for (String prefix : this.config.enderChest().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.ENDER_CHEST, config.enderChest().processor(), prefix);
+					render(ctx, player, RenderType.ENDER_CHEST, this.config.enderChest().processor(), prefix);
 					return;
 				}
 			}
 		}
 
-		if (config.shulkerBox().enable()) {
-			for (String prefix : config.shulkerBox().prefix()) {
+		if (this.config.shulkerBox().enable()) {
+			for (String prefix : this.config.shulkerBox().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.SHULKER_BOX, config.shulkerBox().processor(), prefix);
+					render(ctx, player, RenderType.SHULKER_BOX, this.config.shulkerBox().processor(), prefix);
 					return;
 				}
 			}
@@ -78,17 +78,17 @@ public class RenderStage implements ChatProcessStage {
 		final List<ItemStack> items = collect(player, type);
 
 		final UUID id = RenderRequest.builder()
-				.owner(player)
-				.type(type)
-				.items(items)
-				.build()
-				.capture();
+								 .owner(player)
+								 .type(type)
+								 .items(items)
+								 .build()
+								 .capture();
 
 		final List<String> hoverText = switch (type) {
-			case INVENTORY -> config.inventory().hoverText();
+			case INVENTORY -> this.config.inventory().hoverText();
 			case ITEM -> List.of();
-			case ENDER_CHEST -> config.enderChest().hoverText();
-			case SHULKER_BOX -> config.shulkerBox().hoverText();
+			case ENDER_CHEST -> this.config.enderChest().hoverText();
+			case SHULKER_BOX -> this.config.shulkerBox().hoverText();
 		};
 
 		final Component display = displayComponent(
@@ -108,25 +108,30 @@ public class RenderStage implements ChatProcessStage {
 	private @NotNull List<ItemStack> collect(@NotNull Player player, @NotNull RenderType type) {
 		return switch (type) {
 			case INVENTORY -> {
-				List<ItemStack> items = new ArrayList<>();
+				final List<ItemStack> items = new ArrayList<>();
+
 				for (ItemStack item : player.getInventory().getContents()) {
 					items.add(item != null ? item.clone() : null);
 				}
+
 				yield items;
 			}
 
 			case ITEM -> List.of(player.getInventory().getItemInMainHand().clone());
 
 			case ENDER_CHEST -> {
-				List<ItemStack> items = new ArrayList<>();
+				final List<ItemStack> items = new ArrayList<>();
+
 				for (ItemStack item : player.getEnderChest().getContents()) {
 					items.add(item != null ? item.clone() : null);
 				}
+
 				yield items;
 			}
 
 			case SHULKER_BOX -> {
-				ItemStack hand = player.getInventory().getItemInMainHand();
+				final ItemStack hand = player.getInventory().getItemInMainHand();
+
 				if (hand.getType().name().contains("SHULKER_BOX")) {
 					yield shulkerContents(hand);
 				}
@@ -161,7 +166,9 @@ public class RenderStage implements ChatProcessStage {
 			@NotNull List<ItemStack> items, @NotNull List<String> hoverText
 	) {
 		Component result = TextParser.parse(player, processor)
-				.clickEvent(ClickEvent.runCommand("/mistcallback " + id));
+				.clickEvent(
+						ClickEvent.runCommand("/mistcallback " + id)
+				);
 
 		if (type == RenderType.ITEM && !items.isEmpty()) {
 			final ItemStack item = items.getFirst();

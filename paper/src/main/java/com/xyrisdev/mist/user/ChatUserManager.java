@@ -54,61 +54,62 @@ public class ChatUserManager {
 		}
 
 		return repository.load(id).thenApply(user -> {
-			cache.put(id, user);
+			this.cache.put(id, user);
 			return user;
 		});
 	}
 
 	public ChatUser get(@NotNull UUID id) {
-		return cache.getIfPresent(id);
+		return this.cache.getIfPresent(id);
 	}
 
 	public void modify(@NotNull UUID id, @NotNull Consumer<ChatUser> action) {
-		final ChatUser user = cache.getIfPresent(id);
+		final ChatUser user = this.cache.getIfPresent(id);
+
 		if (user == null) {
 			return;
 		}
 
 		action.accept(user);
-		dirtyUsers.add(id);
+		this.dirtyUsers.add(id);
 	}
 
 	public CompletableFuture<Void> save(@NotNull UUID id) {
-		final ChatUser user = cache.getIfPresent(id);
+		final ChatUser user = this.cache.getIfPresent(id);
 
-		if (user == null || !dirtyUsers.remove(id)) {
+		if (user == null || !this.dirtyUsers.remove(id)) {
 			return CompletableFuture.completedFuture(null);
 		}
 
-		return repository.save(user);
+		return this.repository.save(user);
 	}
 
 	public CompletableFuture<Void> flush() {
-		if (dirtyUsers.isEmpty()) {
+		if (this.dirtyUsers.isEmpty()) {
 			return CompletableFuture.completedFuture(null);
 		}
 
 		return CompletableFuture.allOf(
-				dirtyUsers.stream()
+				this.dirtyUsers.stream()
 						.map(uuid -> {
-							final ChatUser user = cache.getIfPresent(uuid);
+							final ChatUser user = this.cache.getIfPresent(uuid);
 
 							if (user == null) {
 								return CompletableFuture.completedFuture(null);
 							}
 
-							return repository.save(user);
+							return this.repository.save(user);
 						})
 						.toArray(CompletableFuture[]::new)
-		).thenRun(dirtyUsers::clear);
+		).thenRun(this.dirtyUsers::clear);
 	}
 
 	public void invalidate(@NotNull UUID id) {
-		cache.invalidate(id);
+		this.cache.invalidate(id);
 	}
 
 	public void invalidateAll() {
-		cache.invalidateAll();
+		this.cache.invalidateAll();
 	}
 
 	public void autoFlush(@NotNull Duration interval) {
@@ -118,7 +119,7 @@ public class ChatUserManager {
 
 		final long ms = interval.toMillis();
 
-		exe.scheduleAtFixedRate(() ->
+		this.exe.scheduleAtFixedRate(() ->
 						flush().exceptionally(ex -> {
 							ex.printStackTrace();
 							return null;

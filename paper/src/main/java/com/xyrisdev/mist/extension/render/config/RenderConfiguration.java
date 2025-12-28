@@ -19,5 +19,4 @@ public record RenderConfiguration(
 	) {
 		public static final SectionConfig DISABLED = new SectionConfig(false, List.of(), "", List.of());
 	}
-
 }

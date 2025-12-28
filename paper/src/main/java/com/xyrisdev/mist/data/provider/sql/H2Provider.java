@@ -24,9 +24,7 @@ public class H2Provider extends SQLProvider {
 	public void connect() {
 		final HikariConfig config = new HikariConfig();
 
-		config.setJdbcUrl(
-				"jdbc:h2:file:" + file.toAbsolutePath() + ";AUTO_SERVER=TRUE"
-		);
+		config.setJdbcUrl("jdbc:h2:file:" + file.toAbsolutePath() + ";AUTO_SERVER=TRUE");
 
 		config.setDriverClassName("org.h2.Driver");
 		config.setPoolName("mist-pool");

@@ -2,7 +2,7 @@ package com.xyrisdev.mist.extension.filter.alert;
 
 import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.ChatPlugin;
-import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.config.ConfigType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -16,8 +16,8 @@ public class AlertPolicy {
 
 	public AlertPolicy() {
 		final CachableConfiguration config = ChatPlugin.instance()
-				.configRegistry()
-				.get(ConfigType.CONFIGURATION);
+											.configRegistry()
+											.get(ConfigType.CONFIGURATION);
 
 		this.enabled = config.getBoolean("staff_alerts.enabled", true);
 		this.notifyCancel = config.getBoolean("staff_alerts.notify_on_cancel", true);

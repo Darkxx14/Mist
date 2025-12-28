@@ -14,10 +14,9 @@ public class RenderCache {
 
 	private static final int MAX_ENTRIES = 5;
 
-	private final Cache<UUID, RenderEntry> cache =
-			Caffeine.newBuilder()
-					.expireAfterWrite(Duration.ofMinutes(10))
-					.build();
+	private final Cache<UUID, RenderEntry> cache = Caffeine.newBuilder()
+							   .expireAfterWrite(Duration.ofMinutes(10))
+							   .build();
 
 	private final Map<Player, Deque<UUID>> index = new ConcurrentHashMap<>();
 

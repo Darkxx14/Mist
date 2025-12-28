@@ -1,3 +1,10 @@
+# ───────────────────────────────────────────────────────
+# character mappings
+# ───────────────────────────────────────────────────────
+#
+# defines character substitutions used for normalization.
+# used to detect leetspeak and bypass attempts.
+#
 mappings:
   a:
     - '4'
@@ -155,6 +162,6 @@ mappings:
   9:
     - 'g'
 
-# DO NOT EDIT THIS VALUE
-# Used for automatic migration
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

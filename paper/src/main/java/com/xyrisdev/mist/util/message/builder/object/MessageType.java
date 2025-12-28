@@ -22,8 +22,7 @@ public enum MessageType {
 										.replace(' ', '_')
 						)
 				);
-			} catch (IllegalArgumentException ignored) {
-			}
+			} catch (IllegalArgumentException ignored) {}
 		}
 
 		return set.isEmpty() ? EnumSet.of(CHAT) : set;

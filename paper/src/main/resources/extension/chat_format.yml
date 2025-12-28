@@ -1,29 +1,26 @@
 # ───────────────────────────────────────────────────────
-# Mist Chat Formatting
+# chat formatting
 # ───────────────────────────────────────────────────────
 #
-# This file controls how chat messages are rendered.
-# Formats are chosen using the player's PRIMARY LuckPerms group.
-# Format key = LP group name (e.g. "vip" → formats.vip)
-# If no match is found, fallback_format is used.
+# controls how chat messages are rendered.
+# formats are selected using the player's primary luckperms group.
 #
-# Supports:
-# - Adventure MiniMessage + legacy color codes (&, &#hex)
-# - PlaceholderAPI placeholders (<papi:...>) and <message>
-# - Hover text and click actions
+# format resolution:
+# - format key = lp group name (e.g. "vip" → formats.vip)
+# - fallback_format is used if no group matches
 #
-# Click actions:
-# OPEN_URL · RUN_COMMAND · SUGGEST_COMMAND · COPY_TO_CLIPBOARD
+# supports:
+# - adventure minimessage + legacy color codes (&, &#hex)
+# - custom mist colors (<m_color>)
+# - placeholderapi placeholders (<papi:...>) and <message>
+# - hover text and click actions
 #
-# MiniMessage docs:
-# https://tehbrian.xyz/legacy-to-minimessage/
-# https://docs.advntr.dev/minimessage/format.html
+# click actions:
+# - open url
+# - run command
+# - suggest command
+# - copy to clipboard
 #
-# Support:
-# https://xyrisdev.com/discord
-#
-
-# Fallback format used when no LP group matches
 fallback_format: default
 
 formats:
@@ -41,7 +38,7 @@ formats:
       - "<m_white>· click to whisper ·</m_white>"
 
     action:
-      action: SUGGEST_COMMAND
+      action: suggest command
       value: "/msg <papi:player_name> Hello..."
 
   vip:
@@ -58,7 +55,7 @@ formats:
       - "<m_light_yellow>· click to whisper ·</m_light_yellow>"
 
     action:
-      action: SUGGEST_COMMAND
+      action: suggest command
       value: "/msg <papi:player_name> Hello..."
 
 # Used for migrations. DO NOT EDIT.

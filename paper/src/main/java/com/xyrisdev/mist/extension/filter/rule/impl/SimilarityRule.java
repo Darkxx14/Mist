@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class SimilarityRule implements FilterRule {
 
 	private static final Cache<UUID, String> CACHE = Caffeine.newBuilder()
-			.expireAfterWrite(10, TimeUnit.SECONDS)
-			.build();
+						   .expireAfterWrite(10, TimeUnit.SECONDS)
+						   .build();
 
 	private double threshold;
 
@@ -38,7 +38,7 @@ public class SimilarityRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		threshold = section.getDouble("threshold", 0.75);
+		this.threshold = section.getDouble("threshold", 0.75);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SimilarityRule implements FilterRule {
 		final String current = ctx.plain();
 
 		if (previous != null) {
-			final double requiredSimilarity = 1.0 - threshold;
+			final double requiredSimilarity = 1.0 - this.threshold;
 
 			if (SimilarityMatcher.similarity(previous, current) >= requiredSimilarity) {
 				MistMessage.create(ctx.sender())

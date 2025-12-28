@@ -49,16 +49,21 @@ public class FormatConfigurationLoader {
 	}
 
 	private static @Nullable ClickAction action(@NotNull CachableConfiguration config, @NotNull String path) {
-		final String type = config.getString(path + ".action");
+		final String rawType = config.getString(path + ".action");
 		final String value = config.getString(path + ".value");
 
-		if (type == null || value == null) {
+		if (rawType == null || value == null) {
 			return null;
 		}
 
+		final String normalized = rawType.trim()
+								 .toUpperCase()
+								 .replace(' ', '_')
+								 .replace('-', '_');
+
 		try {
 			return new ClickAction(
-					ClickEvent.Action.valueOf(type),
+					ClickEvent.Action.valueOf(normalized),
 					value
 			);
 		} catch (IllegalArgumentException ignored) {

@@ -1,6 +1,16 @@
 # ───────────────────────────────────────────────────────
-# Mist Rendering
+# rendering
 # ───────────────────────────────────────────────────────
+#
+# controls interactive chat rendering features.
+# allows players to preview inventories and items via chat.
+#
+# settings:
+# - enable: toggles the feature
+# - prefix: triggers used in chat messages
+# - processor: rendered display text
+# - hover_text: text shown on hover
+#
 inventory:
   enable: true
   prefix:
@@ -38,5 +48,6 @@ shulker_box:
   hover_text:
     - "<gray>Click to view <papi:player_name>'s shulker box"
 
-# Used for migrations. DO NOT EDIT.
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

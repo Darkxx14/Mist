@@ -1,0 +1,44 @@
+# ───────────────────────────────────────────────────────
+# command configuration
+# ───────────────────────────────────────────────────────
+#
+# controls command registration and permissions.
+#
+# ⚠ IMPORTANT:
+# - /mist reload does NOT reload this file
+# - restart the server for changes to apply
+#
+commands:
+  toggleglobalchat:
+    enabled: true
+    permission: mist.command.toggleglobalchat
+    base_command: toggleglobalchat
+    aliases: [ togglechat ]
+
+  togglepm:
+    enabled: true
+    permission: mist.command.togglepm
+    base_command: togglepm
+    aliases: [ togglemsg ]
+
+  togglementions:
+    enabled: true
+    permission: mist.command.togglementions
+    base_command: togglementions
+    aliases: [ mentions ]
+
+  toggleannouncements:
+    enabled: true
+    permission: mist.command.toggleannouncements
+    base_command: toggleannouncements
+    aliases: [ announcements ]
+
+  ignore:
+    enabled: true
+    permission: mist.command.ignore
+    base_command: ignore
+    aliases: [ unignore ]
+
+# do not edit this value
+# used for automatic migration tracking
+config_version: 1

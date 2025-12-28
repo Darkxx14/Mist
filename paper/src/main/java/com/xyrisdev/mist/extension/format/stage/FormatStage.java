@@ -24,7 +24,7 @@ public class FormatStage implements ChatProcessStage {
 		final Player player = ctx.sender();
 
 		final String group = group(player);
-		final FormatEntry entry = config.resolve(group);
+		final FormatEntry entry = this.config.resolve(group);
 
 		if (entry == null) {
 			return;

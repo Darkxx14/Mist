@@ -17,8 +17,8 @@ import com.xyrisdev.mist.listener.PlayerJoinListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.misc.announcement.AnnouncementService;
 import com.xyrisdev.mist.user.ChatUserManager;
-import com.xyrisdev.mist.util.config.ConfigType;
-import com.xyrisdev.mist.util.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.config.ConfigType;
+import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import com.xyrisdev.mist.util.time.IntervalParseUtil;
@@ -105,11 +105,6 @@ public final class ChatPlugin extends AbstractPlugin {
 
     @Override
     protected void shutdown() {
-        if (this.scheduler != null) {
-            this.scheduler.cancelAllTasks();
-            this.scheduler = null;
-        }
-
         if (this.announcements != null) {
             this.announcements.stop();
             this.announcements = null;
@@ -124,6 +119,11 @@ public final class ChatPlugin extends AbstractPlugin {
         if (this.database != null) {
             this.database.shutdown();
             this.database = null;
+        }
+
+        if (this.scheduler != null) {
+            this.scheduler.cancelAllTasks();
+            this.scheduler = null;
         }
 
         instance = null;

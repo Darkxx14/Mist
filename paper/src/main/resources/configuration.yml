@@ -1,32 +1,35 @@
 # ───────────────────────────────────────────────────────
-# Mist Data
+# data storage
 # ───────────────────────────────────────────────────────
+#
+# controls all persistence and storage-related settings.
+# choose the database type based on your environment and scale.
 #
 # Supported database types:
 # - h2       (embedded, fast, single-file)
 # - sqlite   (embedded, simple, file-based)
 # - mysql    (recommended for production)
-# - mongo    (advanced / document-based)
+# - mongo    (advanced, document-based)
 #
 data:
   type: sqlite
 
-  # Connection pooling settings (for SQL databases)
+  # connection pool settings (sql databases only)
   pool:
     size: 10
     min_idle: 2
     max_lifetime_ms: 1800000
     connection_timeout_ms: 5000
 
-  # H2 - (Embedded)
+  # h2 (embedded)
   h2:
     file: "data/mist-h2"
 
-  # SQLite - (Embedded)
+  # sqlite (embedded)
   sqlite:
     file: "data/mist-sqlite.db"
 
-  # MySQL / MariaDB - (External)
+  # mysql / mariadb (external)
   mysql:
     host: "127.0.0.1"
     port: 3306
@@ -36,7 +39,7 @@ data:
     use_ssl: false
     parameters: "?useUnicode=true&characterEncoding=utf8"
 
-  # MongoDB - (External)
+  # mongodb (external)
   mongo:
     uri: "mongodb://localhost:27017"
     database: "mist"
@@ -45,28 +48,11 @@ data:
       users: "mist_users"
 
 # ───────────────────────────────────────────────────────
-# Mist Communication (Redis)
+# staff alerts
 # ───────────────────────────────────────────────────────
 #
-# Used for cross-server chat synchronization.
-# Enable only if running multiple servers behind a proxy.
+# controls alerts sent to staff members.
 #
-communication:
-  enabled: false
-
-  redis:
-    host: "127.0.0.1"
-    port: 6379
-    password: ""
-
-    # Pub/Sub channel for chat messages
-    channel: "mist:chat"
-
-    client:
-      timeout_ms: 3000
-      reconnect_delay_ms: 2000
-      pool_size: 4
-
 staff_alerts:
   enabled: true
   notify_on_cancel: true
@@ -75,15 +61,20 @@ staff_alerts:
     - cooldown
     - similarity
 
-# Enables automatic config migration on server startup.
+# ───────────────────────────────────────────────────────
+# configuration migration
+# ───────────────────────────────────────────────────────
+#
+# automatically migrates older config versions on startup.
 #
 # ⚠ IMPORTANT:
-# - Migration will normalize YAML formatting.
-# - Quotes, inline comments, and exact spacing are NOT preserved.
-# - Values and section comments ARE preserved.
+# - yaml formatting may be normalized
+# - inline comments, quotes, and spacing are NOT preserved
+# - values and section comments are preserved
+#
 config_migration:
   enabled: true
 
-# DO NOT EDIT THIS VALUE
-# Used for automatic migration
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

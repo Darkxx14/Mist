@@ -2,7 +2,7 @@ package com.xyrisdev.mist.command.subcommand;
 
 import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
-import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
@@ -30,9 +30,9 @@ public class SimilarityCommand {
 		final double similarity = SimilarityMatcher.similarity(s1, s2);
 
 		final double threshold = ChatPlugin.instance()
-				.configRegistry()
-				.get(ConfigType.CHAT_FILTER)
-				.getDouble("similarity.threshold", 0.60);
+								.configRegistry()
+								.get(ConfigType.CHAT_FILTER)
+								.getDouble("similarity.threshold", 0.60);
 
 		final boolean blocked = similarity >= threshold;
 

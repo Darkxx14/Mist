@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.util.message.builder;
 
 import com.xyrisdev.mist.ChatPlugin;
-import com.xyrisdev.mist.util.config.ConfigType;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
 import com.xyrisdev.mist.util.message.effect.SoundEffect;
@@ -51,7 +51,7 @@ public class MistMessageBuilder {
 	}
 
 	public @NotNull MistMessageBuilder placeholder(@NotNull String key, @NotNull String value) {
-		placeholders.put(key, value);
+		this.placeholders.put(key, value);
 		return this;
 	}
 
@@ -74,9 +74,9 @@ public class MistMessageBuilder {
 		Objects.requireNonNull(id, "Message id must be set");
 
 		final ConfigurationSection section = ChatPlugin.instance()
-				.configRegistry()
-				.get(configType)
-				.getSection(basePath + "." + id);
+											.configRegistry()
+											.get(configType)
+											.getSection(basePath + "." + id);
 
 		if (section == null) {
 			return;
@@ -89,9 +89,9 @@ public class MistMessageBuilder {
 		}
 
 		final String prefix = ChatPlugin.instance()
-				.configRegistry()
-				.get(ConfigType.LANGUAGE)
-				.getString("prefix", "");
+							.configRegistry()
+							.get(ConfigType.LANGUAGE)
+							.getString("prefix", "");
 
 		final MessageContext ctx = new MessageContext(placeholders);
 

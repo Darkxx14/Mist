@@ -1,32 +1,53 @@
-# ──────────────────────────────────────────────
-# Mist Chat Filtering
-# ──────────────────────────────────────────────
+# ───────────────────────────────────────────────────────
+# chat filtering
+# ───────────────────────────────────────────────────────
+#
+# controls automatic message filtering and moderation rules.
+# filters are evaluated before formatting is applied.
+#
 
+# similarity filtering
+# compares the last and current message.
+# threshold is a ratio (0.40 = 40% similarity).
+# messages above the threshold are cancelled.
 similarity:
   enabled: true
-  # percentage similarity between last and current message
-  # above this value → message is cancelled
-  threshold: 0.60 # match 60% of the sent message to the old message
+  threshold: 0.40
 
+# flood filtering
+# limits spam caused by long messages or repeated characters.
+# maximum repeated chars = number of identical characters in a row (e.g. "aaaaa").
 flood:
   enabled: true
-  # max total message length
   maximum_length: 100
-  # max consecutive repeated characters (e.g. "aaaaaa")
   maximum_repeated_chars: 5
 
+# caps filtering
+# controls excessive capital letter usage.
+# type:
+# - ratio    → caps / message length > ratio
+# - defined  → caps > max caps
 caps:
   enabled: true
-  # ratio -> caps / length > ratio
-  # defined -> caps > max_caps
   type: ratio
   max_caps: 5
-  ratio: 0.8 # 80% of the whole message
+  ratio: 0.8
 
+# cooldown filtering
+# enforces a delay between messages.
+# cooldown seconds is the minimum time between messages.
 cooldown:
   enabled: true
   cooldown_seconds: 3
 
+# blocked words filtering
+# word-based moderation rules.
+#
+# options:
+# - cancel          → blocks the message entirely
+# - replace         → replaces the word instead of cancelling
+# - detect in words → detects matches inside other words
+#
 blocked_words:
   enabled: true
   words:
@@ -48,6 +69,14 @@ blocked_words:
       replace: "***"
       detect_in_words: false
 
+# regex filtering
+# pattern-based moderation rules.
+#
+# options:
+# - pattern → regex pattern to match
+# - cancel  → blocks the message on match
+# - replace → replaces matched content instead of cancelling
+#
 regex:
   enabled: true
   patterns:
@@ -55,5 +84,6 @@ regex:
       pattern: '[^\x20-\x7E\p{Sc}]'
       cancel: true
 
-# Used for migrations. DO NOT EDIT.
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1
