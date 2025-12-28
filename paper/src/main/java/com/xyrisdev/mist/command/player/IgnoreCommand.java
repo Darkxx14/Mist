@@ -4,6 +4,7 @@ import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
+import com.xyrisdev.mist.util.thread.MistExecutors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.incendo.cloud.bukkit.parser.OfflinePlayerParser;
@@ -55,7 +56,7 @@ public class IgnoreCommand {
 			return;
 		}
 
-		users.modify(senderId, user -> {
+		users.modify(sender.source(), user -> {
 			if (user.ignore().contains(targetId)) {
 				user.ignore().remove(targetId);
 				sender.source().sendRichMessage("<green>You are no longer ignoring <white>" + target.getName() + "</white>.");
@@ -87,6 +88,6 @@ public class IgnoreCommand {
 					.filter(name -> name != null && name.regionMatches(true, 0, token, 0, token.length()))
 					.map(Suggestion::suggestion)
 					.toList();
-		});
+		}, MistExecutors.processor()::execute);
 	}
 }

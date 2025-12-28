@@ -3,6 +3,7 @@ package com.xyrisdev.mist.util.paste;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.xyrisdev.mist.util.paste.response.PasteResponse;
+import com.xyrisdev.mist.util.thread.MistExecutors;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +19,10 @@ public class PasteUtil {
 	private static final URI API_ENDPOINT = URI.create("https://api.pastes.dev/post");
 	private static final String VIEW_BASE = "https://pastes.dev/";
 
-	private static final HttpClient CLIENT = HttpClient.newHttpClient();
+	private static final HttpClient CLIENT = HttpClient.newBuilder()
+											.executor(MistExecutors.processor()::execute)
+											.build();
+
 	private static final Gson GSON = new GsonBuilder()
 									.disableHtmlEscaping()
 									.setPrettyPrinting()

@@ -21,10 +21,13 @@ import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
+import com.xyrisdev.mist.util.thread.MistExecutors;
 import com.xyrisdev.mist.util.time.IntervalParseUtil;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
 
 @Accessors(fluent = true)
 public final class ChatPlugin extends AbstractPlugin {
@@ -66,18 +69,25 @@ public final class ChatPlugin extends AbstractPlugin {
         this.folia = new FoliaLib(this);
         this.scheduler = folia.getScheduler();
 
+        MistExecutors.start();
+
         // database
         this.database = DatabaseProviders.create(this.configRegistry.get(ConfigType.CONFIGURATION));
         this.database.connect();
 
         // user cache & manager
         this.userManager = new ChatUserManager(this.database.users());
-        this.userManager.autoFlush(
-                IntervalParseUtil.parse(
-                        this.configRegistry.get(ConfigType.CONFIGURATION)
-                                .getString("data.auto_save_interval", "5m")
-                )
+        final Duration interval = IntervalParseUtil.parse(
+                this.configRegistry.get(ConfigType.CONFIGURATION).getString("data.auto_save_interval", "5m")
         );
+
+        if (!interval.isZero() && !interval.isNegative()) {
+            this.scheduler.runTimerAsync(
+                    userManager::flush,
+                    interval.toMillis() / 50L,
+                    interval.toMillis() / 50L
+            );
+        }
 
         // chat processor
         this.chatProcessor = ExtensionManager.register();
@@ -111,7 +121,7 @@ public final class ChatPlugin extends AbstractPlugin {
         }
 
         if (this.userManager != null) {
-            this.userManager.shutdown();
+            this.userManager.flush();
             this.userManager.invalidateAll();
             this.userManager = null;
         }
@@ -126,6 +136,7 @@ public final class ChatPlugin extends AbstractPlugin {
             this.scheduler = null;
         }
 
+        MistExecutors.shutdown();
         instance = null;
     }
 

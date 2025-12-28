@@ -37,7 +37,7 @@ public class ToggleCommands {
 
 		final boolean enable = !userManager.get(id).settings().enabled(type);
 
-		userManager.modify(id, user -> {
+		userManager.modify(sender.source(), user -> {
 			if (user.settings().enabled(type)) {
 				user.settings().disable(type);
 			} else {

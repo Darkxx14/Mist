@@ -22,7 +22,9 @@ public class PlayerQuitListener {
 					final ChatUserManager users = ChatPlugin.instance().userManager();
 
 					RenderService.get().invalidate(player);
-					users.save(id).thenRun(() -> users.invalidate(id));
+
+					users.save(id);
+					users.invalidate(id);
 				})
 				.build();
 	}

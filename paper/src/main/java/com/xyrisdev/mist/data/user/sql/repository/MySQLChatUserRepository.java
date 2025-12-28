@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class MySQLChatUserRepository implements ChatUserRepository {
 
@@ -23,67 +22,61 @@ public class MySQLChatUserRepository implements ChatUserRepository {
 	}
 
 	@Override
-	public @NotNull CompletableFuture<ChatUser> load(@NotNull UUID uuid) {
-		return CompletableFuture.supplyAsync(() -> {
-			try (Connection conn = dataSource.getConnection();
-			     PreparedStatement ps = conn.prepareStatement(
-					     "SELECT data FROM " + table + " WHERE uuid = ?"
-			     )) {
+	public @NotNull ChatUser load(@NotNull UUID id) {
+		try (Connection conn = dataSource.getConnection();
+		     final PreparedStatement ps = conn.prepareStatement(
+				     "SELECT data FROM " + table + " WHERE id = ?"
+		     )) {
 
-				ps.setString(1, uuid.toString());
+			ps.setString(1, id.toString());
 
-				try (ResultSet rs = ps.executeQuery()) {
-					if (rs.next()) {
-						return ChatUserSerializer.deserialize(
-								uuid,
-								rs.getString("data")
-						);
-					}
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return ChatUserSerializer.deserialize(
+							id,
+							rs.getString("data")
+					);
 				}
-
-				return new ChatUser(uuid);
-			} catch (Exception e) {
-				throw new IllegalStateException("Failed to load ChatUser " + uuid, e);
 			}
-		});
+
+			return new ChatUser(id);
+		} catch (Exception e) {
+			throw new IllegalStateException("Failed to load ChatUser " + id, e);
+		}
 	}
 
 	@Override
-	public @NotNull CompletableFuture<Void> save(@NotNull ChatUser user) {
-		return CompletableFuture.runAsync(() -> {
-			try (Connection conn = dataSource.getConnection();
-			     PreparedStatement ps = conn.prepareStatement(
-					     """
-                         INSERT INTO %s (uuid, data)
-                         VALUES (?, ?)
-                         ON DUPLICATE KEY UPDATE data = VALUES(data)
-                         """.formatted(table)
-			     )) {
+	public void save(@NotNull ChatUser user) {
+		try (Connection conn = dataSource.getConnection();
+		     final PreparedStatement ps = conn.prepareStatement(
+					"""
+					INSERT INTO %s (uuid, data)
+					VALUES (?, ?)
+					ON DUPLICATE KEY UPDATE data = VALUES(data)
+					""".formatted(table)
+		     )) {
 
-				ps.setString(1, user.id().toString());
-				ps.setString(2, ChatUserSerializer.serialize(user));
-				ps.executeUpdate();
+			ps.setString(1, user.id().toString());
+			ps.setString(2, ChatUserSerializer.serialize(user));
+			ps.executeUpdate();
 
-			} catch (Exception e) {
-				throw new IllegalStateException("Failed to save ChatUser " + user.id(), e);
-			}
-		});
+		} catch (Exception e) {
+			throw new IllegalStateException("Failed to save ChatUser " + user.id(), e);
+		}
 	}
 
 	@Override
-	public @NotNull CompletableFuture<Void> delete(@NotNull UUID uuid) {
-		return CompletableFuture.runAsync(() -> {
-			try (Connection conn = dataSource.getConnection();
-			     PreparedStatement ps = conn.prepareStatement(
-					     "DELETE FROM " + table + " WHERE uuid = ?"
-			     )) {
+	public void delete(@NotNull UUID id) {
+		try (Connection conn = dataSource.getConnection();
+		     final PreparedStatement ps = conn.prepareStatement(
+				     "DELETE FROM " + table + " WHERE uuid = ?"
+		     )) {
 
-				ps.setString(1, uuid.toString());
-				ps.executeUpdate();
+			ps.setString(1, id.toString());
+			ps.executeUpdate();
 
-			} catch (Exception e) {
-				throw new IllegalStateException("Failed to delete ChatUser " + uuid, e);
-			}
-		});
+		} catch (Exception e) {
+			throw new IllegalStateException("Failed to delete ChatUser " + id, e);
+		}
 	}
 }
