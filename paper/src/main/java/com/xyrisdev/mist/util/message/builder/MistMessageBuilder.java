@@ -50,7 +50,7 @@ public class MistMessageBuilder {
 		return this;
 	}
 
-	public @NotNull MistMessageBuilder placeholder(@NotNull String key, @NotNull String value) {
+	public @NotNull MistMessageBuilder placeholder(@NotNull String key, String value) {
 		this.placeholders.put(key, value);
 		return this;
 	}

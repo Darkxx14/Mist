@@ -35,7 +35,7 @@ public class RegexGenerator {
 			set.append(e.getKey());
 
 			for (char variant : e.getValue()) {
-				set.append(escape(variant));
+				set.append(esc(variant));
 			}
 
 			resolved.put(e.getKey(), set.toString());
@@ -86,7 +86,7 @@ public class RegexGenerator {
 		return output.toString();
 	}
 
-	private static char escape(char ch) {
+	private static char esc(char ch) {
 		return switch (ch) {
 			case '\\', '-', '^', ']' -> '\\';
 			default -> ch;

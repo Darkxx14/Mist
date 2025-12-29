@@ -12,6 +12,7 @@
 # - mongo    (advanced, document-based)
 #
 data:
+  auto_save_interval: 10 minutes
   type: sqlite
 
   # connection pool settings (sql databases only)
@@ -60,6 +61,23 @@ staff_alerts:
   disabled_rules:
     - cooldown
     - similarity
+
+# ───────────────────────────────────────────────────────
+# ignore stuff
+# ───────────────────────────────────────────────────────
+#
+# controls player ignore behavior and visibility rules.
+# affects chat rendering and private message delivery.
+#
+ignore:
+  # if true, chat messages from ignored players
+  # will not be rendered to the ignoring player
+  hide_messages: false
+
+  # if true, private messages from ignored players
+  # will be blocked entirely
+  deny_private_messages: true
+
 
 # ───────────────────────────────────────────────────────
 # configuration migration

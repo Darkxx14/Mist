@@ -15,7 +15,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"configuration.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -25,7 +25,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"language.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -36,7 +36,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"extension/chat_format.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -46,7 +46,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"extension/chat_replacement.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -56,7 +56,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"extension/render.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -66,7 +66,17 @@ public enum ConfigType {
 			new MigrationContext(
 					"extension/chat_filter.yml",
 					"config_version",
-					"backups",
+					"backup",
+					true
+			)
+	),
+
+	CHAT_MENTIONS(
+			"extension/chat_mentions.yml",
+			new MigrationContext(
+					"extension/chat_mentions.yml",
+					"config_version",
+					"backup",
 					true
 			)
 	),
@@ -77,7 +87,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"misc/announcements.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -88,7 +98,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"internal/leetmap.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	),
@@ -98,7 +108,7 @@ public enum ConfigType {
 			new MigrationContext(
 					"internal/commands.yml",
 					"config_version",
-					"backups",
+					"backup",
 					true
 			)
 	);

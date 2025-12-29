@@ -20,7 +20,6 @@ public class RegexHealthAnalyzer {
 		int alternations = 0;
 		int capturingGroups = 0;
 		int characterClasses = 0;
-		int wildcards = 0;
 
 		final boolean anchored = pattern.startsWith("^") || pattern.contains("\\b");
 
@@ -61,7 +60,6 @@ public class RegexHealthAnalyzer {
 				}
 
 				case '.' -> {
-					wildcards++;
 
 					if (!groupStack.isEmpty()) {
 						groupStack.peek().containsWildcard = true;

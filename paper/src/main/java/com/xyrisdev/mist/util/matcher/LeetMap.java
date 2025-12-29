@@ -41,13 +41,13 @@ public class LeetMap {
 					continue;
 				}
 
-				final char source = raw.charAt(0);
+				final char charAt = raw.charAt(0);
 
-				if (Character.isLetter(source)) {
+				if (Character.isLetter(charAt)) {
 					continue;
 				}
 
-				resolved.put(source, target);
+				resolved.put(charAt, target);
 			}
 		}
 
@@ -63,12 +63,12 @@ public class LeetMap {
 	}
 
 	public static @NotNull String map(@NotNull String input) {
-		final StringBuilder out = new StringBuilder(input.length());
+		final StringBuilder output = new StringBuilder(input.length());
 
 		for (char c : input.toCharArray()) {
-			out.append(map(c));
+			output.append(map(c));
 		}
 
-		return out.toString();
+		return output.toString();
 	}
 }

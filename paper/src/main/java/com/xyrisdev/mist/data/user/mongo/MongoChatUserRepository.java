@@ -21,30 +21,30 @@ public class MongoChatUserRepository implements ChatUserRepository {
 
 	@Override
 	public @NotNull ChatUser load(@NotNull UUID id) {
-		final Document doc = collection.find(Filters.eq("_id", id.toString())).first();
+		final Document document = collection.find(Filters.eq("_id", id.toString())).first();
 
-		if (doc == null) {
+		if (document == null) {
 			final ChatUser user = new ChatUser(id);
 
 			save(user);
 			return user;
 		}
 
-		final Document data = doc.get("data", Document.class);
+		final Document data = document.get("data", Document.class);
 
 		return ChatUserSerializer.deserialize(id, data.toJson());
 	}
 
 	@Override
 	public void save(@NotNull ChatUser user) {
-		final Document doc = new Document("_id", user.id().toString())
+		final Document document = new Document("_id", user.id().toString())
 				.append("data", Document.parse(
 						ChatUserSerializer.serialize(user)
 				));
 
 		collection.replaceOne(
 				Filters.eq("_id", user.id().toString()),
-				doc,
+				document,
 				new ReplaceOptions().upsert(true)
 		);
 	}

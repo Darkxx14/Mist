@@ -27,13 +27,13 @@ public class MongoProvider implements DatabaseProvider {
 		this.database = client.getDatabase(config.database());
 
 		this.users = new MongoChatUserRepository(
-				database.getCollection(config.usersCollection())
+				database.getCollection(config.users())
 		);
 	}
 
 	@Override
 	public ChatUserRepository users() {
-		return users;
+		return this.users;
 	}
 
 	@SuppressWarnings("unused")

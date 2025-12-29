@@ -20,24 +20,24 @@ public class MistPaperLibraryLoader implements PluginLoader {
 
 	@Override
 	public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
-		final MavenLibraryResolver resolver = new MavenLibraryResolver();
-		final PluginLibraries libraries = load();
+		final MavenLibraryResolver mvnResolver = new MavenLibraryResolver();
+		final PluginLibraries libs = load();
 
-		libraries.asDependencies().forEach(resolver::addDependency);
-		libraries.asRepositories().forEach(resolver::addRepository);
+		libs.asDependencies().forEach(mvnResolver::addDependency);
+		libs.asRepositories().forEach(mvnResolver::addRepository);
 
-		classpathBuilder.addLibrary(resolver);
+		classpathBuilder.addLibrary(mvnResolver);
 	}
 
 	private PluginLibraries load() {
-		final InputStream stream = Objects.requireNonNull(
+		final InputStream insteam = Objects.requireNonNull(
 				getClass().getResourceAsStream(LIBRARIES_RESOURCE),
 				LIBRARIES_RESOURCE + " not found on classpath"
 		);
 
-		try (stream) {
+		try (insteam) {
 			return GSON.fromJson(
-					new InputStreamReader(stream, StandardCharsets.UTF_8),
+					new InputStreamReader(insteam, StandardCharsets.UTF_8),
 					PluginLibraries.class
 			);
 		} catch (Exception e) {

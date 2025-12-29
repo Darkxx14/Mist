@@ -16,8 +16,8 @@ public class DatabaseProviders {
 		final DatabaseType type = DatabaseType.parse(config.getString("data.type", "sqlite"));
 
 		final Path dataDir = ChatPlugin.instance()
-				.getDataFolder()
-				.toPath();
+							.getDataFolder()
+							.toPath();
 
 		return switch (type) {
 			case H2 -> new H2Provider(

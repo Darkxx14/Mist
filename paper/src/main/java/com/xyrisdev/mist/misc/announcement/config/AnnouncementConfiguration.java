@@ -2,11 +2,14 @@ package com.xyrisdev.mist.misc.announcement.config;
 
 import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.object.AnnouncementType;
-import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
-import com.xyrisdev.mist.util.time.IntervalParseUtil;
+import com.xyrisdev.mist.util.time.DurationParser;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +18,9 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Getter
+@RequiredArgsConstructor
+@Accessors(fluent = true)
 public class AnnouncementConfiguration {
 
 	private final boolean enabled;
@@ -25,25 +31,17 @@ public class AnnouncementConfiguration {
 	private int index;
 	private Announcement forcedNext;
 
-	private AnnouncementConfiguration(boolean enabled, AnnouncementType type, Duration interval, List<Announcement> announcements) {
-		this.enabled = enabled;
-		this.type = type;
-		this.interval = interval;
-		this.announcements = announcements;
-	}
-
 	@Contract(" -> new")
 	public static @NotNull AnnouncementConfiguration load() {
 		final CachableConfiguration config = ChatPlugin.instance()
-				.configRegistry()
-				.get(ConfigType.ANNOUNCEMENTS);
+											.configRegistry()
+											.get(ConfigType.ANNOUNCEMENTS);
 
 		final boolean enabled = config.getBoolean("enabled", false);
 		final AnnouncementType type = AnnouncementType.parse(config.getString("type", "random"));
-		final Duration interval = IntervalParseUtil.parse(config.getString("interval", "5 minutes"));
+		final Duration interval = DurationParser.parse(config.getString("interval", "5 minutes"));
 
 		final List<Announcement> list = new ArrayList<>();
-
 		final ConfigurationSection root = config.getSection("announcements");
 
 		if (root != null) {
@@ -60,11 +58,7 @@ public class AnnouncementConfiguration {
 					continue;
 				}
 
-				list.add(new Announcement(
-						key,
-						types,
-						section
-				));
+				list.add(new Announcement(key, types, section));
 			}
 		}
 
@@ -78,10 +72,6 @@ public class AnnouncementConfiguration {
 
 	public boolean enabled() {
 		return enabled && !announcements.isEmpty();
-	}
-
-	public Duration interval() {
-		return interval;
 	}
 
 	public Optional<Announcement> peekNext() {
@@ -126,10 +116,10 @@ public class AnnouncementConfiguration {
 		);
 	}
 
-	public Optional<Announcement> find(@NotNull String name) {
+	public @NotNull Optional<Announcement> find(@NotNull String name) {
 		return announcements.stream()
-				.filter(a -> a.name().equalsIgnoreCase(name))
-				.findFirst();
+							.filter(a -> a.name().equalsIgnoreCase(name))
+							.findFirst();
 	}
 
 	public void next(@NotNull String name) {
@@ -139,9 +129,5 @@ public class AnnouncementConfiguration {
 				return;
 			}
 		}
-	}
-
-	public List<Announcement> announcements() {
-		return announcements;
 	}
 }

@@ -36,10 +36,7 @@ public class AnnouncementService {
 			return;
 		}
 
-		scheduler.start(
-				config.interval().toMillis(),
-				this::announce
-		);
+		scheduler.start(config.interval().toMillis(), this::announce);
 	}
 
 	public void stop() {
@@ -101,9 +98,7 @@ public class AnnouncementService {
 	}
 
 	public Optional<Announcement> find(@NotNull String name) {
-		return config == null
-				? Optional.empty()
-				: config.find(name);
+		return config == null ? Optional.empty() : config.find(name);
 	}
 
 	public List<String> announcementNames() {

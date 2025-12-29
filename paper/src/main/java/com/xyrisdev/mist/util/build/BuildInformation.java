@@ -34,20 +34,20 @@ public class BuildInformation {
 
 	@Contract(" -> new")
 	private static @NotNull BuildInformation load() {
-		final Properties props = new Properties();
+		final Properties prop = new Properties();
 
-		try (InputStream in = BuildInformation.class.getClassLoader().getResourceAsStream("build.properties")) {
-			if (in != null) {
-				props.load(in);
+		try (InputStream insteam = BuildInformation.class.getClassLoader().getResourceAsStream("build.properties")) {
+			if (insteam != null) {
+				prop.load(insteam);
 			}
 		} catch (Exception ignored) {}
 
 		return new BuildInformation(
-				props.getProperty("module", "unknown"),
-				props.getProperty("version", "unknown"),
-				props.getProperty("branch", "unknown"),
-				props.getProperty("commit", "unknown"),
-				props.getProperty("commit_short", "unknown")
+				prop.getProperty("module", "unknown"),
+				prop.getProperty("version", "unknown"),
+				prop.getProperty("branch", "unknown"),
+				prop.getProperty("commit", "unknown"),
+				prop.getProperty("commit_short", "unknown")
 		);
 	}
 

@@ -16,8 +16,8 @@ public class PlayerJoinListener {
 					final UUID id = event.getPlayer().getUniqueId();
 
 					ChatPlugin.instance()
-							.userManager()
-							.load(id);
+							  .userManager()
+							  .load(id);
 				})
 				.build();
 	}

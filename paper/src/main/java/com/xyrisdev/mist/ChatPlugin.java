@@ -22,7 +22,7 @@ import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import com.xyrisdev.mist.util.thread.MistExecutors;
-import com.xyrisdev.mist.util.time.IntervalParseUtil;
+import com.xyrisdev.mist.util.time.DurationParser;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.NotNull;
@@ -77,15 +77,16 @@ public final class ChatPlugin extends AbstractPlugin {
 
         // user cache & manager
         this.userManager = new ChatUserManager(this.database.users());
-        final Duration interval = IntervalParseUtil.parse(
-                this.configRegistry.get(ConfigType.CONFIGURATION).getString("data.auto_save_interval", "5m")
+
+        final Duration interval = DurationParser.parse(
+                this.configRegistry.get(ConfigType.CONFIGURATION).getString("data.auto_save_interval", "10 minutes")
         );
 
         if (!interval.isZero() && !interval.isNegative()) {
             this.scheduler.runTimerAsync(
                     userManager::flush,
-                    interval.toMillis() / 50L,
-                    interval.toMillis() / 50L
+                    DurationParser.toTicks(interval),
+                    DurationParser.toTicks(interval)
             );
         }
 

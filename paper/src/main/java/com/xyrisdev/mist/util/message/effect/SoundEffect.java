@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 public class SoundEffect {
 
 	public static void play(@NotNull Player player, @NotNull ConfigurationSection section) {
-		final String keyString = section.getString("key");
+		final String key = section.getString("key");
 
-		if (keyString == null || keyString.isBlank()) {
+		if (key == null || key.isBlank()) {
 			return;
 		}
 
@@ -26,7 +26,7 @@ public class SoundEffect {
 		final float pitch = (float) section.getDouble("pitch", 1.0);
 
 		final Sound sound = Sound.sound(
-				Key.key(keyString),
+				Key.key(key),
 				source,
 				volume,
 				pitch

@@ -22,8 +22,8 @@ public class ConfigRegistry {
 		final EnumMap<ConfigType, CachableConfiguration> map = new EnumMap<>(ConfigType.class);
 
 		final CachableConfiguration baseConfig = CachableConfiguration.builder()
-						.file(ConfigType.CONFIGURATION.getPath())
-						.build();
+												.file(ConfigType.CONFIGURATION.getPath())
+												.build();
 
 		final boolean migrationEnabled = baseConfig.getBoolean("config_migration.enabled", true);
 
@@ -44,7 +44,7 @@ public class ConfigRegistry {
 	}
 
 	public @NotNull CachableConfiguration get(@NotNull ConfigType type) {
-		final CachableConfiguration config = configs.get(type);
+		final CachableConfiguration config = this.configs.get(type);
 
 		if (config == null) {
 			throw new IllegalStateException(
@@ -56,7 +56,7 @@ public class ConfigRegistry {
 	}
 
 	public @NotNull List<String> all() {
-		return configs.keySet()
+		return this.configs.keySet()
 				.stream()
 				.map(ConfigType::getPath)
 				.map(Object::toString)
@@ -69,7 +69,7 @@ public class ConfigRegistry {
 	}
 
 	public void reloadAll() {
-		for (CachableConfiguration config : configs.values()) {
+		for (CachableConfiguration config : this.configs.values()) {
 			config.reload();
 		}
 	}

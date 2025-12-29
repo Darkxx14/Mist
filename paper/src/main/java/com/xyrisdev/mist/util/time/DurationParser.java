@@ -7,9 +7,10 @@ import java.time.Duration;
 import java.util.Locale;
 
 @UtilityClass
-public class IntervalParseUtil {
+public class DurationParser {
 
 	private static final Duration DEFAULT = Duration.ofMinutes(5);
+	private static final long TICKS_PER_SECOND = 20L;
 
 	public @NotNull Duration parse(@NotNull String raw) {
 		if (raw.isBlank()) {
@@ -22,9 +23,7 @@ public class IntervalParseUtil {
 			final char unit = input.charAt(input.length() - 1);
 
 			if (Character.isLetter(unit)) {
-				final long value = parseSafe(
-						input.substring(0, input.length() - 1)
-				);
+				final long value = parseSafe(input.substring(0, input.length() - 1));
 
 				if (value > 0) {
 					return switch (unit) {
@@ -60,13 +59,28 @@ public class IntervalParseUtil {
 					case "week", "weeks" ->
 							Duration.ofDays(value * 7);
 
-					default ->
-							DEFAULT;
+					default -> DEFAULT;
 				};
 			}
 		}
 
 		return DEFAULT;
+	}
+
+	public long toTicks(@NotNull Duration duration) {
+		if (duration.isZero() || duration.isNegative()) {
+			return 0L;
+		}
+
+		return duration.toSeconds() * TICKS_PER_SECOND;
+	}
+
+	public @NotNull Duration fromTicks(long ticks) {
+		if (ticks <= 0) {
+			return Duration.ZERO;
+		}
+
+		return Duration.ofSeconds(ticks / TICKS_PER_SECOND);
 	}
 
 	private long parseSafe(String value) {

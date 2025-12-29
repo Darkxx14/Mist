@@ -9,6 +9,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
@@ -26,17 +27,19 @@ public class DumpUtil {
 	private static final long MAX_CONFIG_SIZE = 512L * 1024L;
 
 	public static @NotNull CompletableFuture<String> dump() {
-		return PasteUtil.paste(buildDump());
+		return PasteUtil.paste(build());
 	}
 
-	private static Dump buildDump() {
+	@Contract(" -> new")
+	private static @NotNull Dump build() {
 		final Runtime runtime = Runtime.getRuntime();
 
-		final RuntimeMXBean runtimeMx = ManagementFactory.getRuntimeMXBean();
-		final MemoryMXBean memoryMx = ManagementFactory.getMemoryMXBean();
-		final OperatingSystemMXBean osMx = ManagementFactory.getOperatingSystemMXBean();
+		final RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+		final MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+		final OperatingSystemMXBean osMxBean = ManagementFactory.getOperatingSystemMXBean();
 
 		final List<PluginInfo> plugins = new ArrayList<>();
+
 		for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
 			plugins.add(pl(plugin));
 		}
@@ -44,17 +47,18 @@ public class DumpUtil {
 		return new Dump(
 				System.currentTimeMillis(),
 				serverInfo(),
-				systemInfo(osMx),
-				javaInfo(runtimeMx),
-				memInfo(runtime, memoryMx),
+				systemInfo(osMxBean),
+				javaInfo(runtimeMXBean),
+				memInfo(runtime, memoryMXBean),
 				schedulerInfo(Bukkit.getScheduler()),
 				pl(ChatPlugin.instance()),
-				loadConfigs(),
+				configs(),
 				plugins
 		);
 	}
 
-	private static ServerInfo serverInfo() {
+	@Contract(" -> new")
+	private static @NotNull ServerInfo serverInfo() {
 		return new ServerInfo(
 				Bukkit.getName(),
 				Bukkit.getVersion(),
@@ -66,7 +70,8 @@ public class DumpUtil {
 		);
 	}
 
-	private static SystemInfo systemInfo(@NotNull OperatingSystemMXBean os) {
+	@Contract("_ -> new")
+	private static @NotNull SystemInfo systemInfo(@NotNull OperatingSystemMXBean os) {
 		return new SystemInfo(
 				os.getName(),
 				os.getArch(),
@@ -75,7 +80,8 @@ public class DumpUtil {
 		);
 	}
 
-	private static JavaInfo javaInfo(@NotNull RuntimeMXBean runtime) {
+	@Contract("_ -> new")
+	private static @NotNull JavaInfo javaInfo(@NotNull RuntimeMXBean runtime) {
 		return new JavaInfo(
 				System.getProperty("java.version"),
 				System.getProperty("java.vendor"),
@@ -141,14 +147,14 @@ public class DumpUtil {
 		);
 	}
 
-	private static Map<String, Object> loadConfigs() {
-		final Map<String, Object> out = new LinkedHashMap<>();
+	private static @NotNull Map<String, Object> configs() {
+		final Map<String, Object> output = new LinkedHashMap<>();
 		final Path root = ChatPlugin.instance().getDataFolder().toPath();
 		final Yaml yaml = new Yaml();
 
 		if (!Files.exists(root)) {
 			log("data folder missing, skipping config dump");
-			return out;
+			return output;
 		}
 
 		try {
@@ -165,15 +171,17 @@ public class DumpUtil {
 
 						try {
 							final long size = Files.size(file);
+
 							if (size > MAX_CONFIG_SIZE) {
-								out.put(relative, "skipped (too large)");
+								output.put(relative, "skipped (too large)");
 								return;
 							}
 
-							final String raw = Files.readString(file, StandardCharsets.UTF_8);
-							out.put(relative, sanitize(yaml.load(raw)));
+							final String raw = Files.readString(file);
+
+							output.put(relative, sanitize(yaml.load(raw)));
 						} catch (Exception e) {
-							out.put(relative, "error");
+							output.put(relative, "error");
 							log("failed to read config " + relative + ": " + e.getMessage());
 						}
 					});
@@ -181,15 +189,16 @@ public class DumpUtil {
 			log("config scan failed: " + e.getMessage());
 		}
 
-		return out;
+		return output;
 	}
 
 	private static Object sanitize(Object value) {
 		if (value instanceof Map<?, ?> map) {
 			final Map<String, Object> cleaned = new LinkedHashMap<>();
 
-			for (var entry : map.entrySet()) {
+			for (Map.Entry<?, ?> entry : map.entrySet()) {
 				final String key = String.valueOf(entry.getKey());
+
 				if (isSensitive(key)) {
 					cleaned.put(key, "<redacted>");
 				} else {
@@ -202,9 +211,11 @@ public class DumpUtil {
 
 		if (value instanceof List<?> list) {
 			final List<Object> out = new ArrayList<>(list.size());
+
 			for (Object o : list) {
 				out.add(sanitize(o));
 			}
+
 			return out;
 		}
 

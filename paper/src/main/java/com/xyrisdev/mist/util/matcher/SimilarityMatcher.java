@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 public class SimilarityMatcher {
 
 	public static double similarity(String a, String b) {
-		int distance = levenshtein(a, b);
+		int dis = levenshtein(a, b);
 		int max = Math.max(a.length(), b.length());
 
-		return max == 0 ? 1.0 : 1.0 - ((double) distance / max);
+		return max == 0 ? 1.0 : 1.0 - ((double) dis / max);
 	}
 
 	private static int levenshtein(String a, @NotNull String b) {
@@ -26,6 +26,7 @@ public class SimilarityMatcher {
 
 			for (int j = 1; j <= b.length(); j++) {
 				int cur = costs[j];
+
 				costs[j] = Math.min(
 						Math.min(costs[j] + 1, costs[j - 1] + 1),
 						prev + (a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1)

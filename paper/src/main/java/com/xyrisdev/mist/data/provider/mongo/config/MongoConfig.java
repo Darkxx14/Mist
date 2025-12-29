@@ -7,12 +7,16 @@ public class MongoConfig {
 
 	private final String uri;
 	private final String database;
-	private final String usersCollection;
 
-	private MongoConfig(String uri, String database, String usersCollection) {
+	//collections
+	private final String users;
+
+	private MongoConfig(@NotNull String uri, @NotNull String database, @NotNull String users) {
 		this.uri = uri;
 		this.database = database;
-		this.usersCollection = usersCollection;
+
+		// collections
+		this.users = users;
 	}
 
 	public static @NotNull MongoConfig from(@NotNull CachableConfiguration config) {
@@ -24,14 +28,14 @@ public class MongoConfig {
 	}
 
 	public String uri() {
-		return uri;
+		return this.uri;
 	}
 
 	public String database() {
-		return database;
+		return this.database;
 	}
 
-	public String usersCollection() {
-		return usersCollection;
+	public String users() {
+		return this.users;
 	}
 }

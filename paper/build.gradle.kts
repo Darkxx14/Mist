@@ -136,6 +136,9 @@ paper {
     version = "$buildVersion-$commitShort"
     apiVersion = "1.21"
 
+    description = "A lightweight and modern chat plugin."
+    website = "github.com/Darkxx14/Mist/"
+
     main = "com.xyrisdev.mist.ChatPlugin"
     bootstrapper = "com.xyrisdev.mist.loader.MistPaperBootstrapper"
     loader = "com.xyrisdev.mist.loader.MistPaperLibraryLoader"

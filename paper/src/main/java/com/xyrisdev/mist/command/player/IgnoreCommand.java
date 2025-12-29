@@ -4,6 +4,7 @@ import com.xyrisdev.mist.ChatPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
+import com.xyrisdev.mist.util.message.MistMessage;
 import com.xyrisdev.mist.util.thread.MistExecutors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -45,24 +46,36 @@ public class IgnoreCommand {
 		final OfflinePlayer target = ctx.get("target");
 
 		if (!target.hasPlayedBefore()) {
-			sender.source().sendRichMessage("<red>That player has never joined the server.");
+			MistMessage.create(sender.source())
+					.id("ignore_never_joined")
+					.send();
 			return;
 		}
 
 		final UUID targetId = target.getUniqueId();
 
 		if (targetId.equals(senderId)) {
-			sender.source().sendRichMessage("<red>You cannot ignore yourself.");
+			MistMessage.create(sender.source())
+					.id("ignore_self")
+					.send();
 			return;
 		}
 
 		users.modify(sender.source(), user -> {
 			if (user.ignore().contains(targetId)) {
 				user.ignore().remove(targetId);
-				sender.source().sendRichMessage("<green>You are no longer ignoring <white>" + target.getName() + "</white>.");
+
+				MistMessage.create(sender.source())
+						.id("ignore_removed")
+						.placeholder("player", target.getName())
+						.send();
 			} else {
 				user.ignore().add(targetId);
-				sender.source().sendRichMessage("<yellow>You are now ignoring <white>" + target.getName() + "</white>.");
+
+				MistMessage.create(sender.source())
+						.id("ignore_added")
+						.placeholder("player", target.getName())
+						.send();
 			}
 		});
 	}
