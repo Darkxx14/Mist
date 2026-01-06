@@ -1,0 +1,44 @@
+# ──────────────────────────────────────────────
+# private messages
+# ──────────────────────────────────────────────
+#
+# controls the private messaging system.
+# this affects /msg, /reply and spy output.
+#
+
+enabled: true
+
+# how long /reply remembers the last target
+# examples: 30s, 5m, 10 minutes, 1h
+reply_expiration: 5 minutes
+
+messages:
+  sender:
+    enabled: true
+    type: chat
+    chat:
+      text: "<m_dark_gray>[</m_dark_gray><color:#E03261>You</color><m_dark_gray> → </m_dark_gray><color:#E03261><recipient></color><m_dark_gray>]</m_dark_gray> <m_gray><message></m_gray>"
+    sound:
+      key: "ui.button.click"
+      volume: 0.6
+      pitch: 1.2
+
+  recipient:
+    enabled: true
+    type: chat
+    chat:
+      text: "<m_dark_gray>[</m_dark_gray><color:#E03261><sender></color><m_dark_gray> → </m_dark_gray><color:#E03261>You</color><m_dark_gray>]</m_dark_gray> <m_gray><message></m_gray>"
+    sound:
+      key: "block.note_block.pling"
+      volume: 0.8
+      pitch: 1.5
+
+  spy:
+    enabled: true
+    type: chat
+    chat:
+      text: "<m_dark_gray>[</m_dark_gray><m_red>Chat Spy</m_red><m_dark_gray>]</m_dark_gray> <m_red><sender></m_red><m_dark_gray> → </m_dark_gray><m_red><recipient></m_red><m_dark_gray>:</m_dark_gray> <m_gray><message></m_gray>"
+
+# do not edit this value
+# used for automatic migration tracking
+config_version: 1

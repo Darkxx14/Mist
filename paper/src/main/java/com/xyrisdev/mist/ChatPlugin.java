@@ -2,6 +2,7 @@ package com.xyrisdev.mist;
 
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.PlatformScheduler;
+import com.tcoded.folialib.util.FoliaLibOptions;
 import com.xyrisdev.library.AbstractPlugin;
 import com.xyrisdev.library.lib.Library;
 import com.xyrisdev.library.lib.feature.FeatureFlags;
@@ -19,12 +20,16 @@ import com.xyrisdev.mist.misc.announcement.AnnouncementService;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.util.logger.MistLogger;
+import com.xyrisdev.mist.util.logger.suppress.FoliaLibSuppressor;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import com.xyrisdev.mist.util.thread.MistExecutors;
 import com.xyrisdev.mist.util.time.DurationParser;
+import io.papermc.paper.plugin.configuration.PluginMeta;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -65,9 +70,15 @@ public final class ChatPlugin extends AbstractPlugin {
     protected void run() {
         Library.of(this, "mist-paper");
 
+        final PluginMeta meta = this.getPluginMeta();
+        final Server server = this.server();
+
+        MistLogger.infoNoPrefix("<white>Mist</white> <gray>v" + meta.getVersion() + "</gray>");
+        MistLogger.infoNoPrefix("<gray>" + server.getName() + "</gray> <dark_gray>·</dark_gray> <gray>" + server.getBukkitVersion() + "</gray>");
+
         this.configRegistry = ConfigRegistry.load();
-        this.folia = new FoliaLib(this);
-        this.scheduler = folia.getScheduler();
+        this.folia = FoliaLibSuppressor.suppress(this, () -> new FoliaLib(this));
+        this.scheduler = this.folia.getScheduler();
 
         MistExecutors.start();
 

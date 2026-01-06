@@ -39,6 +39,18 @@ commands:
     base_command: ignore
     aliases: [ unignore ]
 
+  message:
+    enabled: true
+    permission: mist.command.message
+    base_command: message
+    aliases: [ msg, pm ]
+
+  reply:
+    enabled: true
+    permission: mist.command.reply
+    base_command: reply
+    aliases: [ r ]
+
 # do not edit this value
 # used for automatic migration tracking
 config_version: 1

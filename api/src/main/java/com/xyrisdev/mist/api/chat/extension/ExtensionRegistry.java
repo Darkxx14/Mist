@@ -8,18 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ExtensionRegistry {
 
 	private final List<OrderedStage> stages = new ArrayList<>();
-
-	public static @NotNull ChatProcessor create(@NotNull Consumer<ExtensionRegistry> registrar) {
-		final ExtensionRegistry registry = new ExtensionRegistry();
-		registrar.accept(registry);
-
-		return new ChatProcessor(registry.stages);
-	}
 
 	public void register(int order, @NotNull ChatProcessStage stage) {
 		stages.add(new OrderedStage(order, stage));
@@ -28,7 +20,7 @@ public class ExtensionRegistry {
 	public void register(int order, @NotNull ExtensionMetadata extension) {
 		try {
 			final Object config = extension.configuration();
-			ChatProcessStage stage;
+			final ChatProcessStage stage;
 
 			if (config != null) {
 				stage = extension.stage()
@@ -41,8 +33,16 @@ public class ExtensionRegistry {
 			}
 
 			register(order, stage);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to instantiate extension: " + extension.name(), e);
+		} catch (Exception ex) {
+			throw new RuntimeException("Failed to instantiate extension: " + extension.name(), ex);
 		}
+	}
+
+	public int size() {
+		return stages.size();
+	}
+
+	public ChatProcessor build() {
+		return new ChatProcessor(stages);
 	}
 }

@@ -1,5 +1,6 @@
 package com.xyrisdev.mist.util.regex;
 
+import com.xyrisdev.mist.util.logger.MistLogger;
 import com.xyrisdev.mist.util.matcher.LeetMap;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,7 @@ import java.util.Set;
 @UtilityClass
 public class RegexGenerator {
 
-	private static volatile Map<Character, String> REVERSE_LEET = Map.of();
+	private static volatile Map<Character, String> reverseLeet = Map.of();
 
 	public static void index() {
 		final Map<Character, Set<Character>> temp = new HashMap<>();
@@ -41,7 +42,8 @@ public class RegexGenerator {
 			resolved.put(e.getKey(), set.toString());
 		}
 
-		REVERSE_LEET = resolved;
+		reverseLeet = resolved;
+		MistLogger.info("Indexed " + resolved.size() + " regex variant groups");
 	}
 
 	public static @NotNull String generate(@NotNull String input) {
@@ -73,7 +75,7 @@ public class RegexGenerator {
 
 			last = raw;
 
-			final String variants = REVERSE_LEET.get(raw);
+			final String variants = reverseLeet.get(raw);
 
 			if (variants != null) {
 				output.append('[').append(variants).append(']');

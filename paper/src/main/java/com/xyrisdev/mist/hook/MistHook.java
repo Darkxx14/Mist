@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.hook;
 
 import com.xyrisdev.library.logger.XLogger;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import lombok.Builder;
 import lombok.experimental.Accessors;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ public record MistHook(
 
 		if (target != null && target.isEnabled()) {
 			if (log && success != null) {
-				XLogger.custom().info(success);
+				MistLogger.info(success);
 			}
 
 			onLoad.accept(target);
@@ -31,7 +32,7 @@ public record MistHook(
 		}
 
 		if (log && failure != null) {
-			XLogger.custom().info(failure);
+			MistLogger.info(failure);
 		}
 
 		if (onFail != null) {

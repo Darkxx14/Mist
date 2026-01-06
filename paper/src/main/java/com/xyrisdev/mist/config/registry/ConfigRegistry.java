@@ -3,6 +3,7 @@ package com.xyrisdev.mist.config.registry;
 import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.config.migration.ConfigMigrator;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +41,7 @@ public class ConfigRegistry {
 			);
 		}
 
+		MistLogger.info("Loaded " + map.size() + " configuration files");
 		return new ConfigRegistry(map);
 	}
 

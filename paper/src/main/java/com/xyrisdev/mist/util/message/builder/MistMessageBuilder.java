@@ -82,6 +82,10 @@ public class MistMessageBuilder {
 			return;
 		}
 
+		if (!section.getBoolean("enabled", true)) {
+			return;
+		}
+
 		final EnumSet<MessageType> types = MessageType.parse(section.getString("type"));
 
 		if (types.isEmpty()) {

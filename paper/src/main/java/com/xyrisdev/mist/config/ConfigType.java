@@ -92,6 +92,16 @@ public enum ConfigType {
 			)
 	),
 
+	PRIVATE_MESSAGES(
+			"misc/private_messages.yml",
+			new MigrationContext(
+					"misc/private_messages.yml",
+					"config_version",
+					"backup",
+					true
+			)
+	),
+
 	// internal
 	LEETMAP(
 			"internal/leetmap.yml",
@@ -107,6 +117,16 @@ public enum ConfigType {
 			"internal/commands.yml",
 			new MigrationContext(
 					"internal/commands.yml",
+					"config_version",
+					"backup",
+					true
+			)
+	),
+
+	PLACEHOLDERS(
+			"internal/placeholders.yml",
+			new MigrationContext(
+					"internal/placeholders.yml",
 					"config_version",
 					"backup",
 					true

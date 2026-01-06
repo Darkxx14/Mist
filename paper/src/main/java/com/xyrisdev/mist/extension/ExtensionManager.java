@@ -17,23 +17,29 @@ import com.xyrisdev.mist.extension.replacement.config.ReplacementsConfiguration;
 import com.xyrisdev.mist.extension.replacement.config.loader.ReplacementsConfigurationLoader;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import org.jetbrains.annotations.NotNull;
 
 public class ExtensionManager {
 
 	public static @NotNull ChatProcessor register() {
-		final ConfigRegistry registry = ChatPlugin.instance().configRegistry();
+		final ConfigRegistry config = ChatPlugin.instance().configRegistry();
 
-		final FilterConfiguration filterConfig = FilterConfigurationLoader.load(registry.get(ConfigType.CHAT_FILTER));
-		final ReplacementsConfiguration replacementsConfig = ReplacementsConfigurationLoader.load(registry.get(ConfigType.CHAT_REPLACEMENTS));
-		final RenderConfiguration renderConfig = RenderConfigurationLoader.load(registry.get(ConfigType.RENDER));
-		final FormatConfiguration formatConfig = FormatConfigurationLoader.load(registry.get(ConfigType.CHAT_FORMAT));
+		final FilterConfiguration filterConfig = FilterConfigurationLoader.load(config.get(ConfigType.CHAT_FILTER));
+		final ReplacementsConfiguration replacementsConfig = ReplacementsConfigurationLoader.load(config.get(ConfigType.CHAT_REPLACEMENTS));
+		final RenderConfiguration renderConfig = RenderConfigurationLoader.load(config.get(ConfigType.RENDER));
+		final FormatConfiguration formatConfig = FormatConfigurationLoader.load(config.get(ConfigType.CHAT_FORMAT));
 
-		return ExtensionRegistry.create(extensionRegistry -> {
-			extensionRegistry.register(1, new ChatFilterExtension(filterConfig));
-			extensionRegistry.register(2, new ChatReplacementExtension(replacementsConfig));
-			extensionRegistry.register(3, new RenderExtension(renderConfig));
-			extensionRegistry.register(100, new ChatFormatExtension(formatConfig));
-		});
+		final ExtensionRegistry registry = new ExtensionRegistry();
+
+		registry.register(1, new ChatFilterExtension(filterConfig));
+		registry.register(2, new ChatReplacementExtension(replacementsConfig));
+		registry.register(3, new RenderExtension(renderConfig));
+		registry.register(100, new ChatFormatExtension(formatConfig));
+
+		final ChatProcessor processor = registry.build();
+
+		MistLogger.info("Registered " + registry.size() + " chat extensions");
+		return processor;
 	}
 }

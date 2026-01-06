@@ -39,6 +39,7 @@ prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <m_dark_gray>·<
 
 messages:
   mist_about:
+    enabled: true
     type: chat
     chat:
       list:
@@ -55,6 +56,7 @@ messages:
         - " "
 
   mist_reloaded:
+    enabled: true
     type: chat, action bar
     chat:
       text: "<prefix> <m_gray>Successfully reloaded in <time_taken>ms.</m_gray>"
@@ -62,6 +64,7 @@ messages:
       text: "<prefix> <m_gray>Successfully reloaded in <time_taken>ms.</m_gray>"
 
   mist_similarity:
+    enabled: true
     type: chat
     chat:
       list:
@@ -74,6 +77,7 @@ messages:
         - " "
 
   chat_cleared:
+    enabled: true
     type: chat
     chat:
       list:
@@ -84,6 +88,7 @@ messages:
         - " "
 
   chat_locked:
+    enabled: true
     type: chat
     chat:
       list:
@@ -94,6 +99,7 @@ messages:
         - " "
 
   chat_unlocked:
+    enabled: true
     type: chat
     chat:
       list:
@@ -104,6 +110,7 @@ messages:
         - " "
 
   mist_regex_generate:
+    enabled: true
     type: chat
     chat:
       list:
@@ -118,6 +125,7 @@ messages:
         - " "
 
   mist_regex_analyze:
+    enabled: true
     type: chat
     chat:
       list:
@@ -131,21 +139,25 @@ messages:
         - " "
 
   chat_already_locked:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Chat is already locked.</m_gray>"
 
   chat_already_unlocked:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Chat is already unlocked.</m_gray>"
 
   chat_locked_blocked:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Chat is currently locked.</m_gray>"
 
   mist_announcement_next:
+    enabled: true
     type: chat
     chat:
       list:
@@ -156,31 +168,37 @@ messages:
         - " "
 
   mist_announcement_none:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>No announcements are currently configured.</m_gray>"
 
   mist_announcement_invalid:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Unknown announcement:</m_gray> <color:#E03261><name></color>"
 
   mist_announcement_setnext:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Next announcement set to</m_gray> <color:#E03261><name></color>."
 
   mist_announcement_forced:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Announcement</m_gray> <color:#E03261><name></color> <m_gray>sent immediately.</m_gray>"
 
   mist_dump_start:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Creating dump...</m_gray>"
 
   mist_dump_success:
+    enabled: true
     type: chat
     chat:
       list:
@@ -194,6 +212,7 @@ messages:
         - " "
 
   mist_dump_failed:
+    enabled: true
     type: chat
     chat:
       list:
@@ -205,6 +224,7 @@ messages:
         - " "
 
   alert_modified:
+    enabled: true
     type: chat
     chat:
       list:
@@ -222,42 +242,50 @@ messages:
     filtering:
       flood:
         length:
+          enabled: true
           type: chat
           chat:
             text: "<prefix> <m_gray>Your message is too long.</m_gray>"
         repeats:
+          enabled: true
           type: chat
           chat:
             text: "<prefix> <m_gray>Please avoid flooding the chat.</m_gray>"
 
       caps:
+        enabled: true
         type: chat
         chat:
           text: "<prefix> <m_gray>Too many capital letters.</m_gray>"
 
       blocked_words:
         blocked:
+          enabled: true
           type: chat
           chat:
             text: "<prefix> <m_gray>Your message contains inappropriate language and has been blocked.</m_gray>"
 
       regex:
         blocked:
+          enabled: true
           type: chat
           chat:
             text: "<prefix> <m_gray>Your message contains forbidden content and has been blocked.</m_gray>"
 
       similarity:
+        enabled: true
         type: chat
         chat:
           text: "<prefix> <m_gray>Please do not repeat the same messages.</m_gray>"
 
       cooldown:
+        enabled: true
         type: chat
         chat:
           text: "<prefix> <m_gray>Please wait <remaining> seconds before sending another message.</m_gray>"
 
   alert_cancelled:
+    enabled: true
     type: chat
     chat:
       list:
@@ -271,21 +299,25 @@ messages:
         - " "
 
   toggle_global_chat:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Global chat has been <color:#E03261><state></color>.</m_gray>"
 
   toggle_private_messages:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Private messages have been <color:#E03261><state></color>.</m_gray>"
 
   toggle_mentions:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Mentions have been <color:#E03261><state></color>.</m_gray>"
 
   toggle_announcements:
+    enabled: true
     type: chat
     chat:
       text: "<prefix> <m_gray>Announcements have been <color:#E03261><state></color>.</m_gray>"

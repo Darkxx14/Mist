@@ -2,6 +2,7 @@ package com.xyrisdev.mist.util.matcher;
 
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.config.registry.ConfigRegistry;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import lombok.experimental.UtilityClass;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
@@ -14,13 +15,13 @@ import java.util.Map;
 @UtilityClass
 public class LeetMap {
 
-	private static volatile Map<Character, Character> MAP = Map.of();
+	private static volatile Map<Character, Character> map = Map.of();
 
 	public static void load(@NotNull ConfigRegistry registry) {
 		final ConfigurationSection section = registry.get(ConfigType.LEETMAP).getSection("mappings");
 
 		if (section == null) {
-			MAP = Map.of();
+			map = Map.of();
 			return;
 		}
 
@@ -51,7 +52,8 @@ public class LeetMap {
 			}
 		}
 
-		MAP = Collections.unmodifiableMap(resolved);
+		map = Collections.unmodifiableMap(resolved);
+		MistLogger.info("Loaded " + map.size() + " leet mappings");
 	}
 
 	public static char map(char input) {
@@ -59,7 +61,7 @@ public class LeetMap {
 			return input;
 		}
 
-		return MAP.getOrDefault(input, input);
+		return map.getOrDefault(input, input);
 	}
 
 	public static @NotNull String map(@NotNull String input) {

@@ -19,6 +19,7 @@ interval: 1 minute
 
 announcements:
   mist:
+    enabled: true
     type: chat
     chat:
       list:

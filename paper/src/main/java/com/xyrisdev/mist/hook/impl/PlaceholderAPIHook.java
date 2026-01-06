@@ -16,7 +16,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 				.plugin("PlaceholderAPI")
 				.onLoad(l -> new PlaceholderAPIHook().register())
 				.log(true)
-				.success("PlaceholderAPI hooked")
+				.success("Hooked into PlaceholderAPI")
 				.failure("PlaceholderAPI not found")
 				.build();
 	}

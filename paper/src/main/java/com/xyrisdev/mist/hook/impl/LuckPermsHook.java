@@ -20,7 +20,7 @@ public class LuckPermsHook {
 					throw new IllegalStateException("LuckPerms is required");
 				})
 				.log(true)
-				.success("LuckPerms hooked")
+				.success("Hooked into LuckPerms")
 				.failure("LuckPerms not found")
 				.build();
 	}

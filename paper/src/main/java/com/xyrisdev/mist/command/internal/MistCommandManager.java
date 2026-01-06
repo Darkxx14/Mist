@@ -4,6 +4,7 @@ import com.xyrisdev.mist.command.MistCallbackCommand;
 import com.xyrisdev.mist.command.MistCommand;
 import com.xyrisdev.mist.command.internal.exception.HandledParseException;
 import com.xyrisdev.mist.command.player.IgnoreCommand;
+import com.xyrisdev.mist.command.player.MessageCommand;
 import com.xyrisdev.mist.command.player.ToggleCommands;
 import org.bukkit.plugin.Plugin;
 import org.incendo.cloud.execution.ExecutionCoordinator;
@@ -53,5 +54,6 @@ public class MistCommandManager {
 		// player commands
 		ToggleCommands.register();
 		IgnoreCommand.register();
+		MessageCommand.register();
 	}
 }
