@@ -12,6 +12,9 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MistChatRenderer {
 
 	@SuppressWarnings("deprecation")
@@ -23,26 +26,30 @@ public class MistChatRenderer {
 				return message;
 			}
 
-			Component base = TextParser.parse(player, entry.message())
+			Component baseComp = TextParser.parse(player, entry.message())
 					.replaceText(b -> b.matchLiteral("<player>").replacement(displayName))
 					.replaceText(b -> b.matchLiteral("<message>").replacement(message));
 
 			if (!entry.hoverText().isEmpty()) {
+				final List<Component> lines = new ArrayList<>(entry.hoverText().size());
+
+				for (String line : entry.hoverText()) {
+					lines.add(TextParser.parse(player, line));
+				}
+
 				final Component hover = Component.join(
 						JoinConfiguration.separator(Component.newline()),
-						entry.hoverText().stream()
-								.map(line -> TextParser.parse(player, line))
-								.toList()
+						lines
 				);
 
-				base = base.hoverEvent(HoverEvent.showText(hover));
+				baseComp = baseComp.hoverEvent(HoverEvent.showText(hover));
 			}
 
 			if (entry.action() != null) {
 				final Component parsedComponent = TextParser.parse(player, entry.action().value());
 				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComponent);
 
-				base = base.clickEvent(
+				baseComp = baseComp.clickEvent(
 						ClickEvent.clickEvent(
 								entry.action().action(),
 								parsedValue
@@ -50,7 +57,7 @@ public class MistChatRenderer {
 				);
 			}
 
-			return base;
+			return baseComp;
 		};
 	}
 }

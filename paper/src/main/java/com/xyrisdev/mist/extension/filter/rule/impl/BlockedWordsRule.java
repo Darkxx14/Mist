@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BlockedWordsRule implements FilterRule {
 
 	private final Map<String, BlockedWordsEntry> entries = new ConcurrentHashMap<>();
+	private int minWordLength = Integer.MAX_VALUE;
 
 	@Override
 	public @NotNull String name() {
@@ -33,7 +34,8 @@ public class BlockedWordsRule implements FilterRule {
 
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
-		entries.clear();
+		this.entries.clear();
+		this.minWordLength = Integer.MAX_VALUE;
 
 		final ConfigurationSection words = section.getConfigurationSection("words");
 
@@ -48,8 +50,11 @@ public class BlockedWordsRule implements FilterRule {
 				continue;
 			}
 
-			entries.put(
-					normalize(raw),
+			final String normalized = normalize(raw);
+			this.minWordLength = Math.min(this.minWordLength, normalized.length());
+
+			this.entries.put(
+					normalized,
 					new BlockedWordsEntry(
 							word.getBoolean("cancel", true),
 							word.getString("replace", "***"),
@@ -68,12 +73,16 @@ public class BlockedWordsRule implements FilterRule {
 
 		for (int i = 0; i < parts.length; i++) {
 			final String original = parts[i];
+
+			if (original.length() < this.minWordLength) {
+				continue;
+			}
+
 			final String normalized = normalize(original);
 
-			for (Map.Entry<String, BlockedWordsEntry> e : entries.entrySet()) {
+			for (Map.Entry<String, BlockedWordsEntry> e : this.entries.entrySet()) {
 				final String word = e.getKey();
 				final BlockedWordsEntry entry = e.getValue();
-
 				final int index = normalized.indexOf(word);
 
 				if (index == -1) {
@@ -96,18 +105,16 @@ public class BlockedWordsRule implements FilterRule {
 
 				parts[i] = original.substring(0, index)
 						+ entry.replace
-						+ original.substring(end);
+						+ original.substring(Math.min(end, original.length()));
 
 				modified = true;
 				break;
 			}
 		}
 
-		if (!modified) {
-			return FilterResult.pass();
-		}
-
-		return FilterResult.modify(String.join(" ", parts));
+		return modified
+				? FilterResult.modify(String.join(" ", parts))
+				: FilterResult.pass();
 	}
 
 	private static @NotNull String normalize(@NotNull String input) {
@@ -115,13 +122,36 @@ public class BlockedWordsRule implements FilterRule {
 			return input;
 		}
 
-		String s = Normalizer.normalize(input, Normalizer.Form.NFKC);
-		s = s.toLowerCase();
-		s = s.replaceAll("\\p{M}+", "");
-		s = LeetMap.map(s);
-		s = s.replaceAll("[^a-z0-9]+", " ");
+		final String decomposed = Normalizer.normalize(input, Normalizer.Form.NFKC);
+		final StringBuilder out = new StringBuilder(decomposed.length());
 
-		return s.trim().replaceAll("\\s+", " ");
+		boolean lastWasSpace = true;
+
+		for (int i = 0; i < decomposed.length(); i++) {
+			char c = Character.toLowerCase(decomposed.charAt(i));
+
+			if (Character.getType(c) == Character.NON_SPACING_MARK) {
+				continue;
+			}
+
+			c = LeetMap.map(c);
+
+			if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
+				out.append(c);
+				lastWasSpace = false;
+			} else if (!lastWasSpace) {
+				out.append(' ');
+				lastWasSpace = true;
+			}
+		}
+
+		final int len = out.length();
+
+		if (len > 0 && out.charAt(len - 1) == ' ') {
+			out.setLength(len - 1);
+		}
+
+		return out.toString();
 	}
 
 	private record BlockedWordsEntry(

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class MessageContext {
 
@@ -13,6 +14,8 @@ public class MessageContext {
 	private final Map<String, Component> componentPlaceholders;
 
 	private UnaryOperator<Component> interceptor;
+
+	private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>");
 
 	public MessageContext(@NotNull Map<String, String> stringPlaceholders) {
 		this.stringPlaceholders = stringPlaceholders;
@@ -28,22 +31,31 @@ public class MessageContext {
 	}
 
 	public @NotNull Component apply(@NotNull Component component) {
-		Component result = component;
-
-		for (Map.Entry<String, Component> entry : this.componentPlaceholders.entrySet()) {
-			result = result.replaceText(builder ->
-					builder.matchLiteral("<" + entry.getKey() + ">")
-							.replacement(entry.getValue())
-			);
+		if (componentPlaceholders.isEmpty() && stringPlaceholders.isEmpty()) {
+			return interceptor != null ? interceptor.apply(component) : component;
 		}
 
-		for (Map.Entry<String, String> entry : this.stringPlaceholders.entrySet()) {
-			result = result.replaceText(builder ->
-					builder.matchLiteral("<" + entry.getKey() + ">")
-							.replacement(entry.getValue())
-			);
-		}
+		final Component result = component.replaceText(builder ->
+				builder.match(PLACEHOLDER_PATTERN)
+						.replacement((match, ctx) -> {
+							final String key = match.group(1);
 
-		return this.interceptor != null ? this.interceptor.apply(result) : result;
+							final Component componentReplacement = componentPlaceholders.get(key);
+
+							if (componentReplacement != null) {
+								return componentReplacement;
+							}
+
+							final String stringReplacement = stringPlaceholders.get(key);
+
+							if (stringReplacement != null) {
+								return Component.text(stringReplacement);
+							}
+
+							return Component.text(match.group());
+						})
+		);
+
+		return interceptor != null ? interceptor.apply(result) : result;
 	}
 }

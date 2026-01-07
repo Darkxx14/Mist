@@ -41,7 +41,6 @@ public class RenderStage implements ChatProcessStage {
 			for (String prefix : this.config.inventory().prefix()) {
 				if (message.contains(prefix)) {
 					render(ctx, player, RenderType.INVENTORY, this.config.inventory().processor(), prefix);
-					return;
 				}
 			}
 		}
@@ -50,7 +49,6 @@ public class RenderStage implements ChatProcessStage {
 			for (String prefix : this.config.item().prefix()) {
 				if (message.contains(prefix)) {
 					render(ctx, player, RenderType.ITEM, this.config.item().processor(), prefix);
-					return;
 				}
 			}
 		}
@@ -59,7 +57,6 @@ public class RenderStage implements ChatProcessStage {
 			for (String prefix : this.config.enderChest().prefix()) {
 				if (message.contains(prefix)) {
 					render(ctx, player, RenderType.ENDER_CHEST, this.config.enderChest().processor(), prefix);
-					return;
 				}
 			}
 		}
@@ -68,7 +65,6 @@ public class RenderStage implements ChatProcessStage {
 			for (String prefix : this.config.shulkerBox().prefix()) {
 				if (message.contains(prefix)) {
 					render(ctx, player, RenderType.SHULKER_BOX, this.config.shulkerBox().processor(), prefix);
-					return;
 				}
 			}
 		}

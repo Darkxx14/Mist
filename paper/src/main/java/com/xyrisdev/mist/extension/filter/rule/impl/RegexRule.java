@@ -3,6 +3,7 @@ package com.xyrisdev.mist.extension.filter.rule.impl;
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.extension.filter.rule.FilterResult;
 import com.xyrisdev.mist.extension.filter.rule.FilterRule;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
@@ -62,9 +63,7 @@ public class RegexRule implements FilterRule {
 						rule.getString("replace", "***")
 				));
 			} catch (Exception ex) {
-				System.out.println(
-						"[RegexRule] Invalid regex '" + id + "': " + ex.getMessage()
-				);
+				MistLogger.warn("Invalid regex" + id + ":" + ex.getMessage());
 			}
 		}
 	}
@@ -90,7 +89,11 @@ public class RegexRule implements FilterRule {
 				return FilterResult.cancelled();
 			}
 
-			msg = matcher.replaceAll(entry.replace);
+			final String replaced = matcher.replaceAll(entry.replace);
+
+			if (!replaced.equals(msg)) {
+				msg = replaced;
+			}
 		}
 
 		return msg.equals(original)

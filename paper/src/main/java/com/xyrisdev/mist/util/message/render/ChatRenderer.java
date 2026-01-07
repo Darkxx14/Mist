@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
@@ -30,15 +31,24 @@ public class ChatRenderer {
 				return;
 			}
 
-			final Component combined = Component.join(
-					JoinConfiguration.separator(Component.newline()),
-					lines.stream()
-							.map(line -> parse(audience, player, line))
-							.map(ctx::apply)
-							.toList()
-			);
+			final List<Component> components = new ArrayList<>(lines.size());
 
-			audience.sendMessage(combined);
+			for (String line : lines) {
+				final Component parsed = parse(audience, player, line);
+
+				if (line.indexOf('<') == -1) {
+					components.add(parsed);
+				} else {
+					components.add(ctx.apply(parsed));
+				}
+			}
+
+			audience.sendMessage(
+					Component.join(
+							JoinConfiguration.separator(Component.newline()),
+							components
+					)
+			);
 			return;
 		}
 

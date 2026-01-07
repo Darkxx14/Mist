@@ -1,5 +1,8 @@
 package com.xyrisdev.mist.util.text;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.xyrisdev.mist.util.text.cache.TextCacheKey;
 import com.xyrisdev.mist.util.text.tags.registry.TagRegistry;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.audience.Audience;
@@ -7,20 +10,35 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
+import java.util.Objects;
+
 @UtilityClass
 public class TextParser {
 
-	private static final TagRegistry TAG_REGISTRY = new TagRegistry();
-	private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
+	private static final TagRegistry tagRegistry = new TagRegistry();
+	private static final MiniMessage mm = MiniMessage.miniMessage();
+
+	private static final Cache<TextCacheKey, Component> cache = Caffeine.newBuilder()
+			.maximumSize(10_000)
+			.expireAfterAccess(Duration.ofMinutes(5))
+			.build();
 
 	public static @NotNull Component parse(@NotNull Audience audience, @NotNull String input) {
 		final String message = containsLegacy(input)
 				? legacy(input)
 				: input;
 
-		return MINI_MESSAGE.deserialize(
-				message,
-				TAG_REGISTRY.build(audience)
+
+		return Objects.requireNonNull(
+				cache.get(
+						new TextCacheKey(audience, message),
+						key -> mm.deserialize(
+								key.message(),
+								tagRegistry.build(key.audience())
+						)
+				),
+				"MiniMessage returned null Component"
 		);
 	}
 

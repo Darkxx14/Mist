@@ -102,6 +102,7 @@ val plugins = runPaper.downloadPluginsSpec {
     modrinth("viabackwards", "5.6.0")
     modrinth("placeholderapi", "2.11.7")
     url("https://ci.lucko.me/job/LuckPerms-Folia/lastBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-5.5.11.jar")
+    url("https://ci.lucko.me/job/spark-extra-platforms/8/artifact/spark-folia/build/libs/spark-1.10.142-SNAPSHOT-folia.jar")
 }
 
 tasks.withType<RunServer>().configureEach {
