@@ -34,7 +34,7 @@ public class AsyncChatListener {
 									event.message()
 							);
 
-							ChatPlugin.instance().chatProcessor().process(ctx);
+							ChatPlugin.service().chatProcessor().process(ctx);
 
 							if (ctx.result() == ChatResult.CANCEL) {
 								event.setCancelled(true);
@@ -43,7 +43,7 @@ public class AsyncChatListener {
 
 							event.message(ctx.message());
 
-							final boolean hideIgnored = ChatPlugin.instance()
+							final boolean hideIgnored = ChatPlugin.service()
 													   .configRegistry()
 												       .get(ConfigType.CONFIGURATION)
 												       .get("ignoring.hide_chat_messages", true);
@@ -53,7 +53,7 @@ public class AsyncChatListener {
 									return false;
 								}
 
-								final ChatUser user = ChatPlugin.instance()
+								final ChatUser user = ChatPlugin.service()
 													 .userManager()
 													 .get(viewer.getUniqueId());
 

@@ -29,7 +29,7 @@ public class SimilarityCommand {
 
 		final double similarity = SimilarityMatcher.similarity(s1, s2);
 
-		final double threshold = ChatPlugin.instance()
+		final double threshold = ChatPlugin.service()
 								.configRegistry()
 								.get(ConfigType.CHAT_FILTER)
 								.getDouble("similarity.threshold", 0.60);

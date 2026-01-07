@@ -19,7 +19,7 @@ public class PlayerQuitListener {
 					final Player player = event.getPlayer();
 					final UUID id = event.getPlayer().getUniqueId();
 
-					final ChatUserManager users = ChatPlugin.instance().userManager();
+					final ChatUserManager users = ChatPlugin.service().userManager();
 
 					RenderService.get().invalidate(player);
 

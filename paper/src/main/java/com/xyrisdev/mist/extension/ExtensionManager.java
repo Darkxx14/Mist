@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public class ExtensionManager {
 
 	public static @NotNull ChatProcessor register() {
-		final ConfigRegistry config = ChatPlugin.instance().configRegistry();
+		final ConfigRegistry config = ChatPlugin.service().configRegistry();
 
 		final FilterConfiguration filterConfig = FilterConfigurationLoader.load(config.get(ConfigType.CHAT_FILTER));
 		final ReplacementsConfiguration replacementsConfig = ReplacementsConfigurationLoader.load(config.get(ConfigType.CHAT_REPLACEMENTS));

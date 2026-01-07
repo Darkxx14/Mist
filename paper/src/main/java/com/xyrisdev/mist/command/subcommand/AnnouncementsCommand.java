@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AnnouncementsCommand {
 
-	private final AnnouncementService service = ChatPlugin.instance().announcements();
+	private final AnnouncementService service = ChatPlugin.service().announcements();
 
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(

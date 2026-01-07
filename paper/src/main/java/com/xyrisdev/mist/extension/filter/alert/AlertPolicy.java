@@ -15,7 +15,7 @@ public class AlertPolicy {
 	private final Set<String> disabledRules;
 
 	public AlertPolicy() {
-		final CachableConfiguration config = ChatPlugin.instance()
+		final CachableConfiguration config = ChatPlugin.service()
 											.configRegistry()
 											.get(ConfigType.CONFIGURATION);
 

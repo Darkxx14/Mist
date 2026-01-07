@@ -18,7 +18,7 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 	public @NotNull ArgumentParseResult<Announcement> parse(@NotNull CommandContext<Source> ctx, @NotNull CommandInput input) {
 		final String name = input.readString();
 
-		return ChatPlugin.instance()
+		return ChatPlugin.service()
 				.announcements()
 				.find(name)
 				.map(ArgumentParseResult::success)
@@ -34,7 +34,7 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 	@Override
 	public @NotNull BlockingSuggestionProvider.Strings<Source> suggestionProvider() {
 		return (ctx, input) ->
-				ChatPlugin.instance()
+				ChatPlugin.service()
 						.announcements()
 						.announcementNames();
 	}

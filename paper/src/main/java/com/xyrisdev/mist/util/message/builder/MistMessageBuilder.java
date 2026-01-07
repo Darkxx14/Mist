@@ -73,7 +73,7 @@ public class MistMessageBuilder {
 	public void send() {
 		Objects.requireNonNull(id, "Message id must be set");
 
-		final ConfigurationSection section = ChatPlugin.instance()
+		final ConfigurationSection section = ChatPlugin.service()
 											.configRegistry()
 											.get(configType)
 											.getSection(basePath + "." + id);
@@ -92,10 +92,10 @@ public class MistMessageBuilder {
 			return;
 		}
 
-		final String prefix = ChatPlugin.instance()
-							.configRegistry()
-							.get(ConfigType.LANGUAGE)
-							.getString("prefix", "");
+		final String prefix = ChatPlugin.service()
+							 .configRegistry()
+							 .get(ConfigType.LANGUAGE)
+							 .getString("prefix", "");
 
 		final MessageContext ctx = new MessageContext(placeholders);
 

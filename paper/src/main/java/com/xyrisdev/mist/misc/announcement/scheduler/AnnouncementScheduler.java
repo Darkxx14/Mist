@@ -6,19 +6,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class AnnouncementScheduler {
 
-	private final ChatPlugin plugin;
 	private WrappedTask task;
-
-	public AnnouncementScheduler(@NotNull ChatPlugin plugin) {
-		this.plugin = plugin;
-	}
 
 	public void start(long intervalMs, @NotNull Runnable action) {
 		stop();
 
 		final long ticks = Math.max(1L, intervalMs / 50L);
 
-		this.task = plugin.scheduler().runTimerAsync(
+		this.task = ChatPlugin.service().scheduler().runTimerAsync(
 				action,
 				ticks,
 				ticks
@@ -27,7 +22,7 @@ public class AnnouncementScheduler {
 
 	public void stop() {
 		if (task != null) {
-			plugin.scheduler().cancelTask(task);
+			ChatPlugin.service().scheduler().cancelTask(task);
 			task = null;
 		}
 	}

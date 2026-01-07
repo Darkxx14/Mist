@@ -24,7 +24,8 @@ public class MistCallbackCommand {
 							final Player player = ctx.sender().source();
 							final UUID id = ctx.get("id");
 
-							ChatPlugin.instance().scheduler()
+							ChatPlugin.service()
+									.scheduler()
 									.runAtEntity(player, task ->
 											RenderService.get().render(player, id)
 									);

@@ -19,7 +19,7 @@ public class ConfigurableCommand {
 
 	public static void register(@NotNull String key, boolean onlyP, @NotNull UnaryOperator<Command.Builder<Source>> operator) {
 		final PaperCommandManager<Source> manager = MistCommandManager.manager();
-		final CachableConfiguration config = ChatPlugin.instance()
+		final CachableConfiguration config = ChatPlugin.service()
 											.configRegistry()
 											.get(ConfigType.COMMANDS);
 

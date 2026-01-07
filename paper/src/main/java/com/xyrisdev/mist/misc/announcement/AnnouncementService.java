@@ -19,8 +19,8 @@ public class AnnouncementService {
 	private final AnnouncementScheduler scheduler;
 	private AnnouncementConfiguration config;
 
-	public AnnouncementService(@NotNull ChatPlugin plugin) {
-		this.scheduler = new AnnouncementScheduler(plugin);
+	public AnnouncementService() {
+		this.scheduler = new AnnouncementScheduler();
 	}
 
 	public void start() {
@@ -52,7 +52,7 @@ public class AnnouncementService {
 
 		Bukkit.getOnlinePlayers().stream()
 				.filter(player -> {
-					final ChatUser user = ChatPlugin.instance()
+					final ChatUser user = ChatPlugin.service()
 										 .userManager()
 										 .get(player.getUniqueId());
 
@@ -79,7 +79,7 @@ public class AnnouncementService {
 		config.find(name).ifPresent(announcement ->
 				Bukkit.getOnlinePlayers().stream()
 						.filter(player -> {
-							final ChatUser user = ChatPlugin.instance()
+							final ChatUser user = ChatPlugin.service()
 												 .userManager()
 												 .get(player.getUniqueId());
 

@@ -33,7 +33,7 @@ public class ToggleCommands {
 		final PlayerSource sender = (PlayerSource) ctx.sender();
 		final UUID id = sender.source().getUniqueId();
 
-		final ChatUserManager userManager = ChatPlugin.instance().userManager();
+		final ChatUserManager userManager = ChatPlugin.service().userManager();
 
 		final boolean enable = !userManager.get(id).settings().enabled(type);
 

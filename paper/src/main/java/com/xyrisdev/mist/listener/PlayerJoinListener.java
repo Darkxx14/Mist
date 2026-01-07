@@ -15,7 +15,7 @@ public class PlayerJoinListener {
 				.execute(event -> {
 					final UUID id = event.getPlayer().getUniqueId();
 
-					ChatPlugin.instance()
+					ChatPlugin.service()
 							  .userManager()
 							  .load(id);
 				})

@@ -33,7 +33,7 @@ public class AnnouncementConfiguration {
 
 	@Contract(" -> new")
 	public static @NotNull AnnouncementConfiguration load() {
-		final CachableConfiguration config = ChatPlugin.instance()
+		final CachableConfiguration config = ChatPlugin.service()
 											.configRegistry()
 											.get(ConfigType.ANNOUNCEMENTS);
 

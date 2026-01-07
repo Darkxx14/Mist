@@ -8,8 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @UtilityClass
-@SuppressWarnings("CallToPrintStackTrace")
-public class MistExecutors {
+public final class MistExecutors {
 
     private static ExecutorService IO;
     private static ExecutorService PROCESSOR;
@@ -19,54 +18,39 @@ public class MistExecutors {
             return;
         }
 
-        IO = Executors.newSingleThreadExecutor(runnable -> {
-            final Thread thread = new Thread(runnable, "mist-io");
-
-            thread.setDaemon(true);
-            return thread;
-        });
-
-        PROCESSOR = Executors.newSingleThreadExecutor(runnable -> {
-           final  Thread thread = new Thread(runnable, "mist-processor");
-
-            thread.setDaemon(true);
-            return thread;
-        });
+        IO = create("mist-io");
+        PROCESSOR = create("mist-processor");
     }
 
     public static void shutdown() {
-        if (IO != null) {
-            IO.shutdown();
-            IO = null;
+        shutdown(IO);
+        shutdown(PROCESSOR);
+
+        IO = null;
+        PROCESSOR = null;
+    }
+
+    public static @NotNull ExecutorService io() {
+        return IO;
+    }
+
+    public static @NotNull ExecutorService processor() {
+        return PROCESSOR;
+    }
+
+    @Contract("_ -> new")
+    private static @NotNull ExecutorService create(String name) {
+        return Executors.newSingleThreadExecutor(runnable -> {
+           final Thread thread = new Thread(runnable, name);
+
+            thread.setDaemon(true);
+            return thread;
+        });
+    }
+
+    private static void shutdown(ExecutorService service) {
+        if (service != null) {
+            service.shutdown();
         }
-
-        if (PROCESSOR != null) {
-            PROCESSOR.shutdown();
-            PROCESSOR = null;
-        }
-    }
-
-    public static @NotNull ExecutorHandle io() {
-        return task -> IO.execute(wrap(task));
-    }
-
-    public static @NotNull ExecutorHandle processor() {
-        return task -> PROCESSOR.execute(wrap(task));
-    }
-
-    @Contract(pure = true)
-    private static @NotNull Runnable wrap(Runnable task) {
-        return () -> {
-            try {
-                task.run();
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        };
-    }
-
-    @FunctionalInterface
-    public interface ExecutorHandle {
-        void execute(@NotNull Runnable task);
     }
 }

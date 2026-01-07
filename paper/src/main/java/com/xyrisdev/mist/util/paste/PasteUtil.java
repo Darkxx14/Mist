@@ -20,7 +20,7 @@ public class PasteUtil {
 	private static final String VIEW_BASE = "https://pastes.dev/";
 
 	private static final HttpClient CLIENT = HttpClient.newBuilder()
-											.executor(MistExecutors.processor()::execute)
+											.executor(MistExecutors.processor())
 											.build();
 
 	private static final Gson GSON = new GsonBuilder()

@@ -41,7 +41,7 @@ public class IgnoreCommand {
 		final PlayerSource sender = (PlayerSource) ctx.sender();
 		final UUID senderId = sender.source().getUniqueId();
 
-		final ChatUserManager users = ChatPlugin.instance().userManager();
+		final ChatUserManager users = ChatPlugin.service().userManager();
 
 		final OfflinePlayer target = ctx.get("target");
 
@@ -86,7 +86,7 @@ public class IgnoreCommand {
 			final PlayerSource sender = (PlayerSource) source;
 			final UUID senderId = sender.source().getUniqueId();
 
-			final ChatUser user = ChatPlugin.instance()
+			final ChatUser user = ChatPlugin.service()
 								 .userManager()
 								 .get(senderId);
 
@@ -101,6 +101,6 @@ public class IgnoreCommand {
 					.filter(name -> name != null && name.regionMatches(true, 0, token, 0, token.length()))
 					.map(Suggestion::suggestion)
 					.toList();
-		}, MistExecutors.processor()::execute);
+		}, MistExecutors.processor());
 	}
 }
