@@ -75,11 +75,7 @@ tasks.jar {
     enabled = false
 }
 
-artifacts {
-    archives(tasks.shadowJar)
-}
-
-tasks.build {
+tasks.assemble {
     dependsOn(tasks.shadowJar)
 }
 
