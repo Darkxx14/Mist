@@ -1,7 +1,8 @@
 package com.xyrisdev.mist.util.command;
 
 import com.xyrisdev.library.config.CachableConfiguration;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.config.ConfigType;
 import lombok.experimental.UtilityClass;
@@ -19,9 +20,7 @@ public class ConfigurableCommand {
 
 	public static void register(@NotNull String key, boolean onlyP, @NotNull UnaryOperator<Command.Builder<Source>> operator) {
 		final PaperCommandManager<Source> manager = MistCommandManager.manager();
-		final CachableConfiguration config = ChatPlugin.service()
-											.configRegistry()
-											.get(ConfigType.COMMANDS);
+		final CachableConfiguration config = Mist.INSTANCE.config().get(ConfigType.COMMANDS);
 
 		final String base = "commands." + key;
 

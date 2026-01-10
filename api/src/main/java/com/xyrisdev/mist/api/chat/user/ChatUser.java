@@ -19,14 +19,14 @@ public class ChatUser {
 	}
 
 	public @NotNull UUID id() {
-		return id;
+		return this.id;
 	}
 
 	public @NotNull ChatSettings settings() {
-		return settings;
+		return this.settings;
 	}
 
 	public @NotNull ChatIgnore ignore() {
-		return ignore;
+		return this.ignore;
 	}
 }

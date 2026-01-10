@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ChatContext {
+public final class ChatContext {
 
 	private final Player sender;
 	private Component message;
@@ -27,15 +27,15 @@ public class ChatContext {
 	}
 
 	public Player sender() {
-		return sender;
+		return this.sender;
 	}
 
 	public Component message() {
-		return message;
+		return this.message;
 	}
 
 	public String plain() {
-		return plainMessage;
+		return this.plainMessage;
 	}
 
 	public void plain(String plain) {
@@ -49,15 +49,11 @@ public class ChatContext {
 	}
 
 	public <T> void attribute(Key key, T value) {
-		attributes.put(key, value);
+		this.attributes.put(key, value);
 	}
 
 	public <T> T attributes(Key key, @NotNull Class<T> type) {
-		return type.cast(attributes.get(key));
-	}
-
-	public boolean has(Key key) {
-		return attributes.containsKey(key);
+		return type.cast(this.attributes.get(key));
 	}
 
 	public void cancel() {
@@ -65,6 +61,6 @@ public class ChatContext {
 	}
 
 	public ChatResult result() {
-		return result;
+		return this.result;
 	}
 }

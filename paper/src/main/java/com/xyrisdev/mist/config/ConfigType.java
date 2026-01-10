@@ -92,21 +92,21 @@ public enum ConfigType {
 			)
 	),
 
-	PRIVATE_MESSAGES(
-			"misc/private_messages.yml",
+	// internal
+	LEETMAP(
+			"internal/leetmap.yml",
 			new MigrationContext(
-					"misc/private_messages.yml",
+					"internal/leetmap.yml",
 					"config_version",
 					"backup",
 					true
 			)
 	),
 
-	// internal
-	LEETMAP(
-			"internal/leetmap.yml",
+	EXTENSION_PRIORITIES(
+			"internal/extension_priorities.yml",
 			new MigrationContext(
-					"internal/leetmap.yml",
+					"internal/extension_priorities.yml",
 					"config_version",
 					"backup",
 					true

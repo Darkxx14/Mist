@@ -2,7 +2,7 @@ package com.xyrisdev.mist.listener;
 
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.api.chat.processor.result.ChatResult;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
@@ -34,7 +34,7 @@ public class AsyncChatListener {
 									event.message()
 							);
 
-							ChatPlugin.service().chatProcessor().process(ctx);
+							Mist.INSTANCE.chatProcessor().process(ctx);
 
 							if (ctx.result() == ChatResult.CANCEL) {
 								event.setCancelled(true);
@@ -43,8 +43,7 @@ public class AsyncChatListener {
 
 							event.message(ctx.message());
 
-							final boolean hideIgnored = ChatPlugin.service()
-													   .configRegistry()
+							final boolean hideIgnored = Mist.INSTANCE.config()
 												       .get(ConfigType.CONFIGURATION)
 												       .get("ignoring.hide_chat_messages", true);
 
@@ -53,9 +52,7 @@ public class AsyncChatListener {
 									return false;
 								}
 
-								final ChatUser user = ChatPlugin.service()
-													 .userManager()
-													 .get(viewer.getUniqueId());
+								final ChatUser user = Mist.INSTANCE.userManager().get(viewer.getUniqueId());
 
 								return user == null || !user.settings().globalChat()
 										|| (hideIgnored && user.ignore().contains(sender.getUniqueId()));

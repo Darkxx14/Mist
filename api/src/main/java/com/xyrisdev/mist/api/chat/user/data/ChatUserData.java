@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class ChatUserData {
+public final class ChatUserData {
 
 	public EnumMap<ChatSettingType, Boolean> settings;
 	public Set<UUID> ignored;

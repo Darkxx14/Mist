@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command.subcommand;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.util.message.MistMessage;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
@@ -21,7 +22,7 @@ public class ReloadCommand {
 	private void reload(@NotNull CommandContext<Source> ctx) {
 		final long start = System.currentTimeMillis();
 
-		ChatPlugin.instance().reload();
+		Mist.INSTANCE.reload();
 
 		MistMessage.create(ctx.sender().source())
 				.id("mist_reloaded")

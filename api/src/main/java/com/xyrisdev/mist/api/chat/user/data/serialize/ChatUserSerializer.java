@@ -11,7 +11,7 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class ChatUserSerializer {
+public final class ChatUserSerializer {
 
 	private static final Gson GSON = new GsonBuilder()
 										.setPrettyPrinting()

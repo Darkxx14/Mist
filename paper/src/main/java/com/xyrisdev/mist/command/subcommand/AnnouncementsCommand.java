@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.command.subcommand;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.command.internal.parser.AnnouncementParser;
 import com.xyrisdev.mist.misc.announcement.AnnouncementService;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AnnouncementsCommand {
 
-	private final AnnouncementService service = ChatPlugin.service().announcements();
+	private final AnnouncementService anncs = Mist.INSTANCE.announcements();
 
 	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
 		manager.command(
@@ -50,7 +50,7 @@ public class AnnouncementsCommand {
 	}
 
 	private void checkNext(@NotNull CommandContext<Source> ctx) {
-		service.previewNext().ifPresentOrElse(
+		anncs.previewNext().ifPresentOrElse(
 				a -> MistMessage.create(ctx.sender().source())
 						.id("mist_announcement_next")
 						.placeholder("name", a.name())
@@ -64,7 +64,7 @@ public class AnnouncementsCommand {
 	private void setNext(@NotNull CommandContext<Source> ctx) {
 		final Announcement announcement = ctx.get("announcement");
 
-		service.setNext(announcement.name());
+		anncs.setNext(announcement.name());
 
 		MistMessage.create(ctx.sender().source())
 				.id("mist_announcement_setnext")
@@ -75,7 +75,7 @@ public class AnnouncementsCommand {
 	private void force(@NotNull CommandContext<Source> ctx) {
 		final Announcement announcement = ctx.get("announcement");
 
-		service.force(announcement.name());
+		anncs.force(announcement.name());
 
 		MistMessage.create(ctx.sender().source())
 				.id("mist_announcement_forced")

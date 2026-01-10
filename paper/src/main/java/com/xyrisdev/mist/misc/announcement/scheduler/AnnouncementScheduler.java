@@ -1,7 +1,8 @@
 package com.xyrisdev.mist.misc.announcement.scheduler;
 
 import com.tcoded.folialib.wrapper.task.WrappedTask;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class AnnouncementScheduler {
@@ -13,7 +14,7 @@ public class AnnouncementScheduler {
 
 		final long ticks = Math.max(1L, intervalMs / 50L);
 
-		this.task = ChatPlugin.service().scheduler().runTimerAsync(
+		this.task = Mist.INSTANCE.scheduler().runTimerAsync(
 				action,
 				ticks,
 				ticks
@@ -22,7 +23,7 @@ public class AnnouncementScheduler {
 
 	public void stop() {
 		if (task != null) {
-			ChatPlugin.service().scheduler().cancelTask(task);
+			Mist.INSTANCE.scheduler().cancelTask(task);
 			task = null;
 		}
 	}

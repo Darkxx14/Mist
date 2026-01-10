@@ -1,6 +1,6 @@
 package com.xyrisdev.mist.util.message.builder;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.builder.object.MessageContext;
 import com.xyrisdev.mist.util.message.builder.object.MessageType;
@@ -73,10 +73,9 @@ public class MistMessageBuilder {
 	public void send() {
 		Objects.requireNonNull(id, "Message id must be set");
 
-		final ConfigurationSection section = ChatPlugin.service()
-											.configRegistry()
-											.get(configType)
-											.getSection(basePath + "." + id);
+		final ConfigurationSection section = Mist.INSTANCE.config()
+											.get(this.configType)
+											.getSection(this.basePath + "." + this.id);
 
 		if (section == null) {
 			return;
@@ -92,45 +91,44 @@ public class MistMessageBuilder {
 			return;
 		}
 
-		final String prefix = ChatPlugin.service()
-							 .configRegistry()
+		final String prefix = Mist.INSTANCE.config()
 							 .get(ConfigType.LANGUAGE)
 							 .getString("prefix", "");
 
-		final MessageContext ctx = new MessageContext(placeholders);
+		final MessageContext ctx = new MessageContext(this.placeholders);
 
 		ctx.interceptor(this.interceptor);
-		ctx.component("prefix", TextParser.parse(audience, prefix));
+		ctx.component("prefix", TextParser.parse(this.audience, prefix));
 
 		if (types.contains(MessageType.CHAT)) {
 			final ConfigurationSection chat = section.getConfigurationSection("chat");
 
 			if (chat != null) {
-				ChatRenderer.render(audience, player, chat, ctx);
+				ChatRenderer.render(this.audience, this.player, chat, ctx);
 			}
 		}
 
-		if (player != null && types.contains(MessageType.ACTION_BAR)) {
+		if (this.player != null && types.contains(MessageType.ACTION_BAR)) {
 			final ConfigurationSection bar = section.getConfigurationSection("action_bar");
 
 			if (bar != null) {
-				ActionBarRenderer.render(player, bar, ctx);
+				ActionBarRenderer.render(this.player, bar, ctx);
 			}
 		}
 
-		if (player != null && types.contains(MessageType.TITLE)) {
+		if (this.player != null && types.contains(MessageType.TITLE)) {
 			final ConfigurationSection title = section.getConfigurationSection("title");
 
 			if (title != null) {
-				TitleRenderer.render(player, title, ctx);
+				TitleRenderer.render(this.player, title, ctx);
 			}
 		}
 
 		final ConfigurationSection sound = section.getConfigurationSection("sound");
 
-		if (player != null && sound != null) {
+		if (this.player != null && sound != null) {
 			SoundEffect.play(
-					player,
+					this.player,
 					sound
 			);
 		}

@@ -1,6 +1,8 @@
 package com.xyrisdev.mist.util.dump;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import com.xyrisdev.mist.util.paste.PasteUtil;
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import lombok.experimental.UtilityClass;
@@ -15,7 +17,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.lang.management.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -51,7 +52,7 @@ public class DumpUtil {
 				javaInfo(runtimeMXBean),
 				memInfo(runtime, memoryMXBean),
 				schedulerInfo(Bukkit.getScheduler()),
-				pl(ChatPlugin.instance()),
+				pl(Mist.INSTANCE.plugin()),
 				configs(),
 				plugins
 		);
@@ -149,7 +150,7 @@ public class DumpUtil {
 
 	private static @NotNull Map<String, Object> configs() {
 		final Map<String, Object> output = new LinkedHashMap<>();
-		final Path root = ChatPlugin.instance().getDataFolder().toPath();
+		final Path root = Mist.INSTANCE.plugin().getDataFolder().toPath();
 		final Yaml yaml = new Yaml();
 
 		if (!Files.exists(root)) {
@@ -254,7 +255,7 @@ public class DumpUtil {
 	}
 
 	private static void log(String msg) {
-		ChatPlugin.instance().getLogger().info("[Dump] " + msg);
+		MistLogger.info("[dump] " + msg);
 	}
 
 	private record Dump(

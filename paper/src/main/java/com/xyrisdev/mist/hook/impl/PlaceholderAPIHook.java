@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.hook.impl;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.api.chat.user.toggle.ChatSettingType;
 import com.xyrisdev.mist.hook.MistHook;
@@ -23,20 +24,20 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 
 	@Override
 	public @NotNull String getIdentifier() {
-		return ChatPlugin.instance().getPluginMeta().getName();
+		return Mist.INSTANCE.plugin().getPluginMeta().getName();
 	}
 
 	@Override
 	public @NotNull String getAuthor() {
 		return String.join(
 				", ",
-				ChatPlugin.instance().getPluginMeta().getAuthors()
+				Mist.INSTANCE.plugin().getPluginMeta().getAuthors()
 		);
 	}
 
 	@Override
 	public @NotNull String getVersion() {
-		return ChatPlugin.instance().getPluginMeta().getVersion();
+		return Mist.INSTANCE.plugin().getPluginMeta().getVersion();
 	}
 
 	@Override
@@ -45,9 +46,7 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 			return null;
 		}
 
-		final ChatUser user = ChatPlugin.service()
-							 .userManager()
-							 .get(player.getUniqueId());
+		final ChatUser user = Mist.INSTANCE.userManager().get(player.getUniqueId());
 
 		if (user == null) {
 			return null;

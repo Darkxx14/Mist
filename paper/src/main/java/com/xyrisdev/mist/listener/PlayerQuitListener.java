@@ -2,7 +2,8 @@ package com.xyrisdev.mist.listener;
 
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.extension.render.impl.RenderService;
 import com.xyrisdev.mist.user.ChatUserManager;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class PlayerQuitListener {
 					final Player player = event.getPlayer();
 					final UUID id = event.getPlayer().getUniqueId();
 
-					final ChatUserManager users = ChatPlugin.service().userManager();
+					final ChatUserManager users = Mist.INSTANCE.userManager();
 
 					RenderService.get().invalidate(player);
 

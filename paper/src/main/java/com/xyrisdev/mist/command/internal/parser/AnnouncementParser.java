@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command.internal.parser;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.exception.HandledParseException;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.util.message.MistMessage;
@@ -18,8 +19,7 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 	public @NotNull ArgumentParseResult<Announcement> parse(@NotNull CommandContext<Source> ctx, @NotNull CommandInput input) {
 		final String name = input.readString();
 
-		return ChatPlugin.service()
-				.announcements()
+		return Mist.INSTANCE.announcements()
 				.find(name)
 				.map(ArgumentParseResult::success)
 				.orElseThrow(() -> HandledParseException.handle(
@@ -34,8 +34,6 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 	@Override
 	public @NotNull BlockingSuggestionProvider.Strings<Source> suggestionProvider() {
 		return (ctx, input) ->
-				ChatPlugin.service()
-						.announcements()
-						.announcementNames();
+				Mist.INSTANCE.announcements().announcementNames();
 	}
 }

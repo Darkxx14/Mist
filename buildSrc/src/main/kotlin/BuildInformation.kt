@@ -1,5 +1,4 @@
 import org.gradle.api.Project
-import java.io.ByteArrayOutputStream
 
 object BuildInformation {
 
@@ -27,8 +26,6 @@ object BuildInformation {
 
     private fun git(vararg args: String): String? =
         runCatching {
-            val out = ByteArrayOutputStream()
-
             ProcessBuilder("git", *args)
                 .redirectErrorStream(true)
                 .start()

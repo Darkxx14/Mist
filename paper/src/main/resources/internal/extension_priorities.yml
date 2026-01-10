@@ -1,0 +1,17 @@
+extension_priorities:
+  extensions:
+    chat_filter:
+      priority: 0
+
+    chat_replacement:
+      priority: 1
+
+    render:
+      priority: 2
+
+    chat_format:
+      priority: 3
+
+# do not edit this value
+# used for automatic migration tracking
+config_version: 1

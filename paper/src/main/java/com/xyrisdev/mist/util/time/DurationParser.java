@@ -12,7 +12,7 @@ public class DurationParser {
 	private static final Duration DEFAULT = Duration.ofMinutes(5);
 	private static final long TICKS_PER_SECOND = 20L;
 
-	public @NotNull Duration parse(@NotNull String raw) {
+	public static @NotNull Duration parse(@NotNull String raw) {
 		if (raw.isBlank()) {
 			return DEFAULT;
 		}
@@ -67,7 +67,7 @@ public class DurationParser {
 		return DEFAULT;
 	}
 
-	public long toTicks(@NotNull Duration duration) {
+	public static long toTicks(@NotNull Duration duration) {
 		if (duration.isZero() || duration.isNegative()) {
 			return 0L;
 		}

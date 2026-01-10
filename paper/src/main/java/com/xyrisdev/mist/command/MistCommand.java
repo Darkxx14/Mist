@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.command.subcommand.*;
 import com.xyrisdev.mist.util.build.BuildInformation;
@@ -39,7 +40,7 @@ public class MistCommand {
 
 	public static void about(@NotNull CommandContext<Source> ctx) {
 		final BuildInformation build = BuildInformation.instance();
-		final PluginMeta meta = ChatPlugin.instance().getPluginMeta();
+		final PluginMeta meta = Mist.INSTANCE.plugin().getPluginMeta();
 
 		MistMessage.create(ctx.sender().source())
 				.id("mist_about")

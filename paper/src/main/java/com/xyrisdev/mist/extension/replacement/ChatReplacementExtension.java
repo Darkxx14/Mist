@@ -1,31 +1,45 @@
 package com.xyrisdev.mist.extension.replacement;
 
-import com.xyrisdev.mist.api.chat.extension.meta.ExtensionMetadata;
-import com.xyrisdev.mist.api.chat.processor.stage.ChatProcessStage;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.api.chat.context.ChatContext;
+import com.xyrisdev.mist.api.chat.extension.ExtensionHandler;
+import com.xyrisdev.mist.api.chat.extension.MistExtension;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.extension.replacement.config.ReplacementsConfiguration;
-import com.xyrisdev.mist.extension.replacement.stage.ReplacementStage;
+import com.xyrisdev.mist.extension.replacement.config.loader.ReplacementsConfigurationLoader;
+import com.xyrisdev.mist.extension.replacement.entry.UnifiedReplacement;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatReplacementExtension implements ExtensionMetadata {
+@MistExtension(
+		id = "chat_replacement",
+		name = "Chat Replacement"
+)
+public class ChatReplacementExtension {
 
 	private final ReplacementsConfiguration config;
 
-	public ChatReplacementExtension(@NotNull ReplacementsConfiguration config) {
-		this.config = config;
+	public ChatReplacementExtension() {
+		this.config = ReplacementsConfigurationLoader.load(
+				Mist.INSTANCE.config().get(ConfigType.CHAT_REPLACEMENTS)
+		);
 	}
 
-	@Override
-	public @NotNull String name() {
-		return "chat_replacement";
-	}
+	@ExtensionHandler
+	public void handler(@NotNull ChatContext ctx) {
+		final Player player = ctx.sender();
 
-	@Override
-	public @NotNull Class<? extends ChatProcessStage> stage() {
-		return ReplacementStage.class;
-	}
+		Component message = ctx.message();
 
-	@Override
-	public Object configuration() {
-		return this.config;
+		for (UnifiedReplacement replacement : this.config.replacements()) {
+			if (!replacement.canApply(player)) {
+				continue;
+			}
+
+			message = replacement.apply(player, message);
+		}
+
+		ctx.message(message);
 	}
 }

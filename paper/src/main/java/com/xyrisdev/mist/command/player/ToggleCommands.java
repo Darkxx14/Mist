@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command.player;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.toggle.ChatSettingType;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
@@ -33,7 +34,7 @@ public class ToggleCommands {
 		final PlayerSource sender = (PlayerSource) ctx.sender();
 		final UUID id = sender.source().getUniqueId();
 
-		final ChatUserManager userManager = ChatPlugin.service().userManager();
+		final ChatUserManager userManager = Mist.INSTANCE.userManager();
 
 		final boolean enable = !userManager.get(id).settings().enabled(type);
 

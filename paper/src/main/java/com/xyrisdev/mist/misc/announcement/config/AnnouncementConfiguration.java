@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.misc.announcement.config;
 
 import com.xyrisdev.library.config.CachableConfiguration;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.misc.announcement.object.AnnouncementType;
@@ -33,9 +33,7 @@ public class AnnouncementConfiguration {
 
 	@Contract(" -> new")
 	public static @NotNull AnnouncementConfiguration load() {
-		final CachableConfiguration config = ChatPlugin.service()
-											.configRegistry()
-											.get(ConfigType.ANNOUNCEMENTS);
+		final CachableConfiguration config = Mist.INSTANCE.config().get(ConfigType.ANNOUNCEMENTS);
 
 		final boolean enabled = config.getBoolean("enabled", false);
 		final AnnouncementType type = AnnouncementType.parse(config.getString("type", "random"));

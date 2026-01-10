@@ -23,15 +23,15 @@ public class ChatSettings {
 	}
 
 	public boolean enabled(@NotNull ChatSettingType type) {
-		return states.getOrDefault(type, true);
+		return this.states.getOrDefault(type, true);
 	}
 
 	public void enable(@NotNull ChatSettingType type) {
-		states.put(type, true);
+		this.states.put(type, true);
 	}
 
 	public void disable(@NotNull ChatSettingType type) {
-		states.put(type, false);
+		this.states.put(type, false);
 	}
 
 	public boolean globalChat() {

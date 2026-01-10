@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.misc.announcement;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.misc.announcement.config.AnnouncementConfiguration;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
@@ -52,9 +53,7 @@ public class AnnouncementService {
 
 		Bukkit.getOnlinePlayers().stream()
 				.filter(player -> {
-					final ChatUser user = ChatPlugin.service()
-										 .userManager()
-										 .get(player.getUniqueId());
+					final ChatUser user = Mist.INSTANCE.userManager().get(player.getUniqueId());
 
 					return user != null && user.settings().announcements();
 				})
@@ -79,9 +78,7 @@ public class AnnouncementService {
 		config.find(name).ifPresent(announcement ->
 				Bukkit.getOnlinePlayers().stream()
 						.filter(player -> {
-							final ChatUser user = ChatPlugin.service()
-												 .userManager()
-												 .get(player.getUniqueId());
+							final ChatUser user = Mist.INSTANCE.userManager().get(player.getUniqueId());
 
 							return user != null && user.settings().announcements();
 						})

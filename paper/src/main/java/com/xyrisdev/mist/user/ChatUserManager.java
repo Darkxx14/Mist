@@ -18,14 +18,14 @@ public class ChatUserManager {
 
 	private final ChatUserRepository repository;
 
-	private final Cache<UUID, ChatUser> cache;
+	private final Cache<@NotNull UUID, ChatUser> cache;
 	private final Set<UUID> dirtyUsers = ConcurrentHashMap.newKeySet();
 
 	public ChatUserManager(@NotNull ChatUserRepository repository) {
 		this.repository = repository;
 		this.cache = Caffeine.newBuilder()
 				.removalListener((UUID id, ChatUser user, RemovalCause cause) -> {
-					if (user == null || !this.dirtyUsers.remove(id)) {
+					if (!this.dirtyUsers.remove(id)) {
 						return;
 					}
 

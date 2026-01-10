@@ -1,6 +1,5 @@
 package com.xyrisdev.mist.hook;
 
-import com.xyrisdev.library.logger.XLogger;
 import com.xyrisdev.mist.util.logger.MistLogger;
 import lombok.Builder;
 import lombok.experimental.Accessors;

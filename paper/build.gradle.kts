@@ -136,7 +136,7 @@ paper {
     description = "A lightweight and modern chat plugin."
     website = "github.com/Darkxx14/Mist/"
 
-    main = "com.xyrisdev.mist.ChatPlugin"
+    main = "com.xyrisdev.mist.MistPlugin"
     bootstrapper = "com.xyrisdev.mist.loader.MistPaperBootstrapper"
     loader = "com.xyrisdev.mist.loader.MistPaperLibraryLoader"
 

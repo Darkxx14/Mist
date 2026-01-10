@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.extension.render.impl.RenderService;
 import org.bukkit.entity.Player;
@@ -24,8 +25,7 @@ public class MistCallbackCommand {
 							final Player player = ctx.sender().source();
 							final UUID id = ctx.get("id");
 
-							ChatPlugin.service()
-									.scheduler()
+							Mist.INSTANCE.scheduler()
 									.runAtEntity(player, task ->
 											RenderService.get().render(player, id)
 									);

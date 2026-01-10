@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command.player;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
@@ -41,7 +42,7 @@ public class IgnoreCommand {
 		final PlayerSource sender = (PlayerSource) ctx.sender();
 		final UUID senderId = sender.source().getUniqueId();
 
-		final ChatUserManager users = ChatPlugin.service().userManager();
+		final ChatUserManager users = Mist.INSTANCE.userManager();
 
 		final OfflinePlayer target = ctx.get("target");
 
@@ -86,9 +87,7 @@ public class IgnoreCommand {
 			final PlayerSource sender = (PlayerSource) source;
 			final UUID senderId = sender.source().getUniqueId();
 
-			final ChatUser user = ChatPlugin.service()
-								 .userManager()
-								 .get(senderId);
+			final ChatUser user = Mist.INSTANCE.userManager().get(senderId);
 
 			final String token = input.lastRemainingToken();
 

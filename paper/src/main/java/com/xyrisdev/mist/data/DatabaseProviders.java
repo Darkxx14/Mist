@@ -1,7 +1,8 @@
 package com.xyrisdev.mist.data;
 
 import com.xyrisdev.library.config.CachableConfiguration;
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.data.provider.mongo.MongoProvider;
 import com.xyrisdev.mist.data.provider.mongo.config.MongoConfig;
 import com.xyrisdev.mist.data.provider.sql.*;
@@ -16,9 +17,9 @@ public class DatabaseProviders {
 	public static @NotNull DatabaseProvider create(@NotNull CachableConfiguration config) {
 		final DatabaseType type = DatabaseType.parse(config.getString("data.type", "sqlite"));
 
-		final Path dataDir = ChatPlugin.instance()
-				.getDataFolder()
-				.toPath();
+		final Path dataDir = Mist.INSTANCE.plugin()
+							.getDataFolder()
+							.toPath();
 
 		return switch (type) {
 			case H2 -> {

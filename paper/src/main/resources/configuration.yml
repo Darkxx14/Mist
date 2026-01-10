@@ -74,10 +74,6 @@ ignore:
   # will not be rendered to the ignoring player
   hide_messages: false
 
-  # if true, private messages from ignored players
-  # will be blocked entirely
-  deny_private_messages: true
-
 
 # ───────────────────────────────────────────────────────
 # configuration migration

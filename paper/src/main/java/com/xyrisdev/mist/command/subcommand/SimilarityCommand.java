@@ -1,6 +1,7 @@
 package com.xyrisdev.mist.command.subcommand;
 
-import com.xyrisdev.mist.ChatPlugin;
+import com.xyrisdev.mist.Mist;
+import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.util.matcher.SimilarityMatcher;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.util.message.MistMessage;
@@ -29,8 +30,7 @@ public class SimilarityCommand {
 
 		final double similarity = SimilarityMatcher.similarity(s1, s2);
 
-		final double threshold = ChatPlugin.service()
-								.configRegistry()
+		final double threshold = Mist.INSTANCE.config()
 								.get(ConfigType.CHAT_FILTER)
 								.getDouble("similarity.threshold", 0.60);
 
