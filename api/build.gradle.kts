@@ -20,5 +20,5 @@ dependencies {
 tasks.withType<AbstractArchiveTask>().configureEach {
     archiveBaseName.set("mist-$module")
     archiveVersion.set(buildVersion)
-    archiveClassifier.set("+$commitShort")
+    archiveClassifier.set(commitShort)
 }
