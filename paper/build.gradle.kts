@@ -5,7 +5,7 @@ import xyz.jpenilla.runtask.task.AbstractRun
 
 plugins {
     java
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
     id("de.eldoria.plugin-yml.paper") version "0.8.0"
     id("com.gradleup.shadow") version "9.3.1"
 }
