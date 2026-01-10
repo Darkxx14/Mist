@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-release:
-    if: contains(github.event.head_commit.message, '[ci]')
+    if: contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
 
     permissions:
@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JBR 21
+      - name: set up JBR 21
         uses: actions/setup-java@v4
         with:
           distribution: jetbrains
@@ -38,7 +38,7 @@ jobs:
           VERSION=$(./gradlew -q properties | grep "^version:" | awk '{print $2}')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Check if tag already exists
+      - name: check if tag already exists
         run: |
           TAG="v${{ steps.version.outputs.version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -53,9 +53,9 @@ jobs:
           name: v${{ steps.version.outputs.version }}
           body: |
             Release **v${{ steps.version.outputs.version }}**
-
+          
             Commit:
-            ${{ github.event.head_commit.message }}
+            [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
           files: |
             api/build/libs/*.jar
             paper/build/libs/*.jar
