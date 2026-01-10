@@ -22,7 +22,7 @@ public final class ExtensionManager {
 
 		final ConfigurationSection section = Mist.INSTANCE.config()
 											.get(ConfigType.EXTENSION_PRIORITIES)
-											.getSection("extension_priorities.extensions");
+											.getSection("extensions");
 
 		if (section == null) {
 			MistLogger.error("No chat extensions registered due to missing 'extension_priorities.extensions' configuration section");
