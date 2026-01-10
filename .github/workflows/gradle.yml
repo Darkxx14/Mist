@@ -1,18 +1,21 @@
-name: Java CI with Gradle
+name: release
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  build:
+  build-and-release:
     if: contains(github.event.head_commit.message, '[ci]')
     runs-on: ubuntu-latest
+
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JBR 21
         uses: actions/setup-java@v4
@@ -23,8 +26,36 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Make Gradle wrapper executable
+      - name: make gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Build with Gradle Wrapper
+      - name: build
         run: ./gradlew clean build
+
+      - name: read version
+        id: version
+        run: |
+          VERSION=$(./gradlew -q properties | grep "^version:" | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if tag already exists
+        run: |
+          TAG="v${{ steps.version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "❌ Release tag $TAG already exists. Bump the version."
+            exit 1
+          fi
+
+      - name: create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          body: |
+            Release **v${{ steps.version.outputs.version }}**
+
+            Commit:
+            ${{ github.event.head_commit.message }}
+          files: |
+            api/build/libs/*.jar
+            paper/build/libs/*.jar
