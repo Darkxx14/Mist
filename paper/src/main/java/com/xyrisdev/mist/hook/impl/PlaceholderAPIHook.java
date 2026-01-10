@@ -1,12 +1,13 @@
 package com.xyrisdev.mist.hook.impl;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.api.chat.user.toggle.ChatSettingType;
+import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.hook.MistHook;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,23 +54,49 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 		}
 
 		return switch (params.toLowerCase()) {
-			case "setting_global_chat" ->
-					bool(user.settings().enabled(ChatSettingType.GLOBAL_CHAT));
+			case "setting_global_chat" -> bool(
+					"mist_setting_global_chat",
+					user.settings().enabled(ChatSettingType.GLOBAL_CHAT)
+			);
 
-			case "setting_private_messages" ->
-					bool(user.settings().enabled(ChatSettingType.PRIVATE_MESSAGES));
+			case "setting_private_messages" -> bool(
+					"mist_setting_private_messages",
+					user.settings().enabled(ChatSettingType.PRIVATE_MESSAGES)
+			);
 
-			case "setting_mentions" ->
-					bool(user.settings().enabled(ChatSettingType.MENTIONS));
+			case "setting_mentions" -> bool(
+					"mist_setting_mentions",
+					user.settings().enabled(ChatSettingType.MENTIONS)
+			);
 
-			case "setting_announcements" ->
-					bool(user.settings().enabled(ChatSettingType.ANNOUNCEMENTS));
+			case "setting_announcements" -> bool(
+					"mist_setting_announcements",
+					user.settings().enabled(ChatSettingType.ANNOUNCEMENTS)
+			);
 
 			default -> null;
 		};
 	}
 
-	private static @NotNull String bool(boolean value) {
-		return value ? "true" : "false";
+	// internal utils
+	private @NotNull String bool(@NotNull String placeholder, boolean value) {
+		final ConfigurationSection section = Mist.INSTANCE.config()
+											.get(ConfigType.PLACEHOLDERS)
+											.getSection("placeholders");
+
+		if (section == null) {
+			return value ? "enabled" : "disabled";
+		}
+
+		final ConfigurationSection section1 = section.getConfigurationSection(placeholder);
+
+		if (section1 == null) {
+			return value ? "enabled" : "disabled";
+		}
+
+		return section1.getString(
+				value ? "true" : "false",
+				value ? "enabled" : "disabled"
+		);
 	}
 }

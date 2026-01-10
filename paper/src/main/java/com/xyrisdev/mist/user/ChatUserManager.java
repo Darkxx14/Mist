@@ -45,7 +45,7 @@ public class ChatUserManager {
 
 		MistExecutors.io().execute(() -> {
 			try {
-				final ChatUser user = repository.load(id);
+				final ChatUser user = this.repository.load(id);
 
 				this.cache.put(id, user);
 				future.complete(user);
@@ -83,7 +83,7 @@ public class ChatUserManager {
 			return;
 		}
 
-		MistExecutors.io().execute(() -> repository.save(user));
+		MistExecutors.io().execute(() -> this.repository.save(user));
 	}
 
 	public void flush() {
@@ -93,10 +93,10 @@ public class ChatUserManager {
 
 		MistExecutors.io().execute(() -> {
 			for (UUID id : this.dirtyUsers) {
-				final ChatUser user = cache.getIfPresent(id);
+				final ChatUser user = this.cache.getIfPresent(id);
 
 				if (user != null) {
-					repository.save(user);
+					this.repository.save(user);
 				}
 
 			}

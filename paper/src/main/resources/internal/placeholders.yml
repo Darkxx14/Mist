@@ -1,0 +1,27 @@
+# ───────────────────────────────────────────────────────
+# placeholder return values
+# ───────────────────────────────────────────────────────
+#
+# controls custom return values for mist's placeholderapi placeholders.
+# allows you to customize what placeholders return.
+#
+placeholders:
+  mist_setting_global_chat:
+    true: "Enabled"
+    false: "Disabled"
+
+  mist_setting_private_messages:
+    true: "On"
+    false: "Off"
+
+  mist_setting_mentions:
+    true: "Active"
+    false: "Muted"
+
+  mist_setting_announcements:
+    true: "Receiving"
+    false: "Silent"
+
+# do not edit this value
+# used for automatic migration tracking
+config_version: 1

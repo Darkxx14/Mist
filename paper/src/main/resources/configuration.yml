@@ -67,13 +67,12 @@ staff_alerts:
 # ───────────────────────────────────────────────────────
 #
 # controls player ignore behavior and visibility rules.
-# affects chat rendering and private message delivery.
+# affects chat rendering.
 #
 ignore:
   # if true, chat messages from ignored players
   # will not be rendered to the ignoring player
-  hide_messages: false
-
+  hide_messages: true
 
 # ───────────────────────────────────────────────────────
 # configuration migration

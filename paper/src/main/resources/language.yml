@@ -34,7 +34,6 @@
 #     stay: 40
 #     fade_out: 10
 #
-
 prefix: "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <m_dark_gray>·</m_dark_gray>"
 
 messages:

@@ -1,16 +1,30 @@
-extension_priorities:
-  extensions:
-    chat_filter:
-      priority: 0
+# ───────────────────────────────────────────────────────
+# extension priorities
+# ───────────────────────────────────────────────────────
+#
+# controls the execution order of mist's chat extensions.
+# extensions process messages in ascending priority order (0 → 1 → 2 → 3).
+#
+# priority guidelines:
+# - lower numbers = earlier execution
+# - avoid duplicate priority values
+# - format should always run last
+#
+# modifying priorities may cause unexpected behavior.
+# only change if you understand the extension system.
+#
+extensions:
+  chat_filter:
+    priority: 0
 
-    chat_replacement:
-      priority: 1
+  chat_replacement:
+    priority: 1
 
-    render:
-      priority: 2
+  render:
+    priority: 2
 
-    chat_format:
-      priority: 3
+  chat_format:
+    priority: 3
 
 # do not edit this value
 # used for automatic migration tracking
