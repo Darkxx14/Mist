@@ -9,6 +9,9 @@
 <a href="https://hangar.papermc.io/darkxx16/mist"><img alt="hangar" height="54" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/hangar_vector.svg"></a>
 <a href="https://discord.gg/jvzGhszSg8"><img alt="discord" height="54" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg"></a>
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+[![CodeFactor](https://www.codefactor.io/repository/github/darkxx14/mist/badge/master)](https://www.codefactor.io/repository/github/darkxx14/mist/overview/master)
+
 coming soon - wip chat plugin
 
 </div>
