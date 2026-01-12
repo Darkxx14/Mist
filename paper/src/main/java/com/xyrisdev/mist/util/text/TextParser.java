@@ -19,7 +19,7 @@ public class TextParser {
 	private static final TagRegistry tagRegistry = new TagRegistry();
 	private static final MiniMessage mm = MiniMessage.miniMessage();
 
-	private static final Cache<TextCacheKey, Component> cache = Caffeine.newBuilder()
+	private static final Cache<@NotNull TextCacheKey, Component> cache = Caffeine.newBuilder()
 			.maximumSize(10_000)
 			.expireAfterAccess(Duration.ofMinutes(5))
 			.build();

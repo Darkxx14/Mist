@@ -8,11 +8,12 @@ public record RenderConfiguration(
 		@NotNull SectionConfig inventory,
 		@NotNull SectionConfig item,
 		@NotNull SectionConfig enderChest,
-		@NotNull SectionConfig shulkerBox
+		@NotNull SectionConfig shulkerBox,
+		@NotNull SectionConfig command
 ) {
 
 	public record SectionConfig(
-			boolean enable,
+			boolean enabled,
 			@NotNull List<String> prefix,
 			@NotNull String processor,
 			@NotNull List<String> hoverText

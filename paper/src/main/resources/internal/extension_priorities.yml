@@ -20,11 +20,14 @@ extensions:
   chat_replacement:
     priority: 1
 
-  render:
+  chat_mentions:
     priority: 2
 
-  chat_format:
+  render:
     priority: 3
+
+  chat_format:
+    priority: 4
 
 # do not edit this value
 # used for automatic migration tracking

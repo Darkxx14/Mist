@@ -32,6 +32,10 @@ public class TitleRenderer {
 				section.getString("subtitle")
 		);
 
+		if (title.equals(Component.empty()) && subtitle.equals(Component.empty())) {
+			return;
+		}
+
 		final ConfigurationSection times = section.getConfigurationSection("times");
 
 		final Title.Times titleTimes = times == null
@@ -45,13 +49,17 @@ public class TitleRenderer {
 		player.showTitle(Title.title(title, subtitle, titleTimes));
 	}
 
-	private static Component parse(@NotNull Player player, @NotNull MessageContext ctx, String input) {
-		if (input == null || input.isBlank()) {
+	private static Component parse(@NotNull Player player, @NotNull MessageContext ctx, @Nullable String input) {
+		if (empty(input)) {
 			return Component.empty();
 		}
 
 		return ctx.apply(
 				TextParser.parse(player, input)
 		);
+	}
+
+	private static boolean empty(@Nullable String value) {
+		return value == null || value.equalsIgnoreCase("<empty>");
 	}
 }

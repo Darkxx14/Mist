@@ -34,6 +34,10 @@ public class ChatRenderer {
 			final List<Component> components = new ArrayList<>(lines.size());
 
 			for (String line : lines) {
+				if (empty(line)) {
+					continue;
+				}
+
 				final Component parsed = parse(audience, player, line);
 
 				if (line.indexOf('<') == -1) {
@@ -41,6 +45,10 @@ public class ChatRenderer {
 				} else {
 					components.add(ctx.apply(parsed));
 				}
+			}
+
+			if (components.isEmpty()) {
+				return;
 			}
 
 			audience.sendMessage(
@@ -54,13 +62,19 @@ public class ChatRenderer {
 
 		final String text = section.getString("text");
 
-		if (text != null) {
-			audience.sendMessage(
-					ctx.apply(
-							parse(audience, player, text)
-					)
-			);
+		if (empty(text)) {
+			return;
 		}
+
+		audience.sendMessage(
+				ctx.apply(
+						parse(audience, player, text)
+				)
+		);
+	}
+
+	private static boolean empty(@Nullable String value) {
+		return value == null || value.equalsIgnoreCase("<empty>");
 	}
 
 	private static @NotNull Component parse(@NotNull Audience audience, @Nullable Player player, @NotNull String input) {

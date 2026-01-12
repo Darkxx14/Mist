@@ -1,9 +1,8 @@
 package com.xyrisdev.mist.command;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
-import com.xyrisdev.mist.extension.render.impl.RenderService;
+import com.xyrisdev.mist.extension.render.inventory.impl.InventoryRenderService;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.paper.util.sender.PlayerSource;
@@ -27,7 +26,7 @@ public class MistCallbackCommand {
 
 							Mist.INSTANCE.scheduler()
 									.runAtEntity(player, task ->
-											RenderService.get().render(player, id)
+											InventoryRenderService.get().render(player, id)
 									);
 						})
 		);

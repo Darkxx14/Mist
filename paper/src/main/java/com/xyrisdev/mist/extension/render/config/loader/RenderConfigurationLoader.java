@@ -12,7 +12,8 @@ public class RenderConfigurationLoader {
 				section(config.getSection("inventory")),
 				section(config.getSection("item")),
 				section(config.getSection("ender_chest")),
-				section(config.getSection("shulker_box"))
+				section(config.getSection("shulker_box")),
+				section(config.getSection("command"))
 		);
 	}
 
@@ -22,7 +23,7 @@ public class RenderConfigurationLoader {
 		}
 
 		return new RenderConfiguration.SectionConfig(
-				section.getBoolean("enable", false),
+				section.getBoolean("enabled", false),
 				section.getStringList("prefix"),
 				section.getString("processor", ""),
 				section.getStringList("hover_text")

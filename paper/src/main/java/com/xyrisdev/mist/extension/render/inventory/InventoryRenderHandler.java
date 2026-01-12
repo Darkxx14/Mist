@@ -1,14 +1,11 @@
-package com.xyrisdev.mist.extension.render;
+package com.xyrisdev.mist.extension.render.inventory;
 
-import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.api.chat.context.ChatContext;
 import com.xyrisdev.mist.api.chat.extension.ExtensionHandler;
-import com.xyrisdev.mist.api.chat.extension.MistExtension;
-import com.xyrisdev.mist.config.ConfigType;
+import com.xyrisdev.mist.extension.render.common.RenderHandler;
 import com.xyrisdev.mist.extension.render.config.RenderConfiguration;
-import com.xyrisdev.mist.extension.render.config.loader.RenderConfigurationLoader;
-import com.xyrisdev.mist.extension.render.impl.object.RenderRequest;
-import com.xyrisdev.mist.extension.render.impl.object.RenderType;
+import com.xyrisdev.mist.extension.render.inventory.impl.object.InventoryRenderRequest;
+import com.xyrisdev.mist.extension.render.inventory.impl.object.InventoryRenderType;
 import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -28,62 +25,56 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 // todo: make menus configurable
-@MistExtension(
-		id = "render",
-		name = "Render"
-)
-public class RenderExtension {
+public class InventoryRenderHandler implements RenderHandler {
 
 	private final RenderConfiguration config;
 
-	public RenderExtension() {
-		this.config = RenderConfigurationLoader.load(
-				Mist.INSTANCE.config().get(ConfigType.RENDER)
-		);
+	public InventoryRenderHandler(@NotNull RenderConfiguration config) {
+		this.config = config;
 	}
 
 	@ExtensionHandler
-	public void handler(@NotNull ChatContext ctx) {
+	public void handle(@NotNull ChatContext ctx) {
 		final String message = ctx.plain();
 		final Player player = ctx.sender();
 
-		if (this.config.inventory().enable()) {
+		if (this.config.inventory().enabled()) {
 			for (String prefix : this.config.inventory().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.INVENTORY, this.config.inventory().processor(), prefix);
+					render(ctx, player, InventoryRenderType.INVENTORY, this.config.inventory().processor(), prefix);
 				}
 			}
 		}
 
-		if (this.config.item().enable()) {
+		if (this.config.item().enabled()) {
 			for (String prefix : this.config.item().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.ITEM, this.config.item().processor(), prefix);
+					render(ctx, player, InventoryRenderType.ITEM, this.config.item().processor(), prefix);
 				}
 			}
 		}
 
-		if (this.config.enderChest().enable()) {
+		if (this.config.enderChest().enabled()) {
 			for (String prefix : this.config.enderChest().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.ENDER_CHEST, this.config.enderChest().processor(), prefix);
+					render(ctx, player, InventoryRenderType.ENDER_CHEST, this.config.enderChest().processor(), prefix);
 				}
 			}
 		}
 
-		if (this.config.shulkerBox().enable()) {
+		if (this.config.shulkerBox().enabled()) {
 			for (String prefix : this.config.shulkerBox().prefix()) {
 				if (message.contains(prefix)) {
-					render(ctx, player, RenderType.SHULKER_BOX, this.config.shulkerBox().processor(), prefix);
+					render(ctx, player, InventoryRenderType.SHULKER_BOX, this.config.shulkerBox().processor(), prefix);
 				}
 			}
 		}
 	}
 
-	private void render(@NotNull ChatContext ctx, @NotNull Player player, @NotNull RenderType type, @NotNull String processor, @NotNull String prefix) {
+	private void render(@NotNull ChatContext ctx, @NotNull Player player, @NotNull InventoryRenderType type, @NotNull String processor, @NotNull String prefix) {
 		final List<ItemStack> items = collect(player, type);
 
-		final UUID id = RenderRequest.builder()
+		final UUID id = InventoryRenderRequest.builder()
 				.owner(player)
 				.type(type)
 				.items(items)
@@ -111,7 +102,7 @@ public class RenderExtension {
 		));
 	}
 
-	private @NotNull List<ItemStack> collect(@NotNull Player player, @NotNull RenderType type) {
+	private @NotNull List<ItemStack> collect(@NotNull Player player, @NotNull InventoryRenderType type) {
 		return switch (type) {
 			case INVENTORY -> {
 				final List<ItemStack> items = new ArrayList<>();
@@ -167,7 +158,7 @@ public class RenderExtension {
 	}
 
 	private @NotNull Component displayComponent(
-			@NotNull Player player, @NotNull RenderType type,
+			@NotNull Player player, @NotNull InventoryRenderType type,
 			@NotNull String processor, @NotNull UUID id,
 			@NotNull List<ItemStack> items, @NotNull List<String> hoverText
 	) {
@@ -176,7 +167,7 @@ public class RenderExtension {
 						ClickEvent.runCommand("/mistcallback " + id)
 				);
 
-		if (type == RenderType.ITEM && !items.isEmpty()) {
+		if (type == InventoryRenderType.ITEM && !items.isEmpty()) {
 			final ItemStack item = items.getFirst();
 
 			if (item != null && !item.getType().isAir()) {

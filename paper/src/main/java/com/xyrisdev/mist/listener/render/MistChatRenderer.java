@@ -46,8 +46,8 @@ public class MistChatRenderer {
 			}
 
 			if (entry.action() != null) {
-				final Component parsedComponent = TextParser.parse(player, entry.action().value());
-				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComponent);
+				final Component parsedComp = TextParser.parse(player, entry.action().value());
+				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComp);
 
 				baseComp = baseComp.clickEvent(
 						ClickEvent.clickEvent(

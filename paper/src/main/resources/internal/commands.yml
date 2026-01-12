@@ -15,12 +15,6 @@ commands:
     base_command: toggleglobalchat
     aliases: [ togglechat ]
 
-  togglepm:
-    enabled: true
-    permission: mist.command.togglepm
-    base_command: togglepm
-    aliases: [ togglemsg ]
-
   togglementions:
     enabled: true
     permission: mist.command.togglementions
@@ -38,18 +32,6 @@ commands:
     permission: mist.command.ignore
     base_command: ignore
     aliases: [ unignore ]
-
-  message:
-    enabled: true
-    permission: mist.command.message
-    base_command: message
-    aliases: [ msg, pm ]
-
-  reply:
-    enabled: true
-    permission: mist.command.reply
-    base_command: reply
-    aliases: [ r ]
 
 # do not edit this value
 # used for automatic migration tracking

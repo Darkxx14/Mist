@@ -2,6 +2,7 @@ package com.xyrisdev.mist.config.migration;
 
 import com.xyrisdev.library.lib.Library;
 import com.xyrisdev.mist.config.migration.context.MigrationContext;
+import com.xyrisdev.mist.util.logger.MistLogger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,16 +15,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class ConfigMigrator {
 
-	private final Logger logger;
 	private final MigrationContext ctx;
 
 	public ConfigMigrator(@NotNull MigrationContext ctx) {
 		this.ctx = Objects.requireNonNull(ctx, "ctx");
-		this.logger = Library.plugin().getLogger();
 	}
 
 	public boolean migrate() {
@@ -37,15 +35,13 @@ public class ConfigMigrator {
 			return false;
 		}
 
-		logger.info(() ->
-				"Config outdated (" + currentVersion + " -> " + latestVersion + "), migrating..."
-		);
+		MistLogger.info(ctx.file() + " outdated (v" + currentVersion + " -> v" + latestVersion + "), migrating...");
 
 		backup(currentVersion);
 		merge(current, latest);
 		save(latest);
 
-		logger.info("Config migrated successfully.");
+		MistLogger.info(ctx.file() + " migrated successfully.");
 		return true;
 	}
 
@@ -70,7 +66,7 @@ public class ConfigMigrator {
 		final File backupDir = ctx.backupDirectory();
 
 		if (!backupDir.exists() && !backupDir.mkdirs()) {
-			logger.warning("Failed to create config backup directory");
+			MistLogger.warn("Failed to create config backup directory");
 			return;
 		}
 
@@ -83,7 +79,7 @@ public class ConfigMigrator {
 					StandardCopyOption.REPLACE_EXISTING
 			);
 		} catch (IOException e) {
-			logger.warning("Failed to backup config: " + e.getMessage());
+			MistLogger.warn("Failed to backup " + ctx.file() + " -> " + e.getMessage());
 		}
 	}
 

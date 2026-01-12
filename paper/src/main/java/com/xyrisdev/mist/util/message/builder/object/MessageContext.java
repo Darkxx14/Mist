@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
 
 public class MessageContext {
 
+	private static final Pattern pattern = Pattern.compile("<([a-zA-Z0-9_]+)>");
+
 	private final Map<String, String> stringPlaceholders;
 	private final Map<String, Component> componentPlaceholders;
 
 	private UnaryOperator<Component> interceptor;
-
-	private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>");
 
 	public MessageContext(@NotNull Map<String, String> stringPlaceholders) {
 		this.stringPlaceholders = stringPlaceholders;
@@ -35,8 +35,8 @@ public class MessageContext {
 			return interceptor != null ? interceptor.apply(component) : component;
 		}
 
-		final Component result = component.replaceText(builder ->
-				builder.match(PLACEHOLDER_PATTERN)
+		final Component comp = component.replaceText(builder ->
+				builder.match(pattern)
 						.replacement((match, ctx) -> {
 							final String key = match.group(1);
 
@@ -56,6 +56,6 @@ public class MessageContext {
 						})
 		);
 
-		return interceptor != null ? interceptor.apply(result) : result;
+		return interceptor != null ? interceptor.apply(comp) : comp;
 	}
 }

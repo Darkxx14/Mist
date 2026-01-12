@@ -54,6 +54,8 @@ public class MistCommandManager {
 		// player commands
 		ToggleCommands.register();
 		IgnoreCommand.register();
-		MessageCommand.register();
+
+		//todo: impl msg system
+		//MessageCommand.register();
 	}
 }

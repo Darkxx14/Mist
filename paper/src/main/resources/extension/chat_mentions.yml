@@ -1,0 +1,33 @@
+# ───────────────────────────────────────────────────────
+# mentions
+# ───────────────────────────────────────────────────────
+#
+# controls @mention detection, formatting, and notifications.
+#
+enabled: true
+
+mentions:
+  # regex pattern used to detect mentions in chat messages
+  pattern: "@([a-zA-Z0-9_]{1,16})"
+
+  # visual format applied to the mention in chat
+  # <name> will be replaced with the mentioned player's name
+  format: "<gradient:#E03261:#811937>@<name></gradient>"
+
+  # notifications for mentioned players
+  notify:
+    enabled: true
+    type: action bar
+
+    action_bar:
+      text: "<color:#E03261><sender></color><gray> has mentioned you!"
+
+    sound:
+      key: "minecraft:entity.experience_orb.pickup"
+      source: "master"
+      volume: 1
+      pitch: 1.2
+
+# do not edit this value
+# used for automatic migration tracking
+config_version: 1

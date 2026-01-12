@@ -17,7 +17,7 @@ public class ToggleCommands {
 
 	public static void register() {
 		command("toggleglobalchat", ChatSettingType.GLOBAL_CHAT, "toggle_global_chat");
-		command("togglepm", ChatSettingType.PRIVATE_MESSAGES, "toggle_private_messages");
+		//command("togglepm", ChatSettingType.PRIVATE_MESSAGES, "toggle_private_messages");
 		command("togglementions", ChatSettingType.MENTIONS, "toggle_mentions");
 		command("toggleannouncements", ChatSettingType.ANNOUNCEMENTS, "toggle_announcements");
 	}

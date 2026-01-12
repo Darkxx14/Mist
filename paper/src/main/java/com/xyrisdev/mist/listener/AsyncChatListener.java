@@ -12,6 +12,7 @@ import com.xyrisdev.mist.listener.render.MistChatRenderer;
 import com.xyrisdev.mist.util.message.MistMessage;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
 public class AsyncChatListener {
@@ -61,6 +62,6 @@ public class AsyncChatListener {
 							event.renderer(MistChatRenderer.render(ctx));
 						}
 				)
-				.build();
+				.build().priority(EventPriority.LOWEST);
 	}
 }

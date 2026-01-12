@@ -3,16 +3,16 @@
 # ───────────────────────────────────────────────────────
 #
 # controls interactive chat rendering features.
-# allows players to preview inventories and items via chat.
+# allows players to preview inventories, items and commands via chat.
 #
 # settings:
-# - enable: toggles the feature
+# - enabled: toggles the feature
 # - prefix: triggers used in chat messages
 # - processor: rendered display text
 # - hover_text: text shown on hover
 #
 inventory:
-  enable: true
+  enabled: true
   prefix:
     - "[inv]"
     - "[inventory]"
@@ -21,7 +21,7 @@ inventory:
     - "<gray>Click to view <papi:player_name>'s inventory"
 
 item:
-  enable: true
+  enabled: true
   prefix:
     - "[item]"
     - "[hand]"
@@ -30,7 +30,7 @@ item:
     - "<gray>Click to view <papi:player_name>'s held item"
 
 ender_chest:
-  enable: true
+  enabled: true
   prefix:
     - "[enderchest]"
     - "[ec]"
@@ -40,13 +40,22 @@ ender_chest:
     - "<gray>Click to view <papi:player_name>'s ender chest"
 
 shulker_box:
-  enable: true
+  enabled: true
   prefix:
     - "[shulker]"
     - "[shulkerbox]"
   processor: "<m_light_purple><italic>[<papi:player_name>'s Shulker]</italic></m_light_purple>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s shulker box"
+
+command:
+  enabled: true
+  prefix:
+    - "[cmd:$cmd]"
+    - "[command:$cmd]"
+  processor: "<m_blue>[<full_cmd>]</m_blue>"
+  hover_text:
+    - "<gray>Click to execute command"
 
 # do not edit this value
 # used for automatic migration tracking

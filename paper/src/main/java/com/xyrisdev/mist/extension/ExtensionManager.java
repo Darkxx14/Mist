@@ -6,7 +6,8 @@ import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.extension.filter.ChatFilterExtension;
 import com.xyrisdev.mist.extension.format.ChatFormatExtension;
-import com.xyrisdev.mist.extension.render.RenderExtension;
+import com.xyrisdev.mist.extension.mention.ChatMentionExtension;
+import com.xyrisdev.mist.extension.render.common.RenderExtension;
 import com.xyrisdev.mist.extension.replacement.ChatReplacementExtension;
 import com.xyrisdev.mist.util.logger.MistLogger;
 import org.bukkit.configuration.ConfigurationSection;
@@ -41,6 +42,7 @@ public final class ExtensionManager {
 	private static void defaults() {
 		MistExtensionRegistry.register(new ChatFilterExtension());
 		MistExtensionRegistry.register(new ChatReplacementExtension());
+		MistExtensionRegistry.register(new ChatMentionExtension());
 		MistExtensionRegistry.register(new RenderExtension());
 		MistExtensionRegistry.register(new ChatFormatExtension());
 	}

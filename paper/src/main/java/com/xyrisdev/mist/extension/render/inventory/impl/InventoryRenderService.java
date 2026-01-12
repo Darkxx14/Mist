@@ -1,8 +1,8 @@
-package com.xyrisdev.mist.extension.render.impl;
+package com.xyrisdev.mist.extension.render.inventory.impl;
 
 import com.xyrisdev.library.menu.Menu;
-import com.xyrisdev.mist.extension.render.impl.cache.RenderCache;
-import com.xyrisdev.mist.extension.render.impl.object.RenderEntry;
+import com.xyrisdev.mist.extension.render.inventory.impl.cache.InventoryRenderCache;
+import com.xyrisdev.mist.extension.render.inventory.impl.object.InventoryRenderEntry;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -11,12 +11,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class RenderService {
+public class InventoryRenderService {
 
-	private static final RenderService INSTANCE = new RenderService();
-	private final RenderCache cache = new RenderCache();
+	private static final InventoryRenderService INSTANCE = new InventoryRenderService();
+	private final InventoryRenderCache cache = new InventoryRenderCache();
 
-	public @NotNull UUID capture(@NotNull RenderEntry entry) {
+	public @NotNull UUID capture(@NotNull InventoryRenderEntry entry) {
 		this.cache.put(entry);
 		return entry.id();
 	}
@@ -26,7 +26,7 @@ public class RenderService {
 	}
 
 	public void render(@NotNull Player viewer, @NotNull UUID id) {
-		final RenderEntry entry = this.cache.get(id);
+		final InventoryRenderEntry entry = this.cache.get(id);
 
 		if (entry == null) {
 			return;
@@ -52,7 +52,7 @@ public class RenderService {
 		menu.open(viewer);
 	}
 
-	public static @NotNull RenderService get() {
+	public static @NotNull InventoryRenderService get() {
 		return INSTANCE;
 	}
 }

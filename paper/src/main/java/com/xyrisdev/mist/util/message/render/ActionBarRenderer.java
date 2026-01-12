@@ -18,12 +18,16 @@ public class ActionBarRenderer {
 
 		final String text = section.getString("text");
 
-		if (text != null) {
-			player.sendActionBar(
-					ctx.apply(
-							TextParser.parse(player, text)
-					)
-			);
+		if (empty(text)) {
+			return;
 		}
+
+		player.sendActionBar(
+				ctx.apply(TextParser.parse(player, text))
+		);
+	}
+
+	private static boolean empty(@Nullable String value) {
+		return value == null || value.equalsIgnoreCase("<empty>");
 	}
 }

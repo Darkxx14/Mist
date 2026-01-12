@@ -3,10 +3,10 @@ package com.xyrisdev.mist.listener;
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
-import com.xyrisdev.mist.extension.render.impl.RenderService;
+import com.xyrisdev.mist.extension.render.inventory.impl.InventoryRenderService;
 import com.xyrisdev.mist.user.ChatUserManager;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,11 +22,11 @@ public class PlayerQuitListener {
 
 					final ChatUserManager users = Mist.INSTANCE.userManager();
 
-					RenderService.get().invalidate(player);
+					InventoryRenderService.get().invalidate(player);
 
 					users.save(id);
 					users.invalidate(id);
 				})
-				.build();
+				.build().priority(EventPriority.LOWEST);
 	}
 }
