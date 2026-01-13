@@ -1,27 +1,27 @@
-package com.xyrisdev.mist.command.internal.parser;
+package com.xyrisdev.mist.command.internal.argument;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.exception.HandledParseException;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.util.message.MistMessage;
+import org.incendo.cloud.annotations.parser.Parser;
+import org.incendo.cloud.annotations.suggestion.Suggestions;
 import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.context.CommandInput;
-import org.incendo.cloud.parser.ArgumentParseResult;
-import org.incendo.cloud.parser.ArgumentParser;
 import org.incendo.cloud.paper.util.sender.Source;
-import org.incendo.cloud.suggestion.BlockingSuggestionProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class AnnouncementParser implements ArgumentParser<Source, Announcement> {
+import java.util.List;
 
-	@Override
-	public @NotNull ArgumentParseResult<Announcement> parse(@NotNull CommandContext<Source> ctx, @NotNull CommandInput input) {
+@SuppressWarnings("unused")
+public class AnnouncementArgument {
+
+	@Parser(suggestions = "announcement")
+	public Announcement parse(CommandContext<Source> ctx, @NotNull CommandInput input) {
 		final String name = input.readString();
 
 		return Mist.INSTANCE.announcements()
 				.find(name)
-				.map(ArgumentParseResult::success)
 				.orElseThrow(() -> HandledParseException.handle(
 						name,
 						() -> MistMessage.create(ctx.sender().source())
@@ -31,9 +31,8 @@ public class AnnouncementParser implements ArgumentParser<Source, Announcement> 
 				));
 	}
 
-	@Override
-	public @NotNull BlockingSuggestionProvider.Strings<Source> suggestionProvider() {
-		return (ctx, input) ->
-				Mist.INSTANCE.announcements().announcementNames();
+	@Suggestions("announcement")
+	public List<String> suggestions() {
+		return Mist.INSTANCE.announcements().announcementNames();
 	}
 }

@@ -42,6 +42,7 @@ dependencies {
     paperLibrary(libs.caffeine)
     paperLibrary(libs.evo.inflector)
     paperLibrary(libs.cloud.paper)
+    paperLibrary(libs.cloud.annotations)
     paperLibrary(libs.folia.lib)
     paperLibrary(libs.h2)
     paperLibrary(libs.mongodb.driver.sync)

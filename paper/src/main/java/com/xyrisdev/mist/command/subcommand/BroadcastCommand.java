@@ -4,67 +4,41 @@ import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
-import org.incendo.cloud.Command;
-import org.incendo.cloud.context.CommandContext;
-import org.incendo.cloud.paper.PaperCommandManager;
-import org.incendo.cloud.paper.util.sender.Source;
-import org.incendo.cloud.parser.standard.StringParser;
-import org.jetbrains.annotations.NotNull;
+import org.incendo.cloud.annotation.specifier.Greedy;
+import org.incendo.cloud.annotations.Command;
+import org.incendo.cloud.annotations.Permission;
+import org.jspecify.annotations.NullMarked;
 
 import java.time.Duration;
 
+@NullMarked
+@SuppressWarnings("unused")
 public class BroadcastCommand {
 
-	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
-		manager.command(
-				root.literal("broadcast")
-						.permission("mist.command.broadcast")
-						.literal("chat")
-						.required("message", StringParser.greedyStringParser())
-						.handler(this::chat)
-		);
-
-		manager.command(
-				root.literal("broadcast")
-						.permission("mist.command.broadcast")
-						.literal("actionbar")
-						.required("message", StringParser.greedyStringParser())
-						.handler(this::actionBar)
-		);
-
-		manager.command(
-				root.literal("broadcast")
-						.permission("mist.command.broadcast")
-						.literal("title")
-						.required("message", StringParser.greedyStringParser())
-						.handler(this::title)
-		);
-	}
-
-	private void chat(@NotNull CommandContext<Source> ctx) {
-		final String input = ctx.get("message");
-
+	@Command("mist broadcast chat <message>")
+	@Permission("mist.command.broadcast")
+	public void chat(@Greedy String message) {
 		Bukkit.getOnlinePlayers().forEach(player ->
-				player.sendMessage(TextParser.parse(player, input))
+				player.sendMessage(TextParser.parse(player, message))
 		);
 	}
 
-	private void actionBar(@NotNull CommandContext<Source> ctx) {
-		final String input = ctx.get("message");
-
+	@Command("mist broadcast actionbar <message>")
+	@Permission("mist.command.broadcast")
+	public void actionBar(@Greedy String message) {
 		Bukkit.getOnlinePlayers().forEach(player ->
-				player.sendActionBar(TextParser.parse(player, input))
+				player.sendActionBar(TextParser.parse(player, message))
 		);
 	}
 
-	private void title(@NotNull CommandContext<Source> ctx) {
-		final String[] parts = ctx.<String>get("message").split(":", 2);
+	@Command("mist broadcast title <message>")
+	@Permission("mist.command.broadcast")
+	public void title(@Greedy String message) {
+		final String[] parts = message.split(":", 2);
 
 		Bukkit.getOnlinePlayers().forEach(player -> {
 			final Component title = TextParser.parse(player, parts[0]);
-			final Component subtitle = parts.length > 1
-					? TextParser.parse(player, parts[1])
-					: Component.empty();
+			final Component subtitle = parts.length > 1 ? TextParser.parse(player, parts[1]) : Component.empty();
 
 			player.showTitle(
 					Title.title(

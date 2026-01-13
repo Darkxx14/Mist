@@ -4,40 +4,23 @@ import com.xyrisdev.mist.util.message.MistMessage;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import com.xyrisdev.mist.util.regex.RegexHealthAnalyzer;
 import net.kyori.adventure.text.event.ClickEvent;
-import org.incendo.cloud.Command;
-import org.incendo.cloud.context.CommandContext;
-import org.incendo.cloud.paper.PaperCommandManager;
+import org.incendo.cloud.annotations.Command;
+import org.incendo.cloud.annotations.Permission;
 import org.incendo.cloud.paper.util.sender.Source;
-import org.incendo.cloud.parser.standard.StringParser;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
+@SuppressWarnings("unused")
 public class RegexCommand {
 
-	public void register(@NotNull PaperCommandManager<Source> manager, Command.@NotNull Builder<Source> root) {
-		manager.command(
-				root.literal("regex")
-						.permission("mist.command.regex")
-						.literal("generate")
-						.required("text", StringParser.greedyStringParser())
-						.handler(this::generate)
-		);
+	@Command("mist regex generate <text>")
+	@Permission("mist.command.regex")
+	public void generate(Source sender, String text) {
+		final String regex = RegexGenerator.generate(text);
 
-		manager.command(
-				root.literal("regex")
-						.permission("mist.command.regex")
-						.literal("analyze")
-						.required("regex", StringParser.greedyStringParser())
-						.handler(this::analyze)
-		);
-	}
-
-	private void generate(@NotNull CommandContext<Source> ctx) {
-		final String input = ctx.get("text");
-		final String regex = RegexGenerator.generate(input);
-
-		MistMessage.create(ctx.sender().source())
+		MistMessage.create(sender.source())
 				.id("mist_regex_generate")
-				.placeholder("input", input)
+				.placeholder("input", text)
 				.placeholder("regex", regex)
 				.interceptor(component ->
 						component.clickEvent(ClickEvent.copyToClipboard(regex))
@@ -45,17 +28,20 @@ public class RegexCommand {
 				.send();
 	}
 
-	private void analyze(@NotNull CommandContext<Source> ctx) {
-		final String regex = ctx.get("regex");
+	@Command("mist regex analyze <regex>")
+	@Permission("mist.command.regex")
+	public void analyze(Source sender, String regex) {
 		final RegexHealthAnalyzer.Result r = RegexHealthAnalyzer.analyze(regex);
 
-		MistMessage.create(ctx.sender().source())
+		MistMessage.create(sender.source())
 				.id("mist_regex_analyze")
 				.placeholder("score", String.valueOf(r.score()))
 				.placeholder("verdict", r.verdict().name())
 				.placeholder("risk", r.risk().name())
 				.placeholder(
-						"notes", r.notes().isEmpty() ? "Looks solid <3" : String.join(", ", r.notes())
+						"notes", r.notes().isEmpty()
+								? "Looks solid <3"
+								: String.join(", ", r.notes())
 				)
 				.send();
 	}
