@@ -29,7 +29,7 @@ public class AnnouncementsCommand {
 
 	@Command("mist announcements next set <announcement>")
 	@Permission("mist.command.announcements")
-	public void next(Source sender, @Argument("announcement") Announcement announcement) {
+	public void next(Source sender, Announcement announcement) {
 		Mist.INSTANCE.announcements().setNext(announcement.name());
 
 		MistMessage.create(sender.source())
@@ -40,7 +40,7 @@ public class AnnouncementsCommand {
 
 	@Command("mist announcements force <announcement>")
 	@Permission("mist.command.announcements")
-	public void force(Source sender, @Argument("announcement") Announcement announcement) {
+	public void force(Source sender, Announcement announcement) {
 		Mist.INSTANCE.announcements().force(announcement.name());
 
 		MistMessage.create(sender.source())
