@@ -25,7 +25,7 @@ public class MistCommand {
 	@Command("mist about")
 	@Permission("mist.command.about")
 	public void about(@NotNull Source sender) {
-		final BuildInformation build = BuildInformation.instance();
+		final BuildInformation build = BuildInformation.of();
 		final PluginMeta meta = Mist.INSTANCE.plugin().getPluginMeta();
 
 		MistMessage.create(sender.source())

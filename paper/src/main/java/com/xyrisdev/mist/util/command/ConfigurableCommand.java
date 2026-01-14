@@ -2,7 +2,6 @@ package com.xyrisdev.mist.util.command;
 
 import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
 import com.xyrisdev.mist.config.ConfigType;
 import lombok.experimental.UtilityClass;

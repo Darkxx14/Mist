@@ -6,17 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class BuildInformation {
+public record BuildInformation(String module, String version, String branch, String commit, String commitShort) {
 
 	private static final BuildInformation INSTANCE = load();
 
-	private final String module;
-	private final String version;
-	private final String branch;
-	private final String commit;
-	private final String commitShort;
-
-	private BuildInformation(
+	public BuildInformation(
 			@NotNull String module, @NotNull String version,
 			@NotNull String branch, @NotNull String commit,
 			@NotNull String commitShort
@@ -28,7 +22,7 @@ public class BuildInformation {
 		this.commitShort = commitShort;
 	}
 
-	public static @NotNull BuildInformation instance() {
+	public static @NotNull BuildInformation of() {
 		return INSTANCE;
 	}
 
@@ -36,9 +30,9 @@ public class BuildInformation {
 	private static @NotNull BuildInformation load() {
 		final Properties prop = new Properties();
 
-		try (InputStream insteam = BuildInformation.class.getClassLoader().getResourceAsStream("build.properties")) {
-			if (insteam != null) {
-				prop.load(insteam);
+		try (InputStream instream = BuildInformation.class.getClassLoader().getResourceAsStream("build.properties")) {
+			if (instream != null) {
+				prop.load(instream);
 			}
 		} catch (Exception ignored) {}
 
@@ -49,25 +43,5 @@ public class BuildInformation {
 				prop.getProperty("commit", "unknown"),
 				prop.getProperty("commit_short", "unknown")
 		);
-	}
-
-	public String module() {
-		return module;
-	}
-
-	public String version() {
-		return version;
-	}
-
-	public String branch() {
-		return branch;
-	}
-
-	public String commit() {
-		return commit;
-	}
-
-	public String commitShort() {
-		return commitShort;
 	}
 }
