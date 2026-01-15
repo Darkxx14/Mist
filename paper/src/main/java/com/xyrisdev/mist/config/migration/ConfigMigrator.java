@@ -14,17 +14,10 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 
-public class ConfigMigrator {
+public record ConfigMigrator(@NotNull MigrationContext ctx) {
 
-	private final MigrationContext ctx;
-
-	public ConfigMigrator(@NotNull MigrationContext ctx) {
-		this.ctx = Objects.requireNonNull(ctx, "ctx");
-	}
-
-	public boolean migrate() {
+	public void migrate() {
 		final YamlConfiguration latest = latest();
 		final YamlConfiguration current = current();
 
@@ -32,7 +25,7 @@ public class ConfigMigrator {
 		final int latestVersion = latest.getInt(ctx.version(), 0);
 
 		if (currentVersion >= latestVersion) {
-			return false;
+			return;
 		}
 
 		MistLogger.info(ctx.file() + " outdated (v" + currentVersion + " -> v" + latestVersion + "), migrating...");
@@ -42,7 +35,6 @@ public class ConfigMigrator {
 		save(latest);
 
 		MistLogger.info(ctx.file() + " migrated successfully.");
-		return true;
 	}
 
 	private void merge(@NotNull YamlConfiguration source, @NotNull YamlConfiguration target) {

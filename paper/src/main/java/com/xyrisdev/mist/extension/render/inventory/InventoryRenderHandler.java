@@ -25,13 +25,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 // todo: make menus configurable
-public class InventoryRenderHandler implements RenderHandler {
-
-	private final RenderConfiguration config;
-
-	public InventoryRenderHandler(@NotNull RenderConfiguration config) {
-		this.config = config;
-	}
+@SuppressWarnings("java:S1135")
+public record InventoryRenderHandler(@NotNull RenderConfiguration config) implements RenderHandler {
 
 	@ExtensionHandler
 	public void handle(@NotNull ChatContext ctx) {

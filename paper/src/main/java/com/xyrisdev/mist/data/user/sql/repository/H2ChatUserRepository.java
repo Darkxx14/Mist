@@ -11,15 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.UUID;
 
-public class H2ChatUserRepository implements ChatUserRepository {
-
-	private final DataSource dataSource;
-	private final String table;
-
-	public H2ChatUserRepository(@NotNull DataSource dataSource, @NotNull String table) {
-		this.dataSource = dataSource;
-		this.table = table;
-	}
+public record H2ChatUserRepository(
+		@NotNull DataSource dataSource,
+		@NotNull String table
+) implements ChatUserRepository {
 
 	@Override
 	public @NotNull ChatUser load(@NotNull UUID id) {
@@ -49,12 +44,12 @@ public class H2ChatUserRepository implements ChatUserRepository {
 	public void save(@NotNull ChatUser user) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-					"""
-					MERGE INTO %s (uuid, data)
-					KEY (uuid)
-					VALUES (?, ?)
-					""".formatted(table)
-				     )) {
+				     """
+						     MERGE INTO %s (uuid, data)
+						     KEY (uuid)
+						     VALUES (?, ?)
+						     """.formatted(table)
+		     )) {
 
 			ps.setString(1, user.id().toString());
 			ps.setString(2, ChatUserSerializer.serialize(user));

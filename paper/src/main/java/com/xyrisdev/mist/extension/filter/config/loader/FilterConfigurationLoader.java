@@ -27,10 +27,12 @@ public class FilterConfigurationLoader {
 	public static @NotNull FilterConfiguration load(CachableConfiguration config) {
 		final List<FilterRule> loaded = RULES.stream()
 				.map(rule -> {
-					ConfigurationSection section = config.getSection(rule.name());
+					final ConfigurationSection section = config.getSection(rule.name());
+
 					if (section == null || !rule.enabled(section)) {
 						return null;
 					}
+
 					rule.load(section);
 					return rule;
 				})

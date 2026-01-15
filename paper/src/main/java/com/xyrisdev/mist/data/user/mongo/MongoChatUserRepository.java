@@ -11,13 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class MongoChatUserRepository implements ChatUserRepository {
-
-	private final MongoCollection<Document> collection;
-
-	public MongoChatUserRepository(@NotNull MongoCollection<Document> collection) {
-		this.collection = collection;
-	}
+public record MongoChatUserRepository(@NotNull MongoCollection<Document> collection) implements ChatUserRepository {
 
 	@Override
 	public @NotNull ChatUser load(@NotNull UUID id) {

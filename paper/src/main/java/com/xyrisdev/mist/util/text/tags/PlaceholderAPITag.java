@@ -26,8 +26,8 @@ public class PlaceholderAPITag implements Modifying {
 		return TagResolver.resolver(Set.of("papi", "placeholderapi"), (argumentQueue, ctx) -> {
 			final String placeholder = argumentQueue.popOr("The papi tag must be a placeholder.").value();
 
-			if (audience instanceof Player) {
-				final String parsed = PlaceholderAPI.setPlaceholders((Player) audience, '%' + placeholder + '%');
+			if (audience instanceof Player player) {
+				final String parsed = PlaceholderAPI.setPlaceholders(player, '%' + placeholder + '%');
 				return Tag.preProcessParsed(parsed);
 			}
 

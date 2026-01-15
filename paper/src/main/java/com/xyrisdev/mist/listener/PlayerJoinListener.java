@@ -3,7 +3,6 @@ package com.xyrisdev.mist.listener;
 import com.xyrisdev.library.event.builder.EventBuilder;
 import com.xyrisdev.library.event.builder.EventHandler;
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;

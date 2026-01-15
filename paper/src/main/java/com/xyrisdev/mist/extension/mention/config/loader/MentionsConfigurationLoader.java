@@ -10,19 +10,19 @@ import java.util.regex.PatternSyntaxException;
 
 public class MentionsConfigurationLoader {
 
-	private static final String def_pattern = "@([a-zA-Z0-9_]{1,16})";
+	private static final String DEF_PATTERN = "@([\\w]{1,16})";
 
 	@Contract("_ -> new")
 	public static @NotNull MentionsConfiguration load(@NotNull CachableConfiguration config) {
 		final boolean enabled = config.getBoolean("enabled", true);
-		final String pattern = config.getString("mentions.pattern", def_pattern);
+		final String pattern = config.getString("mentions.pattern", DEF_PATTERN);
 
 		Pattern resolved;
 
 		try {
 			resolved = Pattern.compile(pattern);
 		} catch (PatternSyntaxException ex) {
-			resolved = Pattern.compile(def_pattern);
+			resolved = Pattern.compile(DEF_PATTERN);
 		}
 
 		final String format = config.getString("mentions.format", "<color:#55FFFF>@<name></color>");

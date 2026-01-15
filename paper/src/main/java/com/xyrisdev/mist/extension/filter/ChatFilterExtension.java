@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 		id = "chat_filter",
 		name = "Chat Filter"
 )
+@SuppressWarnings("unused")
 public class ChatFilterExtension {
 
 	private final FilterConfiguration config;

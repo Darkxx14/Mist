@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 		id = "chat_replacement",
 		name = "Chat Replacement"
 )
+@SuppressWarnings("unused")
 public class ChatReplacementExtension {
 
 	private final ReplacementsConfiguration config;

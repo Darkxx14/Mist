@@ -17,6 +17,7 @@ import java.util.List;
 		id = "render",
 		name = "Render"
 )
+@SuppressWarnings("unused")
 public class RenderExtension {
 
 	private final List<RenderHandler> handlers;

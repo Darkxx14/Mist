@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 		id = "chat_format",
 		name = "Chat Format"
 )
+@SuppressWarnings("unused")
 public class ChatFormatExtension {
 
 	private final FormatConfiguration config;

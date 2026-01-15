@@ -13,7 +13,7 @@ import java.util.Set;
 @UtilityClass
 public class RegexGenerator {
 
-	private static volatile Map<Character, String> reverseLeet = Map.of();
+	private static Map<Character, String> reverseLeet = Map.of();
 
 	public static void index() {
 		final Map<Character, Set<Character>> temp = new HashMap<>();
@@ -25,7 +25,7 @@ public class RegexGenerator {
 				continue;
 			}
 
-			temp.computeIfAbsent(mapped, __ -> new HashSet<>()).add(c);
+			temp.computeIfAbsent(mapped, character -> new HashSet<>()).add(c);
 		}
 
 		final Map<Character, String> resolved = new HashMap<>();
@@ -88,10 +88,10 @@ public class RegexGenerator {
 		return output.toString();
 	}
 
-	private static char esc(char ch) {
+	private static @NotNull String esc(char ch) {
 		return switch (ch) {
-			case '\\', '-', '^', ']' -> '\\';
-			default -> ch;
+			case '\\', '-', '^', ']' -> "\\" + ch;
+			default -> String.valueOf(ch);
 		};
 	}
 }

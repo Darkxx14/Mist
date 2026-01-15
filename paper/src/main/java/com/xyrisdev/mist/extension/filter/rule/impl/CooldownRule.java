@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CooldownRule implements FilterRule {
 
-	private static final Cache<UUID, Long> CACHE = Caffeine.newBuilder()
+	private static final Cache<@NotNull UUID, Long> CACHE = Caffeine.newBuilder()
 						  .expireAfterWrite(5, TimeUnit.MINUTES)
 						  .build();
 

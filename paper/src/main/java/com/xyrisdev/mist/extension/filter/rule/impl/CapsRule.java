@@ -53,15 +53,13 @@ public class CapsRule implements FilterRule {
 			return FilterResult.cancelled();
 		}
 
-		if (this.type == CapsRuleType.RATIO && !msg.isEmpty()) {
-			if ((double) caps / msg.length() > this.ratio) {
-				MistMessage.create(ctx.sender())
-						.id("modules.filtering.caps")
-						.placeholder("max", String.valueOf(this.maxCaps))
-						.send();
+		if (this.type == CapsRuleType.RATIO && !msg.isEmpty() && (double) caps / msg.length() > this.ratio) {
+			MistMessage.create(ctx.sender())
+					.id("modules.filtering.caps")
+					.placeholder("max", String.valueOf(this.maxCaps))
+					.send();
 
-				return FilterResult.cancelled();
-			}
+			return FilterResult.cancelled();
 		}
 
 		return FilterResult.pass();

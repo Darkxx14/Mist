@@ -5,14 +5,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Simple data holder for user chat preferences and ignore list.
+ *
+ * <p>Used when saving/loading user data to/from storage.
+ */
 public final class ChatUserData {
 
-	public EnumMap<ChatSettingType, Boolean> settings;
+	public Map<ChatSettingType, Boolean> settings;
 	public Set<UUID> ignored;
 
+	/**
+	 * Creates new user data with all settings turned on and no ignored players.
+	 *
+	 * @return fresh ChatUserData with default values
+	 */
 	public static @NotNull ChatUserData defaults() {
 		final ChatUserData data = new ChatUserData();
 

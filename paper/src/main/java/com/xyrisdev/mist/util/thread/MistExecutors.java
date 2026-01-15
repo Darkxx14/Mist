@@ -9,21 +9,21 @@ import java.util.concurrent.Executors;
 @UtilityClass
 public final class MistExecutors {
 
-	private static ExecutorService IO;
-	private static ExecutorService PROCESSOR;
+	private static ExecutorService io;
+	private static ExecutorService processor;
 
 	public static void start() {
-		if (IO != null || PROCESSOR != null) {
+		if (io != null || processor != null) {
 			return;
 		}
 
-		IO = Executors.newThreadPerTaskExecutor(
+		io = Executors.newThreadPerTaskExecutor(
 				Thread.ofVirtual()
 						.name("mist-io")
 						.factory()
 		);
 
-		PROCESSOR = Executors.newSingleThreadExecutor(runnable -> {
+		processor = Executors.newSingleThreadExecutor(runnable -> {
 			final Thread thread = new Thread(runnable, "mist-processor");
 
 			thread.setDaemon(true);
@@ -32,22 +32,22 @@ public final class MistExecutors {
 	}
 
 	public static void shutdown() {
-		if (IO != null) {
-			IO.shutdown();
-			IO = null;
+		if (io != null) {
+			io.shutdown();
+			io = null;
 		}
 
-		if (PROCESSOR != null) {
-			PROCESSOR.shutdown();
-			PROCESSOR = null;
+		if (processor != null) {
+			processor.shutdown();
+			processor = null;
 		}
 	}
 
 	public static @NotNull ExecutorService io() {
-		return IO;
+		return io;
 	}
 
 	public static @NotNull ExecutorService processor() {
-		return PROCESSOR;
+		return processor;
 	}
 }

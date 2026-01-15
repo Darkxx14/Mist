@@ -13,13 +13,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @UtilityClass
 public class SchemaUpgrader {
-
-	private static final Logger log = LoggerFactory.getLogger(SchemaUpgrader.class);
 
 	public static void upgrade(@NotNull DataSource dataSource, SQLSchemaDefinition schema) {
 		try (Connection conn = dataSource.getConnection()) {
@@ -42,7 +37,6 @@ public class SchemaUpgrader {
 				ctx.meta().write(schema);
 			});
 		} catch (SQLException e) {
-			log.error("Schema upgrade failed", e);
 			throw new IllegalStateException("Schema upgrade failed", e);
 		}
 	}

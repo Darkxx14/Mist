@@ -9,6 +9,7 @@ import java.util.Deque;
 import java.util.List;
 
 @UtilityClass
+@SuppressWarnings("all")
 public class RegexHealthAnalyzer {
 
 	public static @NotNull Result analyze(@NotNull String pattern) {
@@ -25,11 +26,11 @@ public class RegexHealthAnalyzer {
 
 		final Deque<GroupState> groupStack = new ArrayDeque<>();
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length; ) {
 			final char c = pattern.charAt(i);
 
 			if (c == '\\') {
-				i++;
+				i += 2;
 				continue;
 			}
 
@@ -60,7 +61,6 @@ public class RegexHealthAnalyzer {
 				}
 
 				case '.' -> {
-
 					if (!groupStack.isEmpty()) {
 						groupStack.peek().containsWildcard = true;
 					}
@@ -69,30 +69,34 @@ public class RegexHealthAnalyzer {
 				case '[' -> characterClasses++;
 
 				case '*', '+' -> {
-					if (groupStack.isEmpty()) {
-						break;
+					if (!groupStack.isEmpty()) {
+						final GroupState group = groupStack.peek();
+
+						if (group.quantified) {
+							score -= 40;
+							notes.add("Nested quantifiers can cause catastrophic backtracking");
+						}
+
+						if (group.alternations > 0) {
+							score -= 35;
+							notes.add("Quantified alternation detected");
+						}
+
+						if (group.containsWildcard) {
+							score -= 50;
+							notes.add("Wildcard inside quantified group");
+						}
+
+						group.quantified = true;
 					}
+				}
 
-					final GroupState group = groupStack.peek();
-
-					if (group.quantified) {
-						score -= 40;
-						notes.add("Nested quantifiers can cause catastrophic backtracking");
-					}
-
-					if (group.alternations > 0) {
-						score -= 35;
-						notes.add("Quantified alternation detected");
-					}
-
-					if (group.containsWildcard) {
-						score -= 50;
-						notes.add("Wildcard inside quantified group");
-					}
-
-					group.quantified = true;
+				default -> {
+					// intentionally ignored
 				}
 			}
+
+			i++;
 		}
 
 		if (pattern.contains(".*")) {
@@ -137,23 +141,31 @@ public class RegexHealthAnalyzer {
 
 		score = Math.max(0, score);
 
-		final Risk risk =
-				score >= 80 ? Risk.LOW :
-						score >= 50 ? Risk.MEDIUM :
-								Risk.HIGH;
+		final Risk risk;
+		if (score >= 80) {
+			risk = Risk.LOW;
+		} else if (score >= 50) {
+			risk = Risk.MEDIUM;
+		} else {
+			risk = Risk.HIGH;
+		}
 
-		final Verdict verdict =
-				score >= 85 ? Verdict.EXCELLENT :
-						score >= 65 ? Verdict.GOOD :
-								score >= 40 ? Verdict.WEAK :
-										Verdict.DANGEROUS;
+		final Verdict verdict;
+		if (score >= 85) {
+			verdict = Verdict.EXCELLENT;
+		} else if (score >= 65) {
+			verdict = Verdict.GOOD;
+		} else if (score >= 40) {
+			verdict = Verdict.WEAK;
+		} else {
+			verdict = Verdict.DANGEROUS;
+		}
 
 		return new Result(score, verdict, risk, notes);
 	}
 
 	private static class GroupState {
 		final boolean capturing;
-
 		boolean quantified;
 		boolean containsWildcard;
 		int alternations;

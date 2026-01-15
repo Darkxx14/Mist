@@ -40,6 +40,7 @@ public class ReplacementsConfigurationLoader {
 							replacements.add(new StaticReplacement(match, replace));
 						}
 					}
+
 					case "PAPI" -> {
 						final String processor = entry.getString("processor");
 						final String permission = entry.getString("permission", "");
@@ -48,6 +49,11 @@ public class ReplacementsConfigurationLoader {
 							replacements.add(new PlaceholderAPIReplacement(match, processor, permission));
 						}
 					}
+
+					default -> {
+						//
+					}
+
 				}
 			}
 		}

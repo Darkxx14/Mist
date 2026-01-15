@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.Map;
 import java.util.Objects;
 
-public class ColorTag implements Modifying {
+public record ColorTag(@NotNull TextColor color) implements Modifying {
 
 	// palette from github.com/nulli0n/nightcore-spigot
 	private static final Map<String, TextColor> PALETTE = Map.ofEntries(
@@ -39,12 +39,6 @@ public class ColorTag implements Modifying {
 
 			color("m_dark_gray", "#6c6c62")
 	);
-
-	private final TextColor color;
-
-	private ColorTag(@NotNull TextColor color) {
-		this.color = color;
-	}
 
 	@Override
 	public @NotNull Component apply(@NotNull Component current, int depth) {

@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlaceholderAPIHook extends PlaceholderExpansion {
 
+	private static final String ENABLED = "enabled";
+	private static final String DISABLED = "disabled";
+
 	public static @NotNull MistHook hook() {
 		return MistHook.builder()
 				.plugin("PlaceholderAPI")
@@ -85,18 +88,18 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 											.getSection("placeholders");
 
 		if (section == null) {
-			return value ? "enabled" : "disabled";
+			return value ? ENABLED : DISABLED;
 		}
 
-		final ConfigurationSection section1 = section.getConfigurationSection(placeholder);
+		final ConfigurationSection placeholderS = section.getConfigurationSection(placeholder);
 
-		if (section1 == null) {
-			return value ? "enabled" : "disabled";
+		if (placeholderS == null) {
+			return value ? ENABLED : DISABLED;
 		}
 
-		return section1.getString(
+		return placeholderS.getString(
 				value ? "true" : "false",
-				value ? "enabled" : "disabled"
+				value ? ENABLED : DISABLED
 		);
 	}
 }

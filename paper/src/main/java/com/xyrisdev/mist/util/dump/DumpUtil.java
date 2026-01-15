@@ -1,7 +1,6 @@
 package com.xyrisdev.mist.util.dump;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.util.logger.MistLogger;
 import com.xyrisdev.mist.util.paste.PasteUtil;
 import io.papermc.paper.plugin.configuration.PluginMeta;
@@ -21,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class DumpUtil {
@@ -158,17 +158,17 @@ public class DumpUtil {
 			return output;
 		}
 
-		try {
-			Files.walk(root)
-					.filter(Files::isRegularFile)
-					.filter(f -> {
-						final String n = f.getFileName().toString().toLowerCase(Locale.ROOT);
-						return n.endsWith(".yml") || n.endsWith(".yaml");
+		try (Stream<Path> stream = Files.walk(root)) {
+			stream.filter(Files::isRegularFile)
+					.filter(file -> {
+						final String name = file.getFileName()
+								.toString()
+								.toLowerCase(Locale.ROOT);
+
+						return name.endsWith(".yml") || name.endsWith(".yaml");
 					})
 					.forEach(file -> {
-						final String relative = root.relativize(file)
-								.toString()
-								.replace(File.separatorChar, '/');
+						final String relative = root.relativize(file).toString().replace(File.separatorChar, '/');
 
 						try {
 							final long size = Files.size(file);
@@ -179,7 +179,6 @@ public class DumpUtil {
 							}
 
 							final String raw = Files.readString(file);
-
 							output.put(relative, sanitize(yaml.load(raw)));
 						} catch (Exception e) {
 							output.put(relative, "error");
@@ -268,7 +267,8 @@ public class DumpUtil {
 			PluginInfo self,
 			Map<String, Object> mistConfigs,
 			List<PluginInfo> plugins
-	) {}
+	) {
+	}
 
 	private record ServerInfo(
 			String platform,
@@ -278,14 +278,16 @@ public class DumpUtil {
 			boolean onlineMode,
 			int maxPlayers,
 			int onlinePlayers
-	) {}
+	) {
+	}
 
 	private record SystemInfo(
 			String os,
 			String arch,
 			String osVersion,
 			int processors
-	) {}
+	) {
+	}
 
 	private record JavaInfo(
 			String version,
@@ -294,7 +296,8 @@ public class DumpUtil {
 			String vmVersion,
 			List<String> jvmArgs,
 			long uptimeMillis
-	) {}
+	) {
+	}
 
 	private record MemoryInfo(
 			MemoryValue max,
@@ -302,22 +305,26 @@ public class DumpUtil {
 			MemoryValue free,
 			MemoryValue heapUsed,
 			MemoryValue nonHeapUsed
-	) {}
+	) {
+	}
 
-	private record MemoryValue(long bytes, String formatted) {}
+	private record MemoryValue(long bytes, String formatted) {
+	}
 
 	private record SchedulerInfo(
 			int pendingTasks,
 			int activeWorkers,
 			List<TaskInfo> tasks
-	) {}
+	) {
+	}
 
 	private record TaskInfo(
 			int id,
 			String owner,
 			boolean sync,
 			boolean cancelled
-	) {}
+	) {
+	}
 
 	private record PluginInfo(
 			String name,
@@ -336,5 +343,6 @@ public class DumpUtil {
 			String description,
 			String permissionDefault,
 			List<String> permissions
-	) {}
+	) {
+	}
 }

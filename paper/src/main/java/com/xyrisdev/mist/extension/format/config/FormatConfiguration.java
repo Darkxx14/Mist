@@ -5,17 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class FormatConfiguration {
+public record FormatConfiguration(
+		@NotNull Map<String, FormatEntry> formats,
+		@NotNull String fallback
+) {
 
-	private final Map<String, FormatEntry> formats;
-	private final String fallback;
-
-	public FormatConfiguration(@NotNull Map<String, FormatEntry> formats, @NotNull String fallback) {
-		this.formats = formats;
-		this.fallback = fallback;
-	}
-
-	public FormatEntry resolve(String group) {
+	public FormatEntry resolve(@NotNull String group) {
 		return formats.getOrDefault(group, formats.get(fallback));
 	}
 }

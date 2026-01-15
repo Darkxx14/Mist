@@ -23,7 +23,6 @@ public class AnnouncementArgument {
 		return Mist.INSTANCE.announcements()
 				.find(name)
 				.orElseThrow(() -> HandledParseException.handle(
-						name,
 						() -> MistMessage.create(ctx.sender().source())
 								.id("mist_announcement_invalid")
 								.placeholder("name", name)

@@ -1,7 +1,6 @@
 package com.xyrisdev.mist.command.player;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;

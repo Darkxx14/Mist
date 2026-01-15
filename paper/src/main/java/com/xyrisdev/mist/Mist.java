@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 
+@SuppressWarnings("java:S6548")
 @Getter
 @Accessors(fluent = true)
 public enum Mist {

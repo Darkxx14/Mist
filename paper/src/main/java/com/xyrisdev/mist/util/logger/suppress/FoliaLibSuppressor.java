@@ -15,8 +15,8 @@ public class FoliaLibSuppressor {
         final Logger logger = plugin.getLogger();
         final Filter filter = logger.getFilter();
 
-        logger.setFilter(record -> {
-            final String msg = record.getMessage();
+        logger.setFilter(logRecord -> {
+            final String msg = logRecord.getMessage();
 
             if (msg == null) {
                 return true;

@@ -3,11 +3,12 @@ package com.xyrisdev.mist.util.message.builder.object;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 public enum MessageType {
 	CHAT, ACTION_BAR, TITLE;
 
-	public static EnumSet<MessageType> parse(@Nullable String raw) {
+	public static Set<MessageType> parse(@Nullable String raw) {
 		if (raw == null || raw.isBlank()) {
 			return EnumSet.of(CHAT);
 		}
@@ -22,7 +23,9 @@ public enum MessageType {
 										.replace(' ', '_')
 						)
 				);
-			} catch (IllegalArgumentException ignored) {}
+			} catch (IllegalArgumentException ignored) {
+				// ignore
+			}
 		}
 
 		return set.isEmpty() ? EnumSet.of(CHAT) : set;

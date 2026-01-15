@@ -2,7 +2,6 @@ package com.xyrisdev.mist.data;
 
 import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.data.provider.mongo.MongoProvider;
 import com.xyrisdev.mist.data.provider.mongo.config.MongoConfig;
 import com.xyrisdev.mist.data.provider.sql.*;

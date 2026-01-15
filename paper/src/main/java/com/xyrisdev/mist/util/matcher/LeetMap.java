@@ -15,7 +15,7 @@ import java.util.Map;
 @UtilityClass
 public class LeetMap {
 
-	private static volatile Map<Character, Character> map = Map.of();
+	private static Map<Character, Character> map = Map.of();
 
 	public static void load(@NotNull ConfigRegistry registry) {
 		final ConfigurationSection section = registry.get(ConfigType.LEETMAP).getSection("mappings");

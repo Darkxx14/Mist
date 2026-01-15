@@ -1,7 +1,6 @@
 package com.xyrisdev.mist.misc.announcement;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
 import com.xyrisdev.mist.misc.announcement.config.AnnouncementConfiguration;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;

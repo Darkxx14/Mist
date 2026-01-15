@@ -11,15 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.UUID;
 
-public class SQLiteChatUserRepository implements ChatUserRepository {
-
-	private final DataSource dataSource;
-	private final String table;
-
-	public SQLiteChatUserRepository(@NotNull DataSource dataSource, @NotNull String table) {
-		this.dataSource = dataSource;
-		this.table = table;
-	}
+public record SQLiteChatUserRepository(
+		@NotNull DataSource dataSource,
+		@NotNull String table
+) implements ChatUserRepository {
 
 	@Override
 	public @NotNull ChatUser load(@NotNull UUID id) {
@@ -49,11 +44,11 @@ public class SQLiteChatUserRepository implements ChatUserRepository {
 	public void save(@NotNull ChatUser user) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-					"""
-					INSERT INTO %s (uuid, data)
-					VALUES (?, ?)
-					ON CONFLICT(uuid) DO UPDATE SET data = excluded.data
-					""".formatted(table)
+				     """
+						     INSERT INTO %s (uuid, data)
+						     VALUES (?, ?)
+						     ON CONFLICT(uuid) DO UPDATE SET data = excluded.data
+						     """.formatted(table)
 		     )) {
 
 			ps.setString(1, user.id().toString());

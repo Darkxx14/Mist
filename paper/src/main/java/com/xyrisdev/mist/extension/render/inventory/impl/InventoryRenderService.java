@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+@SuppressWarnings("java:S6548")
 public class InventoryRenderService {
 
 	private static final InventoryRenderService INSTANCE = new InventoryRenderService();

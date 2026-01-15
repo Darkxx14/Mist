@@ -1,7 +1,6 @@
 package com.xyrisdev.mist.command.player;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import com.xyrisdev.mist.api.chat.user.toggle.ChatSettingType;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
@@ -17,7 +16,6 @@ public class ToggleCommands {
 
 	public static void register() {
 		command("toggleglobalchat", ChatSettingType.GLOBAL_CHAT, "toggle_global_chat");
-		//command("togglepm", ChatSettingType.PRIVATE_MESSAGES, "toggle_private_messages");
 		command("togglementions", ChatSettingType.MENTIONS, "toggle_mentions");
 		command("toggleannouncements", ChatSettingType.ANNOUNCEMENTS, "toggle_announcements");
 	}

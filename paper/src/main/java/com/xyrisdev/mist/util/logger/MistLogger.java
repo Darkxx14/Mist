@@ -10,20 +10,20 @@ import java.util.function.Supplier;
 @UtilityClass
 public class MistLogger {
 
-	private static final String prefix = "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray> ";
-	private static final String gradient = "<gradient:#E03261:#811937><bold>";
-	private static final String header_reset = "</bold></gradient>";
+	private static final String PREFIX = "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray> ";
+	private static final String GRADIENT = "<gradient:#E03261:#811937><bold>";
+	private static final String HEADER_RESET = "</bold></gradient>";
 
 	public static void startup(@NotNull String version, @NotNull Server server) {
 		infoNoPrefix("");
 
-		infoNoPrefix(gradient + "   __  __  " + header_reset);
+		infoNoPrefix(GRADIENT + "   __  __  " + HEADER_RESET);
 		infoNoPrefix(
-				gradient + "  |  \\/  | " + header_reset +
+				GRADIENT + "  |  \\/  | " + HEADER_RESET +
 						"<gray>Mist v" + version + "</gray>"
 		);
 		infoNoPrefix(
-				gradient + "  | |\\/| | " + header_reset +
+				GRADIENT + "  | |\\/| | " + HEADER_RESET +
 						"<gray>Running on " + server.getName()
 						+ " - " + server.getBukkitVersion() + "</gray>"
 		);
@@ -57,6 +57,6 @@ public class MistLogger {
 	}
 
 	private static @NotNull String format(@NotNull String message) {
-		return prefix + message;
+		return PREFIX + message;
 	}
 }

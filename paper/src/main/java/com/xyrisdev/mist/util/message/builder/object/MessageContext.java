@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class MessageContext {
 
-	private static final Pattern pattern = Pattern.compile("<([a-zA-Z0-9_]+)>");
+	private static final Pattern pattern = Pattern.compile("<(\\w+)>");
 
 	private final Map<String, String> stringPlaceholders;
 	private final Map<String, Component> componentPlaceholders;

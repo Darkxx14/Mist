@@ -34,6 +34,7 @@ public class DumpCommand {
 							.id("mist_dump_failed")
 							.placeholder("error", t.getMessage())
 							.send();
+
 					return null;
 				});
 	}

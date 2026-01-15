@@ -6,25 +6,24 @@ import com.xyrisdev.mist.config.migration.ConfigMigrator;
 import com.xyrisdev.mist.util.logger.MistLogger;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.EnumMap;
 import java.util.List;
 
-public class ConfigRegistry {
-
-	private final EnumMap<ConfigType, CachableConfiguration> configs;
-
-	private ConfigRegistry(EnumMap<ConfigType, CachableConfiguration> configs) {
-		this.configs = configs;
-	}
+@SuppressWarnings("unused")
+public record ConfigRegistry(
+		@NotNull EnumMap<ConfigType,
+		@NotNull CachableConfiguration> configs
+) {
 
 	@Contract(" -> new")
 	public static @NotNull ConfigRegistry load() {
 		final EnumMap<ConfigType, CachableConfiguration> map = new EnumMap<>(ConfigType.class);
 
 		final CachableConfiguration baseConfig = CachableConfiguration.builder()
-												.file(ConfigType.CONFIGURATION.getPath())
-												.build();
+				.file(ConfigType.CONFIGURATION.getPath())
+				.build();
 
 		final boolean migrationEnabled = baseConfig.getBoolean("config_migration.enabled", true);
 
@@ -57,7 +56,7 @@ public class ConfigRegistry {
 		return config;
 	}
 
-	public @NotNull List<String> all() {
+	public @NotNull @Unmodifiable List<String> all() {
 		return this.configs.keySet()
 				.stream()
 				.map(ConfigType::getPath)

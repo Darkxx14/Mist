@@ -21,6 +21,7 @@ import java.util.regex.MatchResult;
 		id = "chat_mentions",
 		name = "Chat Mentions"
 )
+@SuppressWarnings("unused")
 public class ChatMentionExtension {
 
 	private final MentionsConfiguration config;
@@ -40,7 +41,7 @@ public class ChatMentionExtension {
 		final Component comp = ctx.message().replaceText(
 				TextReplacementConfig.builder()
 						.match(this.config.pattern())
-						.replacement((match, $$) -> mention(ctx, match))
+						.replacement((match, builder) -> mention(ctx, match))
 						.build()
 		);
 

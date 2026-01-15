@@ -3,7 +3,6 @@ package com.xyrisdev.mist.command.subcommand;
 import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.misc.announcement.object.Announcement;
 import com.xyrisdev.mist.util.message.MistMessage;
-import org.incendo.cloud.annotations.Argument;
 import org.incendo.cloud.annotations.Command;
 import org.incendo.cloud.annotations.Permission;
 import org.incendo.cloud.paper.util.sender.Source;

@@ -50,7 +50,7 @@ public class AnnouncementConfiguration {
 					continue;
 				}
 
-				final EnumSet<MessageType> types = MessageType.parse(section.getString("type"));
+				final Set<MessageType> types = MessageType.parse(section.getString("type"));
 
 				if (types.isEmpty()) {
 					continue;

@@ -2,7 +2,6 @@ package com.xyrisdev.mist.misc.announcement.scheduler;
 
 import com.tcoded.folialib.wrapper.task.WrappedTask;
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.MistPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class AnnouncementScheduler {

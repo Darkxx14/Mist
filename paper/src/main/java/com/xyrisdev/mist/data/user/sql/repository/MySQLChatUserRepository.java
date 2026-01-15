@@ -11,15 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.UUID;
 
-public class MySQLChatUserRepository implements ChatUserRepository {
-
-	private final DataSource dataSource;
-	private final String table;
-
-	public MySQLChatUserRepository(@NotNull DataSource dataSource, @NotNull String table) {
-		this.dataSource = dataSource;
-		this.table = table;
-	}
+public record MySQLChatUserRepository(
+		@NotNull DataSource dataSource,
+		@NotNull String table
+) implements ChatUserRepository {
 
 	@Override
 	public @NotNull ChatUser load(@NotNull UUID id) {
@@ -49,11 +44,11 @@ public class MySQLChatUserRepository implements ChatUserRepository {
 	public void save(@NotNull ChatUser user) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-					"""
-					INSERT INTO %s (uuid, data)
-					VALUES (?, ?)
-					ON DUPLICATE KEY UPDATE data = VALUES(data)
-					""".formatted(table)
+				     """
+						     INSERT INTO %s (uuid, data)
+						     VALUES (?, ?)
+						     ON DUPLICATE KEY UPDATE data = VALUES(data)
+						     """.formatted(table)
 		     )) {
 
 			ps.setString(1, user.id().toString());

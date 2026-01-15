@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SimilarityRule implements FilterRule {
 
-	private static final Cache<UUID, String> CACHE = Caffeine.newBuilder()
+	private static final Cache<@NotNull UUID, String> CACHE = Caffeine.newBuilder()
 						   .expireAfterWrite(10, TimeUnit.SECONDS)
 						   .build();
 

@@ -16,10 +16,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MistMessageBuilder {
@@ -85,7 +82,7 @@ public class MistMessageBuilder {
 			return;
 		}
 
-		final EnumSet<MessageType> types = MessageType.parse(section.getString("type"));
+		final Set<MessageType> types = MessageType.parse(section.getString("type"));
 
 		if (types.isEmpty()) {
 			return;

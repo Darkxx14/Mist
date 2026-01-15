@@ -13,9 +13,7 @@ public class LuckPermsHook {
 	public static @NotNull MistHook hook() {
 		return MistHook.builder()
 				.plugin("LuckPerms")
-				.onLoad(l -> {
-					api = Bukkit.getServicesManager().load(LuckPerms.class);
-				})
+				.onLoad(l -> api = Bukkit.getServicesManager().load(LuckPerms.class))
 				.onFail(() -> {
 					throw new IllegalStateException("LuckPerms is required");
 				})

@@ -19,7 +19,7 @@ public class MistChatRenderer {
 
 	@SuppressWarnings("deprecation")
 	public static @NotNull ChatRenderer render(@NotNull ChatContext ctx) {
-		return (player, displayName, message, $$$$) -> {
+		return (player, displayName, message, audience) -> {
 			final FormatEntry entry = ctx.attributes(Key.key("mist", "render"), FormatEntry.class);
 
 			if (entry == null) {

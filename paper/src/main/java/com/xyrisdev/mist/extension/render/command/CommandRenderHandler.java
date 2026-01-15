@@ -11,13 +11,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CommandRenderHandler implements RenderHandler {
-
-	private final RenderConfiguration config;
-
-	public CommandRenderHandler(@NotNull RenderConfiguration config) {
-		this.config = config;
-	}
+public record CommandRenderHandler(RenderConfiguration config) implements RenderHandler {
 
 	@Override
 	public void handle(@NotNull ChatContext ctx) {

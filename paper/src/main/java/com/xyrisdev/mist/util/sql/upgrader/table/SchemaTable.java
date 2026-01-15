@@ -18,15 +18,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class SchemaTable {
-
-	private final Connection conn;
-	private final SqlDialect dialect;
-
-	public SchemaTable(Connection conn, SqlDialect dialect) {
-		this.conn = conn;
-		this.dialect = dialect;
-	}
+public record SchemaTable(Connection conn, SqlDialect dialect) {
 
 	public boolean exists(String table) throws SQLException {
 		final DatabaseMetaData meta = conn.getMetaData();
