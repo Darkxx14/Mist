@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":api"))
+    implementation(project(":mist-api"))
     implementation(libs.xlibrary)
 
     annotationProcessor(libs.lombok)

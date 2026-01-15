@@ -1,8 +1,8 @@
 rootProject.name = "Mist"
 
 include(
-        "api",
-        "paper"
+        "mist-api",
+        "mist-paper"
 )
 
 pluginManagement {
