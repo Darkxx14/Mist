@@ -49,10 +49,6 @@ dependencies {
     paperLibrary(libs.hikaricp)
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
@@ -70,6 +66,7 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 
 tasks.shadowJar {
     archiveClassifier.set(commitShort)
+    relocate("com.xyrisdev.library", "com.xyrisdev.mist.library")
 }
 
 tasks.jar {

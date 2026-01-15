@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation used to mark classes as Mist chat extensions.
  *
- * <p>Classes annotated with @MistExtension are automatically discovered and registered
+ * <p>Classes annotated with {@code @MistExtension} are automatically discovered and registered
  * with the extension system. Each extension must have a unique ID and a descriptive name.
  * Extensions are executed in the chat processing pipeline based on their priority configuration.</p>
  *

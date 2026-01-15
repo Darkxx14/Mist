@@ -6,5 +6,4 @@ import org.jetbrains.annotations.NotNull;
 public interface RenderHandler {
 
     void handle(@NotNull ChatContext ctx);
-
 }

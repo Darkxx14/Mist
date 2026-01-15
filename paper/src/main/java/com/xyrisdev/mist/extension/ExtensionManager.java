@@ -1,7 +1,7 @@
 package com.xyrisdev.mist.extension;
 
 import com.xyrisdev.mist.Mist;
-import com.xyrisdev.mist.api.chat.extension.registry.MistExtensionRegistry;
+import com.xyrisdev.mist.api.MistAPI;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.extension.filter.ChatFilterExtension;
@@ -40,10 +40,12 @@ public final class ExtensionManager {
 	}
 
 	private static void defaults() {
-		MistExtensionRegistry.register(new ChatFilterExtension());
-		MistExtensionRegistry.register(new ChatReplacementExtension());
-		MistExtensionRegistry.register(new ChatMentionExtension());
-		MistExtensionRegistry.register(new RenderExtension());
-		MistExtensionRegistry.register(new ChatFormatExtension());
+		List.of(
+				new ChatFilterExtension(),
+				new ChatReplacementExtension(),
+				new ChatMentionExtension(),
+				new RenderExtension(),
+				new ChatFormatExtension()
+		).forEach(MistAPI.extensions()::register);
 	}
 }

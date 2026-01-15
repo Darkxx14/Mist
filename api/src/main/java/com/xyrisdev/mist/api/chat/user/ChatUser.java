@@ -4,6 +4,7 @@ import com.xyrisdev.mist.api.chat.user.ignore.ChatIgnore;
 import com.xyrisdev.mist.api.chat.user.toggle.ChatSettings;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,17 @@ public final class ChatUser {
 		this.id = id;
 		this.settings = ChatSettings.defaults();
 		this.ignore = new ChatIgnore();
+	}
+
+	/**
+	 * Creates a snapshot copy of another {@link ChatUser}.
+	 * @param other the user to copy
+	 */
+	public ChatUser(@NotNull ChatUser other) {
+		this.id = other.id;
+		this.settings = new ChatSettings(new EnumMap<>(other.settings().states()));
+		this.ignore = new ChatIgnore();
+		other.ignore().snapshot().forEach(this.ignore::add);
 	}
 
 	/**
