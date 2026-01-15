@@ -20,6 +20,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * safe concurrent registration and unregistration.</p>
  *
  * @param <T> the event type handled by this registry
+ *
+ * @since 1.0.0
  */
 public class EventRegistry<T extends MistEvent> {
 

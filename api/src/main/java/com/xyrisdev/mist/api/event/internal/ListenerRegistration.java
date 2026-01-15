@@ -13,6 +13,8 @@ import java.util.function.Consumer;
  * registration flow and is not intended for direct use by API consumers.</p>
  *
  * @param <T> the event type
+ *
+ * @since 1.0.0
  */
 public interface ListenerRegistration<T extends MistEvent> {
 

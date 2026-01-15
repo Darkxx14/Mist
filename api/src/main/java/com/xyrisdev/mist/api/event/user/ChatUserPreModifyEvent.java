@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>The user instance has not yet been mutated when this
  * event is dispatched.</p>
+ *
+ * @since 1.0.0
  */
 public final class ChatUserPreModifyEvent implements MistEvent {
 

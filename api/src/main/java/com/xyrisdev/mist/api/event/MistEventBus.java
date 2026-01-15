@@ -8,6 +8,8 @@ import com.xyrisdev.mist.api.event.internal.ListenerRegistration;
  * <p>Events are dispatched in the same execution context that invokes
  * {@link #post(MistEvent)}. The event bus does not perform any thread
  * switching, scheduling, or context management.</p>
+ *
+ * @since 1.0.0
  */
 public interface MistEventBus {
 

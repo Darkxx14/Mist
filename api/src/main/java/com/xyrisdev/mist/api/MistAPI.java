@@ -13,8 +13,6 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>All returned APIs are managed by Mist and remain stable across
  * versions unless stated otherwise.</p>
- *
- * @since 1.0.0
  */
 public final class MistAPI {
 

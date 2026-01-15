@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>This event is only fired when the user is loaded from the
  * repository, not when returned from cache.</p>
+ *
+ * @since 1.0.0
  */
 public final class ChatUserLoadEvent implements MistEvent {
 

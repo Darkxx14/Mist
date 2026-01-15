@@ -4,6 +4,8 @@ package com.xyrisdev.mist.api.event;
  * Represents a {@link MistEvent} that can be cancelled.
  * <p>
  * Cancelling an event signals that its default behavior should not be executed.
+ *
+ * @since 1.0.0
  */
 public interface CancellableMistEvent extends MistEvent {
 

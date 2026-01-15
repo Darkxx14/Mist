@@ -18,6 +18,8 @@ import java.util.function.Consumer;
  * not be created or manipulated directly by API consumers.</p>
  *
  * @param <T> the event type handled by this listener
+ *
+ * @since 1.0.0
  */
 public class RegisteredListener<T extends MistEvent> implements EventSubscription<T> {
 

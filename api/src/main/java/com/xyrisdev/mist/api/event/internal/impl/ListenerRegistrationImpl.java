@@ -21,6 +21,8 @@ import java.util.function.Consumer;
  * listener registration.</p>
  *
  * @param <T> the event type being registered
+ *
+ * @since 1.0.0
  */
 public final class ListenerRegistrationImpl<T extends MistEvent> implements ListenerRegistration<T> {
 

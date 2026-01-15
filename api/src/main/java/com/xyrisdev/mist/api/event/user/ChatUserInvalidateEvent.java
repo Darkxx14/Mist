@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>After this event is dispatched, the user is no longer
  * present in memory.</p>
+ *
+ * @since 1.0.0
  */
 public final class ChatUserInvalidateEvent implements MistEvent {
 

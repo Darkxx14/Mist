@@ -14,6 +14,8 @@ import java.util.function.Consumer;
  * without notice.</p>
  *
  * @param <T> the event type
+ *
+ * @since 1.0.0
  */
 public interface EventSubscription<T extends MistEvent> extends AutoCloseable {
 

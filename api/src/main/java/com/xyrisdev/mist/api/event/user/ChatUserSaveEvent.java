@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>This event indicates that the user state has been successfully
  * written to the backing repository.</p>
+ *
+ * @since 1.0.0
  */
 public final class ChatUserSaveEvent implements MistEvent {
 

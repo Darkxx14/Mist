@@ -13,6 +13,8 @@ import java.util.UUID;
  * Simple data holder for user chat preferences and ignore list.
  *
  * <p>Used when saving/loading user data to/from storage.
+ *
+ * @since 1.0.0
  */
 public final class ChatUserData {
 

@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>This event provides access to both the state before and
  * after modification.</p>
+ *
+ * @since 1.0.0
  */
 public final class ChatUserModifyEvent implements MistEvent {
 

@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>This class is considered an internal implementation detail and is not
  * intended for direct use outside the Mist runtime.</p>
+ *
+ * @since 1.0.0
  */
 public class MistEventBusImpl implements MistEventBus {
 
