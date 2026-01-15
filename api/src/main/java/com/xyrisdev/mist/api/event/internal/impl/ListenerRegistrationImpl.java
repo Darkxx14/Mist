@@ -48,7 +48,7 @@ public final class ListenerRegistrationImpl<T extends MistEvent> implements List
     }
 
     @Override
-    public @NotNull EventSubscription<T> run(final Consumer<? super T> handler) {
+    public @NotNull EventSubscription<T> run(final Consumer<T> handler) {
         final RegisteredListener<T> listener = new RegisteredListener<>(
             this.eventClass,
             handler,

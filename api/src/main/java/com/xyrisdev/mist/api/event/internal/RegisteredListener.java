@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public class RegisteredListener<T extends MistEvent> implements EventSubscription<T> {
 
     private final Class<T> eventClass;
-    private final Consumer<? super T> handler;
+    private final Consumer<T> handler;
     private final EventPriority priority;
     private final boolean ignoreCancelled;
     private final EventRegistry<T> registry;
@@ -31,7 +31,7 @@ public class RegisteredListener<T extends MistEvent> implements EventSubscriptio
 
 	public RegisteredListener(
        @NotNull Class<T> eventClass,
-       @NotNull Consumer<? super T> handler,
+       @NotNull Consumer<T> handler,
        @NotNull EventPriority priority,
        boolean ignoreCancelled,
        @NotNull EventRegistry<T> registry
@@ -61,10 +61,10 @@ public class RegisteredListener<T extends MistEvent> implements EventSubscriptio
         return this.active.get();
     }
 
-    @Override
-    public Consumer<? super T> handler() {
-        return this.handler;
-    }
+	@Override
+	public Consumer<T> handler() {
+		return this.handler;
+	}
 
     @Override
     public void close() {

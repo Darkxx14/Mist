@@ -20,5 +20,5 @@ public interface ListenerRegistration<T extends MistEvent> {
 
     ListenerRegistration<T> ignoreCancelled();
 
-    EventSubscription<T> run(Consumer<? super T> handler);
+    EventSubscription<T> run(Consumer<T> handler);
 }
