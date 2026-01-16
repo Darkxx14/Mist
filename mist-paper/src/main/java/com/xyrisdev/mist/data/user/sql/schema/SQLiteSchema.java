@@ -12,8 +12,8 @@ public class SQLiteSchema {
 					1,
 					"mist_users",
 					List.of(
-							new SQLColumn("uuid", "uuid TEXT NOT NULL PRIMARY KEY"),
-							new SQLColumn("data", "data TEXT NOT NULL")
+							new SQLColumn("uuid", "TEXT NOT NULL PRIMARY KEY"),
+							new SQLColumn("data", "TEXT NOT NULL")
 					)
 			);
 }

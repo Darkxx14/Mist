@@ -12,8 +12,8 @@ public class H2Schema {
 					1,
 					"mist_users",
 					List.of(
-							new SQLColumn("uuid", "uuid VARCHAR(36) NOT NULL PRIMARY KEY"),
-							new SQLColumn("data", "data CLOB NOT NULL")
+							new SQLColumn("uuid", "VARCHAR(36) NOT NULL PRIMARY KEY"),
+							new SQLColumn("data", "CLOB NOT NULL")
 					)
 			);
 }
