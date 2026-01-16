@@ -30,6 +30,7 @@ repositories {
 
 dependencies {
     implementation(project(":mist-api"))
+    implementation(project(":mist-redis"))
     implementation(libs.xlibrary)
 
     annotationProcessor(libs.lombok)
@@ -47,6 +48,7 @@ dependencies {
     paperLibrary(libs.h2)
     paperLibrary(libs.mongodb.driver.sync)
     paperLibrary(libs.hikaricp)
+    paperLibrary(libs.lettuce)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -59,7 +61,6 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {
-    archiveBaseName.set("mist-$module")
     archiveVersion.set(buildVersion)
     archiveClassifier.set(commitShort)
 }

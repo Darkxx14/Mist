@@ -20,13 +20,13 @@ dependencies {
 
 tasks.named<Jar>("jar") {
     archiveFileName.set(
-        "mist-$module-$buildVersion-$commitShort.jar"
+        "$module-$buildVersion-$commitShort.jar"
     )
 }
 
 tasks.named<Jar>("javadocJar") {
     archiveFileName.set(
-        "mist-$module-$buildVersion-$commitShort-javadoc.jar"
+        "$module-$buildVersion-$commitShort-javadoc.jar"
     )
 }
 

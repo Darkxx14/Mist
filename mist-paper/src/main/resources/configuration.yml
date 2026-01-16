@@ -48,6 +48,11 @@ data:
     collections:
       users: "mist_users"
 
+redis:
+  enabled: false
+  uri: redis://localhost:6379
+  server-id: server-1
+
 # ───────────────────────────────────────────────────────
 # staff alerts
 # ───────────────────────────────────────────────────────

@@ -12,6 +12,9 @@ folia-lib = "0.5.1"
 h2 = "2.4.240"
 mongodb-driver-sync = "5.6.2"
 hikaricp = "7.0.2"
+lettuce = "7.2.1.RELEASE"
+gson = "2.13.2"
+jetbrains-annotations = "26.0.2"
 
 [libraries]
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
@@ -27,3 +30,6 @@ folia-lib = { module = "com.tcoded:FoliaLib", version.ref = "folia-lib" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodb-driver-sync" }
 hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
+lettuce = { module = "io.lettuce:lettuce-core", version.ref = "lettuce" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
