@@ -45,8 +45,8 @@ public class AsyncChatListener {
 							event.message(ctx.message());
 
 							final boolean hideIgnored = Mist.INSTANCE.config()
-												       .get(ConfigType.CONFIGURATION)
-												       .get("ignoring.hide_chat_messages", true);
+													   .get(ConfigType.CONFIGURATION)
+													   .get("ignoring.hide_chat_messages", true);
 
 							event.viewers().removeIf(audience -> {
 								if (!(audience instanceof Player viewer)) {
