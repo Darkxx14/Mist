@@ -3,6 +3,7 @@ package com.xyrisdev.mist;
 import com.google.gson.Gson;
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.PlatformScheduler;
+import com.xyrisdev.library.config.CachableConfiguration;
 import com.xyrisdev.library.lib.Library;
 import com.xyrisdev.mist.api.chat.processor.ChatProcessor;
 import com.xyrisdev.mist.command.internal.MistCommandManager;
@@ -104,11 +105,12 @@ public enum Mist {
 
 		MistCommandManager.of(this.plugin);
 
-		final var redisConfig = this.config.get(ConfigType.CONFIGURATION);
+		// todo: move ts to its own class
+		final CachableConfiguration redis = this.config.get(ConfigType.CONFIGURATION);
 
-		if (redisConfig.getBoolean("redis.enabled", false)) {
-			final String uri = redisConfig.getString("redis.uri");
-			final String serverId = redisConfig.getString("redis.server-id");
+		if (redis.getBoolean("redis.enabled", false)) {
+			final String uri = redis.getString("redis.uri");
+			final String serverId = redis.getString("redis.server-id");
 
 			this.redis = LettuceManager.of(uri);
 
