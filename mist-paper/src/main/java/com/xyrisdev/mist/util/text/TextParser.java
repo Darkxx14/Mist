@@ -47,7 +47,7 @@ public class TextParser {
 	}
 
 	// hacky way to preserve custom tags ):
-	private static @NotNull String legacy(final @NotNull String input) {
+	public static @NotNull String legacy(final @NotNull String input) {
 		String result = input;
 
 		result = result.replaceAll("&#([A-Fa-f0-9]{6})", "<#$1>");

@@ -58,5 +58,6 @@ formats:
       action: suggest command
       value: "/msg <papi:player_name> Hello..."
 
-# Used for migrations. DO NOT EDIT.
+# do not edit this value
+# used for automatic migration tracking
 config_version: 1

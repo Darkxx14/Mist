@@ -1,5 +1,6 @@
 package com.xyrisdev.mist.util.text.tags;
 
+import com.xyrisdev.mist.util.text.TextParser;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -23,15 +24,17 @@ public class PlaceholderAPITag implements Modifying {
 	}
 
 	public static @NotNull TagResolver create(@NotNull Audience audience) {
-		return TagResolver.resolver(Set.of("papi", "placeholderapi"), (argumentQueue, ctx) -> {
-			final String placeholder = argumentQueue.popOr("The papi tag must be a placeholder.").value();
+		return TagResolver.resolver(Set.of("papi", "placeholderapi"), (args, ctx) -> {
+			final String placeholder = args.popOr("The papi tag must be a placeholder.").value();
 
-			if (audience instanceof Player player) {
-				final String parsed = PlaceholderAPI.setPlaceholders(player, '%' + placeholder + '%');
-				return Tag.preProcessParsed(parsed);
+			if (!(audience instanceof Player player)) {
+				return Tag.preProcessParsed("");
 			}
 
-			return Tag.preProcessParsed("");
+			String parsed = PlaceholderAPI.setPlaceholders(player, '%' + placeholder + '%');
+			parsed = TextParser.legacy(parsed);
+
+			return Tag.preProcessParsed(parsed);
 		});
 	}
 }
