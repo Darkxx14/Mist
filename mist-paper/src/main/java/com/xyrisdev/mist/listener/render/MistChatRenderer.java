@@ -26,9 +26,16 @@ public class MistChatRenderer {
 				return message;
 			}
 
-			Component baseComp = TextParser.parse(player, entry.message())
-					.replaceText(b -> b.matchLiteral("<player>").replacement(displayName))
-					.replaceText(b -> b.matchLiteral("<message>").replacement(message));
+			final PlainTextComponentSerializer plain = PlainTextComponentSerializer.plainText();
+
+			final String name = plain.serialize(displayName);
+			final String msg = plain.serialize(message);
+
+			String raw = entry.message()
+					.replace("<player>", name)
+					.replace("<message>", msg);
+
+			Component baseComp = TextParser.parse(player, raw);
 
 			if (!entry.hoverText().isEmpty()) {
 				final List<Component> lines = new ArrayList<>(entry.hoverText().size());
