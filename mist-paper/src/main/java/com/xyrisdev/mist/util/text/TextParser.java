@@ -8,6 +8,7 @@ import lombok.experimental.UtilityClass;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -40,6 +41,12 @@ public class TextParser {
 				),
 				"MiniMessage returned null Component"
 		);
+	}
+
+	public static @NotNull Component parse(@NotNull Audience audience, @NotNull String input, @NotNull TagResolver resolver) {
+		final String message = containsLegacy(input) ? legacy(input) : input;
+
+		return mm.deserialize(message, TagResolver.resolver(tagRegistry.build(audience), resolver));
 	}
 
 	private static boolean containsLegacy(@NotNull String input) {

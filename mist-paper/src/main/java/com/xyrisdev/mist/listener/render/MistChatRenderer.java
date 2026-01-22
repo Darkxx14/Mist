@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,16 +27,13 @@ public class MistChatRenderer {
 				return message;
 			}
 
-			final PlainTextComponentSerializer plain = PlainTextComponentSerializer.plainText();
+			final String name = PlainTextComponentSerializer.plainText().serialize(displayName);
 
-			final String name = plain.serialize(displayName);
-			final String msg = plain.serialize(message);
-
-			String raw = entry.message()
-					.replace("<player>", name)
-					.replace("<message>", msg);
-
-			Component baseComp = TextParser.parse(player, raw);
+			Component result = TextParser.parse(
+					player,
+					entry.message().replace("<player>", name),
+					Placeholder.component("message", message)
+			);
 
 			if (!entry.hoverText().isEmpty()) {
 				final List<Component> lines = new ArrayList<>(entry.hoverText().size());
@@ -44,27 +42,26 @@ public class MistChatRenderer {
 					lines.add(TextParser.parse(player, line));
 				}
 
-				final Component hover = Component.join(
-						JoinConfiguration.separator(Component.newline()),
-						lines
+				result = result.hoverEvent(HoverEvent.showText(
+						Component.join(
+								JoinConfiguration.separator(Component.newline()),
+								lines
+						))
 				);
-
-				baseComp = baseComp.hoverEvent(HoverEvent.showText(hover));
 			}
 
 			if (entry.action() != null) {
-				final Component parsedComp = TextParser.parse(player, entry.action().value());
-				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComp);
+				final String value = PlainTextComponentSerializer.plainText().serialize(TextParser.parse(player, entry.action().value()));
 
-				baseComp = baseComp.clickEvent(
+				result = result.clickEvent(
 						ClickEvent.clickEvent(
 								entry.action().action(),
-								parsedValue
+								value
 						)
 				);
 			}
 
-			return baseComp;
+			return result;
 		};
 	}
 }

@@ -14,8 +14,8 @@
 inventory:
   enabled: true
   prefix:
-    - "[inv]"
-    - "[inventory]"
+    - "<inv>"
+    - "<inventory>"
   processor: "<m_light_blue><italic>[<papi:player_name>'s Inventory]</italic></m_light_blue>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s inventory"
@@ -23,8 +23,8 @@ inventory:
 item:
   enabled: true
   prefix:
-    - "[item]"
-    - "[hand]"
+    - "<item>"
+    - "<hand>"
   processor: "<m_light_green>[<item><reset><m_light_green>]</m_light_green>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s held item"
@@ -32,9 +32,9 @@ item:
 ender_chest:
   enabled: true
   prefix:
-    - "[enderchest]"
-    - "[ec]"
-    - "[ender]"
+    - "<enderchest>"
+    - "<ec>"
+    - "<ender>"
   processor: "<m_light_yellow><italic>[<papi:player_name>'s Ender Chest]</italic></m_light_yellow>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s ender chest"
@@ -42,8 +42,8 @@ ender_chest:
 shulker_box:
   enabled: true
   prefix:
-    - "[shulker]"
-    - "[shulkerbox]"
+    - "<shulker>"
+    - "<shulkerbox>"
   processor: "<m_light_purple><italic>[<papi:player_name>'s Shulker]</italic></m_light_purple>"
   hover_text:
     - "<gray>Click to view <papi:player_name>'s shulker box"
@@ -51,8 +51,8 @@ shulker_box:
 command:
   enabled: true
   prefix:
-    - "[cmd:$cmd]"
-    - "[command:$cmd]"
+    - "<cmd:$cmd>"
+    - "<command:$cmd>"
   processor: "<m_blue>[<full_cmd>]</m_blue>"
   hover_text:
     - "<gray>Click to execute command"

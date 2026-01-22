@@ -30,6 +30,7 @@ flood:
 caps:
   enabled: true
   type: ratio
+  min_length: 2
   max_caps: 5
   ratio: 0.8
 

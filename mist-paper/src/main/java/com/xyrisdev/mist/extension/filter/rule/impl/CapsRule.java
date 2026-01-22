@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class CapsRule implements FilterRule {
 
 	private CapsRuleType type = CapsRuleType.RATIO;
+	private int minLength;
 	private int maxCaps;
 	private double ratio;
 
@@ -31,6 +32,7 @@ public class CapsRule implements FilterRule {
 	@Override
 	public void load(@NotNull ConfigurationSection section) {
 		this.type = CapsRuleType.valueOf(section.getString("type", "RATIO").toUpperCase());
+		this.minLength = section.getInt("min_length", 2);
 		this.maxCaps = section.getInt("max_caps", 5);
 		this.ratio = section.getDouble("ratio", 0.7);
 	}
@@ -38,6 +40,11 @@ public class CapsRule implements FilterRule {
 	@Override
 	public @NotNull FilterResult process(@NotNull ChatContext ctx) {
 		final String msg = ctx.plain();
+
+		if (msg.length() <= this.minLength) {
+			return FilterResult.pass();
+		}
+
 		int caps = 0;
 
 		for (char c : msg.toCharArray()) {
