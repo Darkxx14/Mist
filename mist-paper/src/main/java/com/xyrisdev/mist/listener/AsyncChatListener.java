@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
+// todo: publish the rendered message to the messaging adapter
 public final class AsyncChatListener {
 
 	public static @NotNull EventHandler<AsyncChatEvent> listener() {
