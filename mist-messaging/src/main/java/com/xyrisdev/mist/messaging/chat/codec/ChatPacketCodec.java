@@ -20,7 +20,7 @@ public final class ChatPacketCodec {
 		try {
 			return ChatPacket.parseFrom(payload);
 		} catch (Exception e) {
-			throw new IllegalStateException("Failed to decode ChatEnvelope", e);
+			throw new IllegalStateException("Failed to decode ChatPacket", e);
 		}
 	}
 }
