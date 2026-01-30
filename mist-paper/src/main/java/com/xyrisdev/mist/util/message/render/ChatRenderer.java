@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
-public class ChatRenderer {
+public final class ChatRenderer {
 
 	public static void render(
 			@NotNull Audience audience, @Nullable Player player,

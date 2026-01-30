@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-public class MistMessage {
+public final class MistMessage {
 
 	@Contract("_ -> new")
 	public static @NotNull MistMessageBuilder create(@NotNull CommandSender sender) {

@@ -4,7 +4,7 @@ import com.tcoded.folialib.wrapper.task.WrappedTask;
 import com.xyrisdev.mist.Mist;
 import org.jetbrains.annotations.NotNull;
 
-public class AnnouncementScheduler {
+public final class AnnouncementScheduler {
 
 	private WrappedTask task;
 

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Duration;
 
 @UtilityClass
-public class TitleRenderer {
+public final class TitleRenderer {
 
 	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext ctx) {
 		if (section == null) {

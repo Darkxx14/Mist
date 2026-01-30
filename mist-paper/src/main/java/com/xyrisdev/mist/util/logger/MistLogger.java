@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 @UtilityClass
-public class MistLogger {
+public final class MistLogger {
 
 	private static final String PREFIX = "<gradient:#E03261:#811937><bold>Mist</bold></gradient> <dark_gray>·</dark_gray> ";
 	private static final String GRADIENT = "<gradient:#E03261:#811937><bold>";

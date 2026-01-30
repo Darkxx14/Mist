@@ -17,16 +17,16 @@ extensions:
   chat_filter:
     priority: 0
 
-  chat_replacement:
+  chat_format:
     priority: 1
 
-  chat_mentions:
+  chat_replacement:
     priority: 2
 
-  render:
+  chat_mentions:
     priority: 3
 
-  chat_format:
+  render:
     priority: 4
 
 # do not edit this value

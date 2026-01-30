@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class PlayerJoinListener {
+public final class PlayerJoinListener {
 
 	public static @NotNull EventHandler<PlayerJoinEvent> listener() {
 		return EventBuilder.event(PlayerJoinEvent.class)

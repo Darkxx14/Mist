@@ -4,6 +4,7 @@ import com.xyrisdev.mist.util.message.MistMessage;
 import com.xyrisdev.mist.util.regex.RegexGenerator;
 import com.xyrisdev.mist.util.regex.RegexHealthAnalyzer;
 import net.kyori.adventure.text.event.ClickEvent;
+import org.incendo.cloud.annotation.specifier.Greedy;
 import org.incendo.cloud.annotations.Command;
 import org.incendo.cloud.annotations.Permission;
 import org.incendo.cloud.paper.util.sender.Source;
@@ -30,7 +31,7 @@ public class RegexCommand {
 
 	@Command("mist regex analyze <regex>")
 	@Permission("mist.command.regex")
-	public void analyze(Source sender, String regex) {
+	public void analyze(Source sender, @Greedy String regex) {
 		final RegexHealthAnalyzer.Result r = RegexHealthAnalyzer.analyze(regex);
 
 		MistMessage.create(sender.source())

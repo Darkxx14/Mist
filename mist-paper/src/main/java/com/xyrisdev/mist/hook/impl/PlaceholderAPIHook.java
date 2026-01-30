@@ -84,8 +84,8 @@ public class PlaceholderAPIHook extends PlaceholderExpansion {
 	// internal utils
 	private @NotNull String bool(@NotNull String placeholder, boolean value) {
 		final ConfigurationSection section = Mist.INSTANCE.config()
-											.get(ConfigType.PLACEHOLDERS)
-											.getSection("placeholders");
+				.get(ConfigType.PLACEHOLDERS)
+				.getSection("placeholders");
 
 		if (section == null) {
 			return value ? ENABLED : DISABLED;

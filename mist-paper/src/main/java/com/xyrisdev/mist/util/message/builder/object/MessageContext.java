@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class MessageContext {
+public final class MessageContext {
 
 	private static final Pattern pattern = Pattern.compile("<(\\w+)>");
 

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SmallCapsTag implements Modifying {
+public final class SmallCapsTag implements Modifying {
 
 	private final Map<Character, Character> map;
 	private final TextReplacementConfig replacement;

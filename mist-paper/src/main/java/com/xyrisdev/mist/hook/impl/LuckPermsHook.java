@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LuckPermsHook {
+public final class LuckPermsHook {
 
 	private static @Nullable LuckPerms api;
 

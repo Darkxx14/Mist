@@ -8,13 +8,14 @@ import lombok.experimental.UtilityClass;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Objects;
 
 @UtilityClass
-public class TextParser {
+public final class TextParser {
 
 	private static final TagRegistry tagRegistry = new TagRegistry();
 	private static final MiniMessage mm = MiniMessage.miniMessage();
@@ -42,12 +43,18 @@ public class TextParser {
 		);
 	}
 
+	public static @NotNull Component parse(@NotNull Audience audience, @NotNull String input, @NotNull TagResolver resolver) {
+		final String message = containsLegacy(input) ? legacy(input) : input;
+
+		return mm.deserialize(message, TagResolver.resolver(tagRegistry.build(audience), resolver));
+	}
+
 	private static boolean containsLegacy(@NotNull String input) {
 		return input.indexOf('&') != -1 || input.indexOf('§') != -1;
 	}
 
 	// hacky way to preserve custom tags ):
-	private static @NotNull String legacy(final @NotNull String input) {
+	public static @NotNull String legacy(final @NotNull String input) {
 		String result = input;
 
 		result = result.replaceAll("&#([A-Fa-f0-9]{6})", "<#$1>");

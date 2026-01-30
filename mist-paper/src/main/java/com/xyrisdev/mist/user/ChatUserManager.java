@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
-public class ChatUserManager {
+public final class ChatUserManager {
 
 	private final ChatUserRepository repository;
 
@@ -36,7 +36,7 @@ public class ChatUserManager {
 				.build();
 	}
 
-	public CompletableFuture<ChatUser> load(@NotNull UUID id) {
+	public @NotNull CompletableFuture<ChatUser> load(@NotNull UUID id) {
 		final ChatUser cached = this.cache.getIfPresent(id);
 
 		if (cached != null) {

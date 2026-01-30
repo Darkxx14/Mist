@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 @UtilityClass
-public class RegexGenerator {
+public final class RegexGenerator {
 
 	private static Map<Character, String> reverseLeet = Map.of();
 

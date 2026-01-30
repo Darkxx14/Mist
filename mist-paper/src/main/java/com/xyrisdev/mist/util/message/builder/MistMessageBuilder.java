@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class MistMessageBuilder {
+public final class MistMessageBuilder {
 
 	private final Audience audience;
 	private final Player player;

@@ -9,13 +9,14 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MistChatRenderer {
+public final class MistChatRenderer {
 
 	@SuppressWarnings("deprecation")
 	public static @NotNull ChatRenderer render(@NotNull ChatContext ctx) {
@@ -26,9 +27,13 @@ public class MistChatRenderer {
 				return message;
 			}
 
-			Component baseComp = TextParser.parse(player, entry.message())
-					.replaceText(b -> b.matchLiteral("<player>").replacement(displayName))
-					.replaceText(b -> b.matchLiteral("<message>").replacement(message));
+			final String name = PlainTextComponentSerializer.plainText().serialize(displayName);
+
+			Component result = TextParser.parse(
+					player,
+					entry.message().replace("<player>", name),
+					Placeholder.component("message", message)
+			);
 
 			if (!entry.hoverText().isEmpty()) {
 				final List<Component> lines = new ArrayList<>(entry.hoverText().size());
@@ -37,27 +42,26 @@ public class MistChatRenderer {
 					lines.add(TextParser.parse(player, line));
 				}
 
-				final Component hover = Component.join(
-						JoinConfiguration.separator(Component.newline()),
-						lines
+				result = result.hoverEvent(HoverEvent.showText(
+						Component.join(
+								JoinConfiguration.separator(Component.newline()),
+								lines
+						))
 				);
-
-				baseComp = baseComp.hoverEvent(HoverEvent.showText(hover));
 			}
 
 			if (entry.action() != null) {
-				final Component parsedComp = TextParser.parse(player, entry.action().value());
-				final String parsedValue = PlainTextComponentSerializer.plainText().serialize(parsedComp);
+				final String value = PlainTextComponentSerializer.plainText().serialize(TextParser.parse(player, entry.action().value()));
 
-				baseComp = baseComp.clickEvent(
+				result = result.clickEvent(
 						ClickEvent.clickEvent(
 								entry.action().action(),
-								parsedValue
+								value
 						)
 				);
 			}
 
-			return baseComp;
+			return result;
 		};
 	}
 }
