@@ -30,7 +30,11 @@ repositories {
 
 dependencies {
     implementation(project(":mist-api"))
+    implementation(project(":mist-messaging"))
+
     implementation(project(":adapter:redis"))
+    implementation(project(":adapter:nats"))
+
     implementation(libs.xlibrary)
 
     annotationProcessor(libs.lombok)
@@ -49,6 +53,7 @@ dependencies {
     paperLibrary(libs.mongodb.driver.sync)
     paperLibrary(libs.hikaricp)
     paperLibrary(libs.lettuce)
+    paperLibrary(libs.jnats)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -68,6 +73,7 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 tasks.shadowJar {
     archiveClassifier.set(commitShort)
     relocate("com.xyrisdev.library", "com.xyrisdev.mist.library")
+    relocate("com.google.protobuf.", "com.xyrisdev.mist.library.protobuf")
 }
 
 tasks.jar {

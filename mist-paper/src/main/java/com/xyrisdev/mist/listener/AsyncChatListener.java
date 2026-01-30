@@ -11,11 +11,12 @@ import com.xyrisdev.mist.config.ConfigType;
 import com.xyrisdev.mist.listener.render.MistChatRenderer;
 import com.xyrisdev.mist.util.message.MistMessage;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
-// todo: publish the rendered message to the messaging adapter
 public final class AsyncChatListener {
 
 	public static @NotNull EventHandler<AsyncChatEvent> listener() {
@@ -61,7 +62,21 @@ public final class AsyncChatListener {
 										|| (hideIgnored && user.ignore().contains(sender.getUniqueId()));
 							});
 
-							event.renderer(MistChatRenderer.render(ctx));
+							event.renderer(MistChatRenderer.renderer(ctx));
+
+							final Component rendered = MistChatRenderer.render(
+									ctx,
+									sender,
+									sender.displayName(),
+									event.message()
+							);
+
+							Mist.INSTANCE.sync().publish(
+									Mist.INSTANCE.config().get(ConfigType.CONFIGURATION).getString("chat_synchronization.server_id", "server1"),
+									sender.getUniqueId(),
+									GsonComponentSerializer.gson().serialize(rendered)
+							);
+
 						}
 				)
 				.build().priority(EventPriority.LOWEST);

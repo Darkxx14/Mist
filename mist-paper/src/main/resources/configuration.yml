@@ -66,7 +66,7 @@ chat_synchronization:
 
   # unique identifier for this server
   # used to prevent message echo between servers
-  server_id: lobby
+  server_id: server1
 
   # messaging adapter to use
   # options: redis | nats

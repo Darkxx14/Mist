@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-library`
 }
 
 val branch = BuildInformation.branch()
@@ -15,7 +15,7 @@ java {
 
 dependencies {
     compileOnly(project(":mist-api"))
-    compileOnly(libs.protobuf)
+    api(libs.protobuf)
     compileOnly(libs.jetbrains.annotations)
 }
 
