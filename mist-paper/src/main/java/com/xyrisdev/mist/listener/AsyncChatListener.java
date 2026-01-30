@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
+// todo mentions and inventory rendering support
 public final class AsyncChatListener {
 
 	public static @NotNull EventHandler<AsyncChatEvent> listener() {
