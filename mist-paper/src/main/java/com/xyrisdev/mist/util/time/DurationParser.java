@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.util.Locale;
 
 @UtilityClass
-public class DurationParser {
+public final class DurationParser {
 
 	private static final Duration DEFAULT = Duration.ofMinutes(5);
 	private static final long TICKS_PER_SECOND = 20L;

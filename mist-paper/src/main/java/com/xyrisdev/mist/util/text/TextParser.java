@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.util.Objects;
 
 @UtilityClass
-public class TextParser {
+public final class TextParser {
 
 	private static final TagRegistry tagRegistry = new TagRegistry();
 	private static final MiniMessage mm = MiniMessage.miniMessage();

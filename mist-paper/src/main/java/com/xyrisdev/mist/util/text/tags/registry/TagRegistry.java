@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-public class TagRegistry {
+public final class TagRegistry {
 
 	private final Map<Set<String>, Function<Audience, ? extends Tag>> tags = new LinkedHashMap<>();
 	private final Set<Function<Audience, TagResolver>> resolvers = new LinkedHashSet<>();

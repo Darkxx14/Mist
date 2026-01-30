@@ -9,7 +9,7 @@ import java.util.logging.Filter;
 import java.util.logging.Logger;
 
 @UtilityClass
-public class FoliaLibSuppressor {
+public final class FoliaLibSuppressor {
 
     public static <T> T suppress(@NotNull JavaPlugin plugin, @NotNull Supplier<T> action) {
         final Logger logger = plugin.getLogger();
@@ -22,12 +22,10 @@ public class FoliaLibSuppressor {
                 return true;
             }
 
-            return !(
-                    msg.contains("FoliaLib is not relocated correctly")
+            return !(msg.contains("FoliaLib is not relocated correctly")
                     || msg.contains("with other plugins using FoliaLib")
                     || msg.contains("inform them of this issue immediately")
-                    || msg.equals("****************************************************************")
-            );
+                    || msg.equals("****************************************************************"));
         });
 
         try {

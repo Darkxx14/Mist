@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MistChatRenderer {
+public final class MistChatRenderer {
 
 	@SuppressWarnings("deprecation")
 	public static @NotNull ChatRenderer render(@NotNull ChatContext ctx) {

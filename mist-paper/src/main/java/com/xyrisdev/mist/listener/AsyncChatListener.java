@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
-public class AsyncChatListener {
+public final class AsyncChatListener {
 
 	public static @NotNull EventHandler<AsyncChatEvent> listener() {
 		return EventBuilder.event(AsyncChatEvent.class)
@@ -24,6 +24,7 @@ public class AsyncChatListener {
 
 							if (ChatCommand.getLocked() && !sender.hasPermission("mist.chat.bypass")) {
 								event.setCancelled(true);
+
 								MistMessage.create(sender)
 										.id("chat_locked_blocked")
 										.send();

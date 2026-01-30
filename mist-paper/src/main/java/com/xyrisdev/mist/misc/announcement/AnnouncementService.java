@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public class AnnouncementService {
+public final class AnnouncementService {
 
 	private final AnnouncementScheduler scheduler;
 	private AnnouncementConfiguration config;

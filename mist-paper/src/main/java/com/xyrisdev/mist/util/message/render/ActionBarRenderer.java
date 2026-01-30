@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @UtilityClass
-public class ActionBarRenderer {
+public final class ActionBarRenderer {
 
 	public static void render(@NotNull Player player, @Nullable ConfigurationSection section, @NotNull MessageContext ctx) {
 		if (section == null) {

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class PlayerQuitListener {
+public final class PlayerQuitListener {
 
 	public static @NotNull EventHandler<PlayerQuitEvent> listener() {
 		return EventBuilder.event(PlayerQuitEvent.class)

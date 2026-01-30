@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 @UtilityClass
-public class ConfigurableCommand {
+public final class ConfigurableCommand {
 
 	public static void register(@NotNull String key, boolean onlyP, @NotNull UnaryOperator<Command.Builder<Source>> operator) {
 		final PaperCommandManager<Source> manager = MistCommandManager.manager();

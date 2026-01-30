@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @UtilityClass
-public class LeetMap {
+public final class LeetMap {
 
 	private static Map<Character, Character> map = Map.of();
 

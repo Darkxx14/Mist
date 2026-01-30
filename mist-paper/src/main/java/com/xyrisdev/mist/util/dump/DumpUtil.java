@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 @UtilityClass
-public class DumpUtil {
+public final class DumpUtil {
 
 	private static final long MAX_CONFIG_SIZE = 512L * 1024L;
 

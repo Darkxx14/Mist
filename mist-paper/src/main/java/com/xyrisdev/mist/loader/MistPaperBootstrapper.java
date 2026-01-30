@@ -5,7 +5,7 @@ import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings({"UnstableApiUsage", "unused"})
-public class MistPaperBootstrapper implements PluginBootstrap {
+public final class MistPaperBootstrapper implements PluginBootstrap {
 
 	@Override
 	public void bootstrap(@NotNull BootstrapContext ctx) {

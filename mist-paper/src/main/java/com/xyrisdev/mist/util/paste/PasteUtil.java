@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 @UtilityClass
-public class PasteUtil {
+public final class PasteUtil {
 
 	private static final URI API_ENDPOINT = URI.create("https://api.pastes.dev/post");
 	private static final String VIEW_BASE = "https://pastes.dev/";

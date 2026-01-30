@@ -8,7 +8,7 @@ import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 @UtilityClass
-public class Items {
+public final class Items {
 
 	public static ItemBuilder of(Material material) {
 		return new ItemBuilder(new ItemStack(material));

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("all")
 @UtilityClass
-public class SoundEffect {
+public final class SoundEffect {
 
 	public static void play(@NotNull Player player, @NotNull ConfigurationSection section) {
 		final String key = section.getString("key");

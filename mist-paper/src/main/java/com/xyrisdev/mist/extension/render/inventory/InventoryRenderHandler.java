@@ -6,16 +6,15 @@ import com.xyrisdev.mist.extension.render.common.RenderHandler;
 import com.xyrisdev.mist.extension.render.config.RenderConfiguration;
 import com.xyrisdev.mist.extension.render.inventory.impl.object.InventoryRenderRequest;
 import com.xyrisdev.mist.extension.render.inventory.impl.object.InventoryRenderType;
+import com.xyrisdev.mist.util.inventory.ShulkerUtil;
 import com.xyrisdev.mist.util.text.TextParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.atteo.evo.inflector.English;
-import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -125,31 +124,12 @@ public record InventoryRenderHandler(@NotNull RenderConfiguration config) implem
 				final ItemStack hand = player.getInventory().getItemInMainHand();
 
 				if (hand.getType().name().contains("SHULKER_BOX")) {
-					yield shulkerContents(hand);
+					yield ShulkerUtil.contents(hand);
 				}
 
 				yield List.of();
 			}
 		};
-	}
-
-	private @NotNull List<ItemStack> shulkerContents(@NotNull ItemStack shulker) {
-		if (!(shulker.getItemMeta() instanceof BlockStateMeta meta)) {
-			return List.of();
-		}
-
-		if (!(meta.getBlockState() instanceof ShulkerBox box)) {
-			return List.of();
-		}
-
-		final ItemStack[] contents = box.getInventory().getContents();
-		final List<ItemStack> items = new ArrayList<>(contents.length);
-
-		for (ItemStack item : contents) {
-			items.add(item != null ? item.clone() : null);
-		}
-
-		return items;
 	}
 
 	private @NotNull Component displayComponent(
@@ -168,8 +148,7 @@ public record InventoryRenderHandler(@NotNull RenderConfiguration config) implem
 			if (item != null && !item.getType().isAir()) {
 				final int amount = item.getAmount();
 
-				final Component itemName =
-						item.hasItemMeta() && item.getItemMeta().hasDisplayName()
+				final Component itemName = item.hasItemMeta() && item.getItemMeta().hasDisplayName()
 								? item.getItemMeta().displayName()
 								: Component.text(
 								English.plural(

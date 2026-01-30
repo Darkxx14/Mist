@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Getter
 @RequiredArgsConstructor
 @Accessors(fluent = true)
-public class AnnouncementConfiguration {
+public final class AnnouncementConfiguration {
 
 	private final boolean enabled;
 	private final AnnouncementType type;
