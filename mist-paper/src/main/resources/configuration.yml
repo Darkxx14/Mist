@@ -48,10 +48,37 @@ data:
     collections:
       users: "mist_users"
 
-redis:
+# ───────────────────────────────────────────────────────
+# chat synchronization
+# ───────────────────────────────────────────────────────
+#
+# controls cross-server chat syncing.
+# messages are serialized once and broadcast to other servers
+# using the selected messaging adapter.
+#
+# Supported adapters:
+# - redis   (simple pub/sub, easy to set up)
+# - nats    (low-latency, real-time, recommended for scale)
+#
+chat_synchronization:
+  # if false, chat synchronization is disabled
   enabled: false
-  uri: redis://localhost:6379
-  server-id: server-1
+
+  # unique identifier for this server
+  # used to prevent message echo between servers
+  server_id: lobby
+
+  # messaging adapter to use
+  # options: redis | nats
+  adapter: redis
+
+  # nats configuration (used when adapter = nats)
+  nats:
+    uri: "nats://localhost:4222"
+
+  # redis configuration (used when adapter = redis)
+  redis:
+    uri: "redis://localhost:6379"
 
 # ───────────────────────────────────────────────────────
 # staff alerts
