@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package mist.chat.v1;
+
+option java_package = "com.xyrisdev.mist.messaging.chat.packet";
+option java_multiple_files = true;
+
+message ChatPacket {
+    string server_id = 1;
+    string sender_id = 2;
+    string message_json = 3;
+}

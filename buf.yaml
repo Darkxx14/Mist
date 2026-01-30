@@ -1,0 +1,4 @@
+version: v2
+
+modules:
+  - path: mist-messaging/src/main/proto

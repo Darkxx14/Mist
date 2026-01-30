@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     implementation(project(":mist-api"))
-    implementation(project(":mist-redis"))
+    implementation(project(":adapter:redis"))
     implementation(libs.xlibrary)
 
     annotationProcessor(libs.lombok)

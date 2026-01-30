@@ -18,12 +18,8 @@ import com.xyrisdev.mist.listener.AsyncChatListener;
 import com.xyrisdev.mist.listener.PlayerJoinListener;
 import com.xyrisdev.mist.listener.PlayerQuitListener;
 import com.xyrisdev.mist.misc.announcement.AnnouncementService;
-import com.xyrisdev.mist.redis.LettuceManager;
-import com.xyrisdev.mist.redis.channel.impl.RedisChatChannel;
-import com.xyrisdev.mist.redis.codec.GsonCodec;
 import com.xyrisdev.mist.redis.packet.ChatPacket;
 import com.xyrisdev.mist.user.ChatUserManager;
-import com.xyrisdev.mist.util.gson.MistGson;
 import com.xyrisdev.mist.util.logger.MistLogger;
 import com.xyrisdev.mist.util.logger.suppress.FoliaLibSuppressor;
 import com.xyrisdev.mist.util.matcher.LeetMap;
@@ -52,11 +48,6 @@ public enum Mist {
 	private ChatUserManager userManager;
 	private ChatProcessor chatProcessor;
 	private AnnouncementService announcements;
-
-	// redis stuff
-	private LettuceManager redis;
-	private RedisChatChannel chatChannel;
-	private GsonCodec<ChatPacket> chatCodec;
 
 	public static void load(@NotNull MistPlugin plugin) {
 		INSTANCE.plugin = plugin;
@@ -104,31 +95,6 @@ public enum Mist {
 		PlayerQuitListener.listener().register();
 
 		MistCommandManager.of(this.plugin);
-
-		// todo: move ts to its own class
-		final CachableConfiguration redis = this.config.get(ConfigType.CONFIGURATION);
-
-		if (redis.getBoolean("redis.enabled", false)) {
-			final String uri = redis.getString("redis.uri");
-			final String serverId = redis.getString("redis.server-id");
-
-			this.redis = LettuceManager.of(uri);
-
-			this.chatChannel = new RedisChatChannel(
-					serverId,
-					uuid -> this.userManager.get(uuid)
-			);
-
-			this.chatCodec = new GsonCodec<>(
-					new Gson(),
-					ChatPacket.class
-			);
-
-			this.redis.register(this.chatChannel, this.chatCodec);
-
-			MistLogger.info("Redis chat sync enabled (server-id: " + serverId + ")");
-		}
-
 	}
 
 	public void shutdown() {
@@ -147,10 +113,6 @@ public enum Mist {
 
 		if (this.scheduler != null) {
 			this.scheduler.cancelAllTasks();
-		}
-
-		if (this.redis != null) {
-			this.redis.close();
 		}
 
 		MistExecutors.shutdown();
