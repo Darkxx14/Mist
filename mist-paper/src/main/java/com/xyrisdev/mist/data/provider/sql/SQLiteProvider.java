@@ -9,6 +9,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class SQLiteProvider extends SQLProvider {
@@ -22,6 +24,12 @@ public class SQLiteProvider extends SQLProvider {
 
 	@Override
 	public void connect() {
+		try {
+			Files.createDirectories(file.getParent());
+		} catch (IOException ex) {
+			throw new IllegalStateException("failed to create SQLite data directory: " + file.getParent(), ex);
+		}
+
 		final HikariConfig config = new HikariConfig();
 
 		config.setJdbcUrl("jdbc:sqlite:" + file.toAbsolutePath());

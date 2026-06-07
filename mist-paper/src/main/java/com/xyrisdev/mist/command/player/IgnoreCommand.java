@@ -2,6 +2,7 @@ package com.xyrisdev.mist.command.player;
 
 import com.xyrisdev.mist.Mist;
 import com.xyrisdev.mist.api.chat.user.ChatUser;
+import com.xyrisdev.mist.hook.impl.EssentialsHook;
 import com.xyrisdev.mist.user.ChatUserManager;
 import com.xyrisdev.mist.util.command.ConfigurableCommand;
 import com.xyrisdev.mist.util.message.MistMessage;
@@ -62,21 +63,27 @@ public class IgnoreCommand {
 		}
 
 		users.modify(sender.source(), user -> {
-			if (user.ignore().contains(targetId)) {
+			final boolean ignored = user.ignore().contains(targetId);
+
+			if (ignored) {
 				user.ignore().remove(targetId);
+				EssentialsHook.ignore(senderId, targetId, false);
 
 				MistMessage.create(sender.source())
 						.id("ignore_removed")
 						.placeholder("player", target.getName())
 						.send();
-			} else {
-				user.ignore().add(targetId);
 
-				MistMessage.create(sender.source())
-						.id("ignore_added")
-						.placeholder("player", target.getName())
-						.send();
+				return;
 			}
+
+			user.ignore().add(targetId);
+			EssentialsHook.ignore(senderId, targetId, true);
+
+			MistMessage.create(sender.source())
+					.id("ignore_added")
+					.placeholder("player", target.getName())
+					.send();
 		});
 	}
 

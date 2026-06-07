@@ -321,6 +321,30 @@ messages:
     chat:
       text: "<prefix> <m_gray>Announcements have been <color:#E03261><state></color>.</m_gray>"
 
+  ignore_never_joined:
+    enabled: true
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>That player has never joined the server.</m_gray>"
+
+  ignore_self:
+    enabled: true
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>You cannot ignore yourself.</m_gray>"
+
+  ignore_added:
+    enabled: true
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>You are now ignoring <color:#E03261><player></color><m_gray>.</m_gray>"
+
+  ignore_removed:
+    enabled: true
+    type: chat
+    chat:
+      text: "<prefix> <m_gray>You are no longer ignoring <color:#E03261><player></color><m_gray>.</m_gray>"
+
 # do not edit this value
 # used for automatic migration tracking
 config_version: 1

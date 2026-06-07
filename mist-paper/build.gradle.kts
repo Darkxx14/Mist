@@ -26,6 +26,7 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.xyrisdev.com/repository/maven-public/")
     maven("https://repo.tcoded.com/releases")
+    maven("https://repo.essentialsx.net/releases/")
 }
 
 dependencies {
@@ -38,6 +39,7 @@ dependencies {
     compileOnly(libs.paper.api)
     compileOnly(libs.placeholder.api)
     compileOnly(libs.luckperms)
+    compileOnly(libs.essentialsx)
 
     paperLibrary(libs.caffeine)
     paperLibrary(libs.evo.inflector)
@@ -150,6 +152,10 @@ paper {
         register("LuckPerms") {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             required = true
+        }
+        register("EssentialsX") {
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
+            required = false
         }
     }
 

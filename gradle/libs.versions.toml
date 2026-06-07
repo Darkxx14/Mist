@@ -12,6 +12,7 @@ folia-lib = "0.5.1"
 h2 = "2.4.240"
 mongodb-driver-sync = "5.6.2"
 hikaricp = "7.0.2"
+essentialsx = "2.21.0"
 
 [libraries]
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
@@ -27,3 +28,4 @@ folia-lib = { module = "com.tcoded:FoliaLib", version.ref = "folia-lib" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
 mongodb-driver-sync = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodb-driver-sync" }
 hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
+essentialsx = { module = "net.essentialsx:EssentialsX", version.ref = "essentialsx" }

@@ -10,6 +10,7 @@ import com.xyrisdev.mist.config.registry.ConfigRegistry;
 import com.xyrisdev.mist.data.DatabaseProvider;
 import com.xyrisdev.mist.data.DatabaseProviders;
 import com.xyrisdev.mist.extension.ExtensionManager;
+import com.xyrisdev.mist.hook.impl.EssentialsHook;
 import com.xyrisdev.mist.hook.impl.LuckPermsHook;
 import com.xyrisdev.mist.hook.impl.PlaceholderAPIHook;
 import com.xyrisdev.mist.listener.AsyncChatListener;
@@ -83,6 +84,7 @@ public enum Mist {
 
 		LuckPermsHook.hook().register();
 		PlaceholderAPIHook.hook().register();
+		EssentialsHook.hook().register();
 
 		this.announcements = new AnnouncementService();
 		this.announcements.start();
