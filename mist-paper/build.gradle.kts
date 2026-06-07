@@ -39,7 +39,10 @@ dependencies {
     compileOnly(libs.paper.api)
     compileOnly(libs.placeholder.api)
     compileOnly(libs.luckperms)
-    compileOnly(libs.essentialsx)
+
+    compileOnly(libs.essentialsx) {
+        exclude(group = "org.spigotmc", module = "spigot-api")
+    }
 
     paperLibrary(libs.caffeine)
     paperLibrary(libs.evo.inflector)
