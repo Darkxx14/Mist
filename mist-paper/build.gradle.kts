@@ -156,7 +156,7 @@ paper {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             required = true
         }
-        register("EssentialsX") {
+        register("Essentials") {
             load = PaperPluginDescription.RelativeLoadOrder.BEFORE
             required = false
         }
