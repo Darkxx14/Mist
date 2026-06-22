@@ -9,11 +9,11 @@ import com.xyrisdev.mist.util.message.MistMessage;
 import com.xyrisdev.mist.util.thread.MistExecutors;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.incendo.cloud.bukkit.parser.OfflinePlayerParser;
 import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.context.CommandInput;
 import org.incendo.cloud.paper.util.sender.PlayerSource;
 import org.incendo.cloud.paper.util.sender.Source;
+import org.incendo.cloud.parser.standard.StringParser;
 import org.incendo.cloud.suggestion.Suggestion;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,8 +28,7 @@ public class IgnoreCommand {
 				true,
 				builder -> builder
 						.argument(
-								OfflinePlayerParser
-										.offlinePlayerComponent()
+								StringParser.stringComponent(StringParser.StringMode.GREEDY)
 										.name("target")
 										.suggestionProvider(IgnoreCommand::suggestions)
 						)
@@ -44,7 +43,8 @@ public class IgnoreCommand {
 
 		final ChatUserManager users = Mist.INSTANCE.userManager();
 
-		final OfflinePlayer target = ctx.get("target");
+		final String targetName = ctx.get("target");
+		final OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
 
 		if (!target.hasPlayedBefore()) {
 			MistMessage.create(sender.source())
