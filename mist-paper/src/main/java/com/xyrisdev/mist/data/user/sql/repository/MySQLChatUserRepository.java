@@ -20,7 +20,7 @@ public record MySQLChatUserRepository(
 	public @NotNull ChatUser load(@NotNull UUID id) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-				     "SELECT data FROM " + table + " WHERE id = ?"
+			     "SELECT data FROM " + table + " WHERE uuid = ?"
 		     )) {
 
 			ps.setString(1, id.toString());
@@ -44,11 +44,11 @@ public record MySQLChatUserRepository(
 	public void save(@NotNull ChatUser user) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-				     """
-						     INSERT INTO %s (uuid, data)
-						     VALUES (?, ?)
-						     ON DUPLICATE KEY UPDATE data = VALUES(data)
-						     """.formatted(table)
+			     """
+			     INSERT INTO %s (uuid, data)
+			     VALUES (?, ?)
+			     ON DUPLICATE KEY UPDATE data = VALUES(data)
+			     """.formatted(table)
 		     )) {
 
 			ps.setString(1, user.id().toString());
@@ -64,7 +64,7 @@ public record MySQLChatUserRepository(
 	public void delete(@NotNull UUID id) {
 		try (Connection conn = dataSource.getConnection();
 		     final PreparedStatement ps = conn.prepareStatement(
-				     "DELETE FROM " + table + " WHERE uuid = ?"
+			     "DELETE FROM " + table + " WHERE uuid = ?"
 		     )) {
 
 			ps.setString(1, id.toString());
