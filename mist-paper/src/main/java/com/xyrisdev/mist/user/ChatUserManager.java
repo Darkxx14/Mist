@@ -117,24 +117,30 @@ public final class ChatUserManager {
 		}
 
 		MistExecutors.io().execute(() -> {
-			for (UUID id : dirtyUsers) {
-				final ChatUser user = cache.getIfPresent(id);
+			for (UUID id : this.dirtyUsers) {
+				if (!this.dirtyUsers.remove(id)) {
+					continue;
+				}
+
+				final ChatUser user = this.cache.getIfPresent(id);
 
 				if (user == null) {
 					continue;
 				}
 
-				repository.save(user);
+				try {
+					this.repository.save(user);
 
-				MistAPI.eventBus().post(
-						new ChatUserSaveEvent(user)
-				);
+					MistAPI.eventBus().post(
+							new ChatUserSaveEvent(user)
+					);
+				} catch (Exception e) {
+					this.dirtyUsers.add(id);
+					MistLogger.error("Failed to flush ChatUser " + id + ": " + e.getMessage());
+				}
 			}
-
-			dirtyUsers.clear();
 		});
 	}
-
 
 	public void invalidate(@NotNull UUID id) {
 		final ChatUser user = cache.getIfPresent(id);
